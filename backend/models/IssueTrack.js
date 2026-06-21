@@ -6,17 +6,14 @@ const issueTrackSchema = new mongoose.Schema({
         ref: "Issue",
         required: true
     },
-
     officer: {
         type: String,
         required: true
     },
-
     progress: {
         type: String,
         required: true
     }
-
 }, {
     timestamps: true
 });
