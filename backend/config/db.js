@@ -9,11 +9,7 @@ const connectDB = async () => {
 
         console.log("MongoDB Connected");
 
-        await User.create({
-            name: "Atharva",
-            email: "atharva@gmail.com",
-            password: "123"
-        });
+
     } catch (err) {
         console.log(err.message);
         process.exit(1);
