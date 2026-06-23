@@ -2,6 +2,10 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+require("dotenv").config();
+const secretkey = process.env.SECRETKEY;
+console.log("secret key: ", secretkey);
+
 const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -12,7 +16,7 @@ const registerUser = async (req, res) => {
             });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user =await User.create(
+        const user = await User.create(
             {
                 name: name,
                 email: email,
@@ -21,13 +25,13 @@ const registerUser = async (req, res) => {
         )
         res.status(201).json({
             message: "User created successfully",
-            user:{
-                id:user._id,
-                email:user.email,
-                name:user.name,
+            user: {
+                id: user._id,
+                email: user.email,
+                name: user.name,
             }
         });
-        console.log("user created yayyy!! ", name, email, password)
+        console.log("user created yayyy!! ", name, email)
     } catch (error) {
         res.status(400).json({
             message: error.message
@@ -36,19 +40,49 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-        try {
-        const {email, password} = req.body;
-        
+    try {
+        const { email, password } = req.body;
+
         const user = await User.findOne({
-            email:email,
+            email: email,
         })
+        if (!user) {
+            return res.status(400).json({ message: "user not found" })
+        }
         const ispasswordcorrect = await bcrypt.compare(password, user.password || "");
-        if(!loggedinuser || !ispasswordcorrect){
-            return res.status(400).json({message:"email/password incorrect!"})
+        if (!ispasswordcorrect) {
+            return res.status(400).json({ message: "invalid password" })
         }
-        } catch (error) {
-            
-        }
+        const token = jwt.sign(
+            {
+                id: user._id,
+                email: user.email,
+            }, secretkey,
+            {
+                expiresIn: "1h",
+            }
+        )
+        res.cookie("token", token, {
+            httpOnly: true,
+            maxAge: 60 * 60 * 1000
+        });
+
+        res.status(200).json({
+            message: "Login successful",
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        });
+        console.log("login successfull!",user)
+
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
 };
 
 module.exports = {
