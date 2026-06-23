@@ -35,12 +35,11 @@ function IssueForm() {
 
     console.log(formData);
 
-    // Backend API call will come later
+    // API call will come later
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Report an Issue</h2>
 
       <div>
         <label>Title</label>
