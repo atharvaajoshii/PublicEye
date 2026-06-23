@@ -64,7 +64,8 @@ const loginUser = async (req, res) => {
         )
         res.cookie("token", token, {
             httpOnly: true,
-            maxAge: 60 * 60 * 1000
+            maxAge: 60 * 60 * 1000,
+            sameSite: "lax"
         });
 
         res.status(200).json({
@@ -76,7 +77,7 @@ const loginUser = async (req, res) => {
                 email: user.email
             }
         });
-        console.log("login successfull!",user)
+        console.log("login successfull!", user)
 
     } catch (error) {
         res.status(400).json({
