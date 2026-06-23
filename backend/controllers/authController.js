@@ -9,6 +9,7 @@ console.log("secret key: ", secretkey);
 const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
+        if (!name || !email || !password) { throw new Error("all feilds are requiredd") }
         const exist = await User.findOne({ email: email })
         if (exist) {
             return res.status(400).json({
@@ -42,6 +43,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
+        if (!email || !password) { throw new Error("all feilds are requiredd") }
 
         const user = await User.findOne({
             email: email,
@@ -86,7 +88,21 @@ const loginUser = async (req, res) => {
     }
 };
 
+const logout = async (req, res) => {
+    try {
+        res.clearCookie("token");
+        res.status(200).json({
+            message: "Logout successful"
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    logout
 };
