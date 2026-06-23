@@ -87,7 +87,6 @@ const loginUser = async (req, res) => {
         });
     }
 };
-
 const logout = async (req, res) => {
     try {
         res.clearCookie("token");
@@ -100,7 +99,6 @@ const logout = async (req, res) => {
         })
     }
 }
-
 module.exports = {
     registerUser,
     loginUser,
