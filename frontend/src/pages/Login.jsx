@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import axios from "axios"
+import { useAuth } from "../context/AuthContext";
+
 
 
 function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
+    const { login } = useAuth();
 
-
-    const login = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:5000/api/auth/login", {
+           await login({
                 email, password
             },
                 {
@@ -21,7 +22,6 @@ function Login() {
                 }
             )
             alert("login successful")
-            console.log(res.data)
             navigate("/profile")
             
         } catch (error) {
@@ -31,7 +31,7 @@ function Login() {
     return (
         <div>
             <h1>Login</h1>
-            <form onSubmit={login}>
+            <form onSubmit={handleLogin}>
                 <input type="text" name="email" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
                 <input type="password" name="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
                 <Link to={"/register"}>dont have an account</Link>
