@@ -10,9 +10,10 @@ function OfficerDashboard() {
 
   const [stats, setStats] = useState({
     totalIssues: 0,
-    openIssues: 0,
-    inProgressIssues: 0,
-    completedIssues: 0
+    assigned: 0,
+    inProgress: 0,
+    resolved: 0,
+    rejected: 0
   })
 
   const [priorityIssues, setPriorityIssues] = useState([]);
@@ -49,20 +50,24 @@ function OfficerDashboard() {
       </div>
       <div>
         <div>
-          <h1>Total Issues</h1>
+          <h1>Total Assigned</h1>
           <p>{stats.totalIssues}</p>
         </div>
         <div>
-          <h1>Open Issues</h1>
-          <p>{stats.openIssues}</p>
+          <h1>Assigned</h1>
+          <p>{stats.assigned}</p>
         </div>
         <div>
-          <h1>In Progress Issues</h1>
-          <p>{stats.inProgressIssues}</p>
+          <h1>In Progress</h1>
+          <p>{stats.inProgress}</p>
         </div>
         <div>
-          <h1>Completed Issues</h1>
-          <p>{stats.completedIssues}</p>
+          <h1>Resolved</h1>
+          <p>{stats.resolved}</p>
+        </div>
+        <div>
+          <h1>Rejected</h1>
+          <p>{stats.rejected}</p>
         </div>
       </div>
       <div>
@@ -97,7 +102,9 @@ function OfficerDashboard() {
             <div key={activity._id}
             onClick={() => navigate(`/issue/${activity.issue._id}`)}
       style={{ cursor: "pointer" }}>
-              <p>{activity.issue?.title} - {activity.progress}</p>
+              <p>{activity.issue?.title}</p>
+              <p>Status: {activity.Status}</p>
+              <p>Progress: {activity.progress}</p>
               <p>{activity.updatedAt
                 ? new Date(activity.updatedAt).toLocaleString()
                 : "No date available"}</p>

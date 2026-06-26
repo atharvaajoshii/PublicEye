@@ -7,12 +7,16 @@ const issueTrackSchema = new mongoose.Schema({
         required: true
     },
     officer: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true
     },
     progress: {
-        type: String,
-        required: true
+        type: Number,
+        required: true,
+        min: 0,
+        max: 100,
+        default: 0
     }
 }, {
     timestamps: true
