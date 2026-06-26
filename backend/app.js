@@ -27,7 +27,8 @@ connectDB();
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
-module.exports = app;app.use("/api/officer", officerRoutes);
+module.exports = app;
+app.use("/api/officer", officerRoutes);
 
 app.listen(5000, () => {
     console.log("Server Running");
