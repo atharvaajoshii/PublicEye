@@ -14,7 +14,7 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-           await login({
+           const res = await login({
                 email, password
             },
                 {
