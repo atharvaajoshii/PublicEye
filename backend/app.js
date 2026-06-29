@@ -4,6 +4,7 @@ const express = require("express");
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const officerRoutes = require("./routes/officerRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 const authRoutes = require("./routes/authRoutes");
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 module.exports = app;
 app.use("/api/officer", officerRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.listen(5000, () => {
     console.log("Server Running");
