@@ -1,24 +1,30 @@
-//aak
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-export default function Profile() {
+function Profile() {
   const navigate = useNavigate();
-  const {logout} = useAuth();
-  const handleLogout = async (e) => {
-    try {
-      logout();
-      alert("logged out!!")
-      navigate('/login')
-    } catch (error) {
 
-    }
-  }
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
-    <>
+    <div>
       <h1>Profile</h1>
-      <button onClick={handleLogout}>logout</button>
-    </>
-  )
 
+      <p>Name: {user?.name}</p>
+
+      <p>Email: {user?.email}</p>
+
+      <button onClick={handleLogout}>
+        Logout
+      </button>
+    </div>
+  );
 }
+
+export default Profile;

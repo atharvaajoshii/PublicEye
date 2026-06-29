@@ -17,6 +17,7 @@ import UserManagement from "./pages/admin/UserManagement";
 import OfficerManagement from "./pages/admin/OfficerManagement";
 import Reports from "./pages/admin/Reports";
 
+
 function App() {
   return (
     <BrowserRouter>
