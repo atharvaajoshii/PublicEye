@@ -9,6 +9,7 @@ import Landing from "./pages/Landing";
 import ProtectedRoute from "./components/ProtectedRoute";
 import OfficerDashboard from "./pages/OfficerDashboard";
 import Analytics from "./pages/Analytics";
+import ManageIssues from "./pages/ManageIssues";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/report" element={<ProtectedRoute><ReportIssue /></ProtectedRoute>}/>
         <Route path="/officer/dashboard" element={<OfficerDashboard />} />
         <Route path="/officer/analytics" element={<Analytics />} />
+        <Route path="/officer/manage-issues" element={<ManageIssues />} />
       </Routes>
     </BrowserRouter>
   );
