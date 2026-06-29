@@ -21,7 +21,7 @@ function Login() {
                     withCredentials: true
                 }
             )
-            alert("login successful")
+            console.log("login successful")
             if (res.user.role === "admin") {
                 navigate("/admin/dashboard");
             } else if (res.user.role === "officer") {

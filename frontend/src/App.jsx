@@ -28,9 +28,9 @@ function App() {
         <Route path="/issue/:id" element={<IssueDetails />} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/report" element={<ProtectedRoute><ReportIssue /></ProtectedRoute>}/>
-        <Route path="/officer/dashboard" element={<OfficerDashboard />} />
-        <Route path="/officer/analytics" element={<Analytics />} />
-        <Route path="/officer/manage-issues" element={<ManageIssues />} />
+        <Route path="/officer/dashboard" element={<ProtectedRoute roles={["admin"]}><OfficerDashboard /></ProtectedRoute>} />
+        <Route path="/officer/analytics" element={<ProtectedRoute roles={["admin"]}><Analytics /></ProtectedRoute>} />
+        <Route path="/officer/manage-issues" element={<ProtectedRoute roles={["admin"]}><ManageIssues /></ProtectedRoute>} />
         <Route path="/admin/dashboard" element={<ProtectedRoute roles={["admin"]}><AdminDashboard/></ProtectedRoute>} />
         <Route path="/admin/analytics" element={<ProtectedRoute roles={["admin"]}><AdminAnalytics/></ProtectedRoute>} />
         <Route path="/admin/manage-issues" element={<ProtectedRoute roles={["admin"]}><IssueManagement/></ProtectedRoute>} />
