@@ -1,7 +1,15 @@
 import React from 'react'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import adminService from "../services/adminService";
 
 function AdminSidebar() {
+    const navigate = useNavigate();
+
+    const handleLogout=async()=>{
+        await adminService.logout();
+        navigate("/");
+        }
+
     return (
         <div>
             <Link to='/admin/dashboard'>Dashboard</Link>
@@ -10,7 +18,7 @@ function AdminSidebar() {
             <Link to='/admin/manage-issues'>Issues</Link>
             <Link to='/admin/reports'>Reports</Link>
             <Link to='/admin/analytics'>Analytics</Link>
-            <Link to='#'>Logout</Link>
+            <p onClick={handleLogout}>Logout</p>
         </div>
     )
 }

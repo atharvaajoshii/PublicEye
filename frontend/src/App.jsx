@@ -31,12 +31,12 @@ function App() {
         <Route path="/officer/dashboard" element={<OfficerDashboard />} />
         <Route path="/officer/analytics" element={<Analytics />} />
         <Route path="/officer/manage-issues" element={<ManageIssues />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/analytics" element={<AdminAnalytics />} />
-        <Route path="/admin/manage-issues" element={<IssueManagement />} />
-        <Route path="/admin/manage-users" element={<UserManagement />} />
-        <Route path="/admin/manage-officers" element={<OfficerManagement />} />
-        <Route path="/admin/reports" element={<Reports />} />
+        <Route path="/admin/dashboard" element={<ProtectedRoute roles={["admin"]}><AdminDashboard/></ProtectedRoute>} />
+        <Route path="/admin/analytics" element={<ProtectedRoute roles={["admin"]}><AdminAnalytics/></ProtectedRoute>} />
+        <Route path="/admin/manage-issues" element={<ProtectedRoute roles={["admin"]}><IssueManagement/></ProtectedRoute>} />
+        <Route path="/admin/manage-users" element={<ProtectedRoute roles={["admin"]}><UserManagement/></ProtectedRoute>} />
+        <Route path="/admin/manage-officers" element={<ProtectedRoute roles={["admin"]}><OfficerManagement/></ProtectedRoute>} />
+        <Route path="/admin/reports" element={<ProtectedRoute roles={["admin"]}><Reports/></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

@@ -26,7 +26,6 @@ app.use(express.json());
 
 connectDB();
 app.use(cookieParser());
-app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/officer", officerRoutes);
 app.use("/api/admin", adminRoutes);

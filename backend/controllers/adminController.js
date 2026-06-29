@@ -76,57 +76,59 @@ const analytics = async (req, res) => {
     }
 }
 
-const officers = async (req, res) => {
+const getAllOfficers = async (req, res) => {
     try {
-        const officerId = req.params.id;
 
-        const { sort, status, category, search } = req.query;
-
-        let issues = await IssueTrack.find({
-            officer: officerId
-        }).populate({
-            path: "issue",
-            match: {}
-        });
-
-        issues = issues.filter(item => item.issue);
-
-        if (search) {
-            issues = issues.filter(
-                item => item.issue?.title?.toLowerCase().includes(search.toLowerCase())
-            );
-        }
-
-        if (status) {
-            issues = issues.filter(
-                item => item.issue?.status === status
-            );
-        }
-
-        if (category) {
-            issues = issues.filter(
-                item => item.issue?.category === category
-            );
-        }
-
-        if (sort === "votes") {
-            issues = [...issues].sort((a, b) => (b.issue?.votes || 0) - (a.issue?.votes || 0));
-        }
-
-        if (sort === "newest") {
-            issues = [...issues].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        }
-
-        if (sort === "oldest") {
-            issues = [...issues].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-        }
-
-        return res.json({ issues });
+        return res.json({ officer });
     } catch (error) {
-        console.log("Error in officer Controller :", error.message);
+        console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
     }
 }
 
-module.exports = { dashboard, analytics, officers};
-/* issues, users, reports, logout add later athu*/ 
+const getOfficerById = async (req, res) => {
+    try {
+
+        return res.json({ officer });
+    } catch (error) {
+        console.log("Error in admin Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" })
+    }
+}
+
+const createOfficers = async (req, res) => {
+    try {
+
+        return res.json({ officer });
+    } catch (error) {
+        console.log("Error in admin Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" })
+    }
+}
+
+const updateOfficers = async (req, res) => {
+    try {
+
+        return res.json({ officer });
+    } catch (error) {
+        console.log("Error in admin Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" })
+    }
+}
+
+const deleteOfficers = async (req, res) => {
+    try {
+
+        return res.json({ officer });
+    } catch (error) {
+        console.log("Error in admin Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" })
+    }
+}
+
+
+const issues = async (req, res) => { }
+const users = async (req, res) => { }
+const reports = async (req, res) => { }
+
+module.exports = { dashboard, analytics, issues, users, getAllOfficers, getOfficerById, createOfficers, updateOfficers, deleteOfficers, reports};
