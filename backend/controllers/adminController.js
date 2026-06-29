@@ -128,4 +128,5 @@ const officers = async (req, res) => {
     }
 }
 
-module.exports = { dashboard, analytics, issues, users, officers, reports, logout };
+module.exports = { dashboard, analytics, officers};
+/* issues, users, reports, logout add later athu*/ 
