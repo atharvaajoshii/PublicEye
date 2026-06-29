@@ -36,6 +36,16 @@ function IssueForm() {
     console.log(formData);
 
     // API call will come later
+    setFormData({
+    title: "",
+    description: "",
+    location: "",
+    latitude: "",
+    longitude: "",
+    category: "",
+    publicVoting: false,
+    image: null,
+  });
   };
 
   return (
@@ -77,7 +87,7 @@ function IssueForm() {
         <label>Latitude</label>
         <input
           type="number"
-          name="latitude"
+          name="latitude" step="any"
           value={formData.latitude}
           onChange={handleChange}
         />
@@ -87,7 +97,7 @@ function IssueForm() {
         <label>Longitude</label>
         <input
           type="number"
-          name="longitude"
+          name="longitude" step="any"
           value={formData.longitude}
           onChange={handleChange}
         />
