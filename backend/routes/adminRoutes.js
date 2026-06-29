@@ -1,7 +1,7 @@
 // Atmika
 
 const express = require("express");
-const { dashboard, analytics, issues, users, getAllOfficers, getOfficerById, createOfficers, updateOfficers, deleteOfficers, reports } = require("../controllers/adminController");
+const { dashboard, analytics, issues, users, getAllOfficers, getOfficerById, createOfficers, updateOfficers, deleteOfficers, reports,getAllIssues,getIssueById} = require("../controllers/adminController");
 
 const authMiddleware = require("../middleware/authMiddleware");
 const roleMiddleware = require("../middleware/roleMiddleware");
@@ -13,7 +13,7 @@ router.use(roleMiddleware(["admin"]));
 
 router.get("/dashboard", dashboard);
 router.get("/analytics", analytics);
-router.get("/issues", issues);
+// router.get("/issues", issues);
 router.get("/users", users);
 router.get("/reports", reports);
 
@@ -22,5 +22,8 @@ router.get("/officers/:id", getOfficerById);
 router.post("/officers", createOfficers);
 router.put("/officers/:id", updateOfficers);
 router.delete("/officers/:id", deleteOfficers);
+
+router.get("/issues",getAllIssues);
+router.get("/issue/:id",getAllIssues);
 
 module.exports = router; 
