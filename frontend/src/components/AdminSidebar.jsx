@@ -18,7 +18,7 @@ function AdminSidebar() {
             <Link to='/admin/manage-issues'>Issues</Link>
             <Link to='/admin/reports'>Reports</Link>
             <Link to='/admin/analytics'>Analytics</Link>
-            <p onClick={handleLogout}>Logout</p>
+            <p onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</p>
         </div>
     )
 }
