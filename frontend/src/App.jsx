@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import OfficerDashboard from "./pages/OfficerDashboard";
 import Analytics from "./pages/Analytics";
 import ManageIssues from "./pages/ManageIssues";
+import Map from "./pages/Map";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import IssueManagement from "./pages/admin/IssueManagement";
@@ -31,6 +32,7 @@ function App() {
         <Route path="/officer/dashboard" element={<ProtectedRoute roles={["officer"]}><OfficerDashboard /></ProtectedRoute>} />
         <Route path="/officer/analytics" element={<ProtectedRoute roles={["officer"]}><Analytics /></ProtectedRoute>} />
         <Route path="/officer/manage-issues" element={<ProtectedRoute roles={["officer"]}><ManageIssues /></ProtectedRoute>} />
+        <Route path="/officer/map" element={<ProtectedRoute roles={["officer"]}><Map /></ProtectedRoute>} />
         <Route path="/admin/dashboard" element={<ProtectedRoute roles={["admin"]}><AdminDashboard/></ProtectedRoute>} />
         <Route path="/admin/analytics" element={<ProtectedRoute roles={["admin"]}><AdminAnalytics/></ProtectedRoute>} />
         <Route path="/admin/manage-issues" element={<ProtectedRoute roles={["admin"]}><IssueManagement/></ProtectedRoute>} />

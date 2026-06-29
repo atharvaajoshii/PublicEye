@@ -28,7 +28,6 @@ function AdminAnalytics() {
 
     const fetchAnalytics = async () => {
         try {
-            //   const officerId = "6a39f9d694f116839d769180";
 
             const res = await adminService.getAnalytics();
 
