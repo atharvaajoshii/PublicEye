@@ -1,12 +1,15 @@
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import adminService from "../services/adminService";
+// import adminService from "../services/adminService";
+import { useAuth } from '../context/AuthContext';
+
 
 function AdminSidebar() {
     const navigate = useNavigate();
+     const { logout } = useAuth();
 
     const handleLogout=async()=>{
-        await adminService.logout();
+        await logout();
         navigate("/");
         }
 
