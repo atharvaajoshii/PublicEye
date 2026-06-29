@@ -132,6 +132,37 @@ const getAreaDistribution = async () => {
     return stats;
 }
 
+const getStatusDistribution = async () => {
+    const stats = await Issue.aggregate([
+        {
+            $match:{
+            status:{
+               $ne:null
+            }
+           }
+        },
+        {
+            $group: {
+                _id: "$status",
+                issues: { $sum: 1 },
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                status: "$_id",
+                issues: 1
+            }
+        },
+        {
+            $sort:{
+                issues:-1
+            }
+        }
+    ]);
+    return stats;
+}
+
 const getAverageResolutionTime = async () => {
     const stats = await Issue.aggregate([
         {
@@ -176,6 +207,7 @@ module.exports = {
     getMonthlyStats,
     getResolutionTrend,
     getAreaDistribution,
+    getStatusDistribution,
     getAverageResolutionTime,
     getTopVotedIssues
 };
