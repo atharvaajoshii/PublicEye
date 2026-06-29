@@ -1,6 +1,7 @@
 //aak
 
 import React, { useState } from "react";
+import { createIssue } from "./issueService";
 
 function IssueForm() {
   const [formData, setFormData] = useState({
@@ -19,9 +20,11 @@ function IssueForm() {
 
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === "checkbox" ? checked : value, //this is called computed property name
     });
   };
+  //... is callled spread operator. w/o it other fields wud disappear
+
 
   const handleImageChange = (e) => {
     setFormData({
@@ -30,24 +33,33 @@ function IssueForm() {
     });
   };
 
-  const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    const data = new FormData();
 
-    // API call will come later
-    setFormData({
-    title: "",
-    description: "",
-    location: "",
-    latitude: "",
-    longitude: "",
-    category: "",
-    publicVoting: false,
-    image: null,
-  });
-  };
+    data.append("title", formData.title);
+    data.append("description", formData.description);
+    data.append("location", formData.location);
+    data.append("latitude", formData.latitude);
+    data.append("longitude", formData.longitude);
+    data.append("category", formData.category);
+    data.append("publicVoting", formData.publicVoting);
+    data.append("image", formData.image);
 
+    try {
+        const result = await createIssue(data);
+
+        alert("Issue reported successfully!");
+
+        console.log(result);
+
+    } catch (error) {
+        console.error(error);
+
+        alert("Failed to submit issue.");
+    }
+};
   return (
     <form onSubmit={handleSubmit}>
 
