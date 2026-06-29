@@ -22,7 +22,13 @@ function Login() {
                 }
             )
             alert("login successful")
-            navigate("/profile")
+            if (res.user.role === "admin") {
+                navigate("/admin/dashboard");
+            } else if (res.user.role === "officer") {
+                navigate("/officer/dashboard");
+            } else {
+                navigate("/profile");
+            }
             
         } catch (error) {
             alert(error.response?.data?.message || "Registration failed");
