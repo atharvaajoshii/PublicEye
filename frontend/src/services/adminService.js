@@ -16,7 +16,6 @@ const adminService = {
     updateOfficers(id, data) { return axios.put(`${API}/officers/${id}`, data, config); },
     deleteOfficers(id) { return axios.delete(`${API}/officers/${id}`, config); },
     getIssues() { return axios.get(`${API}/issues`); },
-    logout() { return axios.post(`${API}/logout`); }
 };
 
 export default adminService;

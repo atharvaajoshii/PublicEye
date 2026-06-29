@@ -242,7 +242,17 @@ const reassignOfficer = async (req, res) => {
 
 const deleteIssue = async (req, res) => {
     try {
+        const { id } = req.params;
+        const issue = await Issue.findById(id);
+        if (!issue) {
+            return res.status(404).json({ error: "Issue not found" });
+        }
+        await IssueTrack.deleteMany({
+            issue: id
+        });
 
+        await Issue.findByIdAndDelete(id);
+        return res.json({ message: "Issue deleted" });
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
