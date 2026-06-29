@@ -74,4 +74,84 @@ const analytics = async (req, res) => {
     }
 }
 
-module.exports = { dashboard, analytics };
+const manageIssues = async (req, res) => {
+    try {
+        const officerId = req.params.id;
+
+        const { sort, status, category, search } = req.query;
+
+        let issues = await IssueTrack.find({
+            officer: officerId
+        }).populate({
+            path: "issue",
+            match: {}
+        });
+
+        issues = issues.filter(item => item.issue);
+
+        if(search){
+            issues = issues.filter(
+                item => item.issue?.title?.toLowerCase().includes(search.toLowerCase())
+            );
+        }
+
+        if(status){
+            issues = issues.filter(
+                item => item.issue?.status === status
+            );
+        }
+
+        if(category){
+            issues = issues.filter(
+                item => item.issue?.category === category
+            );
+        }
+
+        if(sort === "votes"){
+            issues = [...issues].sort((a, b) => (b.issue?.votes || 0) - (a.issue?.votes || 0));
+        }
+
+        if(sort === "newest"){
+            issues = [...issues].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
+
+        if(sort === "oldest"){
+            issues = [...issues].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        }
+
+        return res.json({issues});
+    } catch (error) {
+        console.log("Error in officer Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" })
+    }
+}
+
+const updateIssueStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        const issue = await Issue.findByIdAndUpdate(
+            id,
+            { status },
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
+        if (!issue) {
+            return res.status(404).json({
+                error: "Issue not found"
+            });
+        }
+
+        res.json({message: "Status updated successfully",issue});
+    } catch (error) {
+        console.log("Error in officer Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" })
+    }
+}
+
+
+module.exports = { dashboard, analytics, manageIssues, updateIssueStatus };
