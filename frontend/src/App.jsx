@@ -9,6 +9,13 @@ import Landing from "./pages/Landing";
 import ProtectedRoute from "./components/ProtectedRoute";
 import OfficerDashboard from "./pages/OfficerDashboard";
 import Analytics from "./pages/Analytics";
+import ManageIssues from "./pages/ManageIssues";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import IssueManagement from "./pages/admin/IssueManagement";
+import UserManagement from "./pages/admin/UserManagement";
+import OfficerManagement from "./pages/admin/OfficerManagement";
+import Reports from "./pages/admin/Reports";
 
 function App() {
   return (
@@ -22,6 +29,13 @@ function App() {
         <Route path="/report" element={<ProtectedRoute><ReportIssue /></ProtectedRoute>}/>
         <Route path="/officer/dashboard" element={<OfficerDashboard />} />
         <Route path="/officer/analytics" element={<Analytics />} />
+        <Route path="/officer/manage-issues" element={<ManageIssues />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/analytics" element={<AdminAnalytics />} />
+        <Route path="/admin/manage-issues" element={<IssueManagement />} />
+        <Route path="/admin/manage-users" element={<UserManagement />} />
+        <Route path="/admin/manage-officers" element={<OfficerManagement />} />
+        <Route path="/admin/reports" element={<Reports />} />
       </Routes>
     </BrowserRouter>
   );

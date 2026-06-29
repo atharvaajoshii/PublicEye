@@ -1,42 +1,41 @@
 // Atmika
+
 const Issue = require("../models/Issue");
 const IssueTrack = require("../models/IssueTrack");
 const User = require("../models/User");
+
 const {
     getCategoryStats,
     getMonthlyStats,
     getResolutionTrend,
     getAreaDistribution,
+    getStatusDistribution,
     getAverageResolutionTime,
     getTopVotedIssues
 } = require("../utils/analytics");
 
 const dashboard = async (req, res) => {
     try {
-        const officerId = req.params.id;
-
-        const assigned = await IssueTrack.find({
-            officer: officerId
-        }).populate("issue");
+        const issues = await Issue.find();
+        const citizens = await User.countDocuments({ role: "citizen" });
+        const officers = await User.countDocuments({ role: "officer" });
 
         const stats = {
-            totalIssues: assigned.length,
-            assigned: assigned.filter(item => item.issue?.status === "Assigned").length,
-            inProgress: assigned.filter(item => item.issue?.status === "In Progress").length,
-            resolved: assigned.filter(item => item.issue?.status === "Resolved").length,
-            rejected: assigned.filter(item => item.issue?.status === "Rejected").length
+            totalIssues: issues.length,
+            totalUsers: citizens,
+            totalOfficers: officers,
         }
 
-        const priorityIssues = [...assigned].sort((a, b) => (b.issue?.votes || 0) - (a.issue?.votes || 0)).slice(0, 5);
+        const pendingIssues = [...issues].filter(issue => issue.status === "Pending");
 
-        const recentAssigned = [...assigned].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+        const resolvedIssues = [...issues].filter(issue => issue.status === "Resolved");
 
-        const recentActivity = [...assigned].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).slice(0, 5);
+        const reportedToday = [...issues].filter(item => new Date(item.createdAt).toDateString() === new Date().toDateString());
 
-        res.json({ stats, priorityIssues, recentAssigned, recentActivity })
+        res.json({ stats, pendingIssues, resolvedIssues, reportedToday })
 
     } catch (error) {
-        console.log("Error in officer Controller :", error.message);
+        console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
     }
 
@@ -49,6 +48,7 @@ const analytics = async (req, res) => {
             monthly,
             resolution,
             area,
+            status,
             avgTime,
             topVotes
         ] = await Promise.all([
@@ -56,6 +56,7 @@ const analytics = async (req, res) => {
             getMonthlyStats(),
             getResolutionTrend(),
             getAreaDistribution(),
+            getStatusDistribution(),
             getAverageResolutionTime(),
             getTopVotedIssues()
         ]);
@@ -65,16 +66,17 @@ const analytics = async (req, res) => {
             monthly,
             resolution,
             area,
+            status,
             avgTime,
             topVotes
         });
     } catch (error) {
-        console.log("Error in officer Controller :", error.message);
+        console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
     }
 }
 
-const manageIssues = async (req, res) => {
+const officers = async (req, res) => {
     try {
         const officerId = req.params.id;
 
@@ -89,69 +91,41 @@ const manageIssues = async (req, res) => {
 
         issues = issues.filter(item => item.issue);
 
-        if(search){
+        if (search) {
             issues = issues.filter(
                 item => item.issue?.title?.toLowerCase().includes(search.toLowerCase())
             );
         }
 
-        if(status){
+        if (status) {
             issues = issues.filter(
                 item => item.issue?.status === status
             );
         }
 
-        if(category){
+        if (category) {
             issues = issues.filter(
                 item => item.issue?.category === category
             );
         }
 
-        if(sort === "votes"){
+        if (sort === "votes") {
             issues = [...issues].sort((a, b) => (b.issue?.votes || 0) - (a.issue?.votes || 0));
         }
 
-        if(sort === "newest"){
+        if (sort === "newest") {
             issues = [...issues].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         }
 
-        if(sort === "oldest"){
+        if (sort === "oldest") {
             issues = [...issues].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
         }
 
-        return res.json({issues});
+        return res.json({ issues });
     } catch (error) {
         console.log("Error in officer Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
     }
 }
 
-const updateIssueStatus = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { status } = req.body;
-
-        const issue = await Issue.findByIdAndUpdate(
-            id,
-            { status },
-            {
-                new: true,
-                runValidators: true
-            }
-        );
-
-        if (!issue) {
-            return res.status(404).json({
-                error: "Issue not found"
-            });
-        }
-
-        res.json({message: "Status updated successfully",issue});
-    } catch (error) {
-        console.log("Error in officer Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" })
-    }
-}
-
-
-module.exports = { dashboard, analytics, manageIssues, updateIssueStatus };
+module.exports = { dashboard, analytics, issues, users, officers, reports, logout };
