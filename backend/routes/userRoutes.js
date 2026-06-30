@@ -2,9 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { registerUser,
-        loginUser,
-        getProfile,
+const { getProfile,
         updateProfile,
         deleteProfile
 } = require("../controllers/userController"); //these are the functions that will be defined in userController
