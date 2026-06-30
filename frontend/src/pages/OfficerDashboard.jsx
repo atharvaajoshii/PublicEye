@@ -1,10 +1,15 @@
 // Atmika
 
 import React, { useEffect, useState } from 'react'
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom"
 
+import { useAuth } from "../context/AuthContext";
+import officerService from "../services/officerService";
+import OfficerSidebar from "../components/OfficerSidebar"
+
 function OfficerDashboard() {
+
+  const { user } = useAuth();
 
   const navigate = useNavigate();
 
@@ -21,16 +26,13 @@ function OfficerDashboard() {
   const [recentActivity, setRecentActivity] = useState([]);
 
   useEffect(() => {
-    fetchDashboard();
-  }, [])
+    if (user) fetchDashboard();
+  }, [user]);
 
   const fetchDashboard = async () => {
     try {
-      const officerId = "6a39f9d694f116839d769180";
+      const res = await officerService.getDashboard();
 
-      const res = await axios.get(
-        `http://localhost:5000/api/officer/dashboard/${officerId}`
-      );
       setStats(res.data.stats);
       setPriorityIssues(res.data.priorityIssues);
       setRecentAssigned(res.data.recentAssigned);
@@ -43,11 +45,7 @@ function OfficerDashboard() {
 
   return (
     <div>
-      <div>
-        <Link to='/officer/manage-issues'>Manage Issues</Link>
-        <Link to='/officer/map'>Map</Link>
-        <Link to='/officer/analytics'>Analytics</Link>
-      </div>
+      <OfficerSidebar />
       <div>
         <div>
           <h1>Total Assigned</h1>
@@ -75,8 +73,8 @@ function OfficerDashboard() {
           <h1>Priority Isssues</h1>
           {priorityIssues.map((issue) => (
             <div key={issue._id}
-            onClick={() => navigate(`/issue/${issue.issue._id}`)}
-      style={{ cursor: "pointer" }}>
+              onClick={() => navigate(`/issue/${issue.issue._id}`)}
+              style={{ cursor: "pointer" }}>
               <h3>{issue.issue?.title}</h3>
               <p>Votes: {issue.issue?.votes}</p>
               <p>Progress: {issue.progress}</p>
@@ -86,9 +84,9 @@ function OfficerDashboard() {
         <div>
           <h1>Recently Assigned Isssues</h1>
           {recentAssigned.map((issue) => (
-            <div key={issue._id} 
-            onClick={() => navigate(`/issue/${issue.issue._id}`)}
-            style={{ cursor: "pointer" }}>
+            <div key={issue._id}
+              onClick={() => navigate(`/issue/${issue.issue._id}`)}
+              style={{ cursor: "pointer" }}>
               <h3>{issue.issue?.title}</h3>
               <p>{issue.createdAt
                 ? new Date(issue.createdAt).toLocaleString()
@@ -100,10 +98,10 @@ function OfficerDashboard() {
           <h1>Recent Activity</h1>
           {recentActivity.map((activity) => (
             <div key={activity._id}
-            onClick={() => navigate(`/issue/${activity.issue._id}`)}
-      style={{ cursor: "pointer" }}>
+              onClick={() => navigate(`/issue/${activity.issue._id}`)}
+              style={{ cursor: "pointer" }}>
               <p>{activity.issue?.title}</p>
-              <p>Status: {activity.Status}</p>
+              <p>Status: {activity.issue.status}</p>
               <p>Progress: {activity.progress}</p>
               <p>{activity.updatedAt
                 ? new Date(activity.updatedAt).toLocaleString()

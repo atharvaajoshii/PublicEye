@@ -7,13 +7,14 @@ const {
     getMonthlyStats,
     getResolutionTrend,
     getAreaDistribution,
+    getStatusDistribution,
     getAverageResolutionTime,
     getTopVotedIssues
 } = require("../utils/analytics");
 
 const dashboard = async (req, res) => {
     try {
-        const officerId = req.params.id;
+        const officerId = req.user.id;
 
         const assigned = await IssueTrack.find({
             officer: officerId
@@ -49,6 +50,7 @@ const analytics = async (req, res) => {
             monthly,
             resolution,
             area,
+            status,
             avgTime,
             topVotes
         ] = await Promise.all([
@@ -56,6 +58,7 @@ const analytics = async (req, res) => {
             getMonthlyStats(),
             getResolutionTrend(),
             getAreaDistribution(),
+            getStatusDistribution(),
             getAverageResolutionTime(),
             getTopVotedIssues()
         ]);
@@ -65,6 +68,7 @@ const analytics = async (req, res) => {
             monthly,
             resolution,
             area,
+            status,
             avgTime,
             topVotes
         });
@@ -76,7 +80,7 @@ const analytics = async (req, res) => {
 
 const manageIssues = async (req, res) => {
     try {
-        const officerId = req.params.id;
+        const officerId = req.user.id;
 
         const { sort, status, category, search } = req.query;
 
@@ -128,8 +132,20 @@ const manageIssues = async (req, res) => {
 
 const updateIssueStatus = async (req, res) => {
     try {
+        const officerId = req.user.id;
         const { id } = req.params;
         const { status } = req.body;
+
+        const assignment = await IssueTrack.findOne({
+            issue: id,
+            officer: officerId
+        });
+
+        if (!assignment) {
+            return res.status(403).json({
+                message: "You are not assigned to this issue."
+            });
+        }
 
         const issue = await Issue.findByIdAndUpdate(
             id,
@@ -139,12 +155,6 @@ const updateIssueStatus = async (req, res) => {
                 runValidators: true
             }
         );
-
-        if (!issue) {
-            return res.status(404).json({
-                error: "Issue not found"
-            });
-        }
 
         res.json({message: "Status updated successfully",issue});
     } catch (error) {

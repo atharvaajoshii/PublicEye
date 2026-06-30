@@ -14,15 +14,21 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-           await login({
+           const res = await login({
                 email, password
             },
                 {
                     withCredentials: true
                 }
             )
-            alert("login successful")
-            navigate("/profile")
+            console.log("login successful")
+            if (res.user.role === "admin") {
+                navigate("/admin/dashboard");
+            } else if (res.user.role === "officer") {
+                navigate("/officer/dashboard");
+            } else {
+                navigate("/profile");
+            }
             
         } catch (error) {
             alert(error.response?.data?.message || "Registration failed");

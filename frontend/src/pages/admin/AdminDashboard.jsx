@@ -1,10 +1,10 @@
 // Atmika
 
 import React, { useEffect, useState } from 'react'
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom"
 
 import AdminSidebar from "../../components/AdminSidebar"
+import adminService from "../../services/adminService";
 
 function AdminDashboard() {
 
@@ -27,9 +27,8 @@ function AdminDashboard() {
     const fetchDashboard = async () => {
         try {
 
-            const res = await axios.get(
-                `http://localhost:5000/api/admin/dashboard`
-            );
+            const res = await adminService.getDashboard();
+
             setStats(res.data.stats);
             setPendingIssues(res.data.pendingIssues);
             setResolvedIssues(res.data.resolvedIssues);

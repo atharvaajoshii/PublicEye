@@ -11,14 +11,8 @@ const { registerUser,
 
 const authMiddleware = require("../middleware/authMiddleware");
 
-router.post('/register',registerUser);
-
-router.post('/login',loginUser);
-
 router.get('/profile',authMiddleware,getProfile);
-
-router.post('/profile',authMiddleware,updateProfile);
-
+router.put('/profile',authMiddleware,updateProfile);
 router.delete('/profile',authMiddleware,deleteProfile);
 
 module.exports = router;

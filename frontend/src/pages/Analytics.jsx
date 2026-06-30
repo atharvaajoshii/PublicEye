@@ -1,10 +1,10 @@
 // Atmika
 
 import React, { useEffect, useState } from 'react'
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import AnalyticsChart from "../components/AnalyticsChart"
+import officerService from "../services/officerService";
 
 function Analytics() {
     const navigate = useNavigate();
@@ -14,6 +14,7 @@ function Analytics() {
         monthly: [],
         resolution: [],
         area: [],
+        status: [],
         avgTime: {
             averageDays: 0
         },
@@ -26,11 +27,7 @@ function Analytics() {
 
     const fetchAnalytics = async () => {
         try {
-            //   const officerId = "6a39f9d694f116839d769180";
-
-            const res = await axios.get(
-                `http://localhost:5000/api/officer/analytics`
-            );
+            const res = await officerService.getAnalytics();
 
             setAnalytics(res.data);
 
@@ -74,6 +71,13 @@ function Analytics() {
                     data={analytics.resolution}
                     dataKey="resolved"
                     XKey="month"
+                />
+                <AnalyticsChart
+                    type="bar"
+                    title="Status Distribution"
+                    data={analytics.status}
+                    dataKey="issues"
+                    XKey="status"
                 />
             </div>
             <div>

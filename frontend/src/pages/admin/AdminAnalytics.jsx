@@ -1,11 +1,11 @@
 // Atmika
 
 import React, { useEffect, useState } from 'react'
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom"
 
 import AnalyticsChart from "../../components/AnalyticsChart"
 import AdminSidebar from "../../components/AdminSidebar.jsx"
+import adminService from "../../services/adminService";
 
 function AdminAnalytics() {
     const navigate = useNavigate();
@@ -28,11 +28,8 @@ function AdminAnalytics() {
 
     const fetchAnalytics = async () => {
         try {
-            //   const officerId = "6a39f9d694f116839d769180";
 
-            const res = await axios.get(
-                `http://localhost:5000/api/admin/analytics`
-            );
+            const res = await adminService.getAnalytics();
 
             setAnalytics(res.data);
 

@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import OfficerDashboard from "./pages/OfficerDashboard";
 import Analytics from "./pages/Analytics";
 import ManageIssues from "./pages/ManageIssues";
+// import Map from "./pages/Map";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import IssueManagement from "./pages/admin/IssueManagement";
@@ -28,15 +29,16 @@ function App() {
         <Route path="/issue/:id" element={<IssueDetails />} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/report" element={<ProtectedRoute><ReportIssue /></ProtectedRoute>}/>
-        <Route path="/officer/dashboard" element={<OfficerDashboard />} />
-        <Route path="/officer/analytics" element={<Analytics />} />
-        <Route path="/officer/manage-issues" element={<ManageIssues />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/analytics" element={<AdminAnalytics />} />
-        <Route path="/admin/manage-issues" element={<IssueManagement />} />
-        <Route path="/admin/manage-users" element={<UserManagement />} />
-        <Route path="/admin/manage-officers" element={<OfficerManagement />} />
-        <Route path="/admin/reports" element={<Reports />} />
+        <Route path="/officer/dashboard" element={<ProtectedRoute roles={["officer"]}><OfficerDashboard /></ProtectedRoute>} />
+        <Route path="/officer/analytics" element={<ProtectedRoute roles={["officer"]}><Analytics /></ProtectedRoute>} />
+        <Route path="/officer/manage-issues" element={<ProtectedRoute roles={["officer"]}><ManageIssues /></ProtectedRoute>} />
+        {/* <Route path="/officer/map" element={<ProtectedRoute roles={["officer"]}><Map /></ProtectedRoute>} /> */}
+        <Route path="/admin/dashboard" element={<ProtectedRoute roles={["admin"]}><AdminDashboard/></ProtectedRoute>} />
+        <Route path="/admin/analytics" element={<ProtectedRoute roles={["admin"]}><AdminAnalytics/></ProtectedRoute>} />
+        <Route path="/admin/manage-issues" element={<ProtectedRoute roles={["admin"]}><IssueManagement/></ProtectedRoute>} />
+        <Route path="/admin/manage-users" element={<ProtectedRoute roles={["admin"]}><UserManagement/></ProtectedRoute>} />
+        <Route path="/admin/manage-officers" element={<ProtectedRoute roles={["admin"]}><OfficerManagement/></ProtectedRoute>} />
+        <Route path="/admin/reports" element={<ProtectedRoute roles={["admin"]}><Reports/></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
