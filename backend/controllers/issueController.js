@@ -15,9 +15,9 @@ const createIssue = async (req, res) => {
         const image = req.file
             ? req.file.filename
             : "";
-        console.log(req.body);
-        console.log(req.file);
-        console.log(req.user);
+        console.log("BODY:", req.body);
+        console.log("FILE:", req.file);
+        console.log("USER:", req.user);
 
         const issue = new Issue({
             title,
