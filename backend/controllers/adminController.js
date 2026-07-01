@@ -190,6 +190,13 @@ const assignOfficer = async (req, res) => {
             return res.status(404).json({ error: "officer not found" });
         }
         issue.officer = officerId
+
+        //trial
+        await Issue.findByIdAndUpdate(id, {
+            status: "Assigned"
+        });
+        //
+
         await issue.save();
         return res.json({
             message: "Officer assigned successfully",
@@ -261,6 +268,15 @@ const deleteIssue = async (req, res) => {
 
 const filterIssues = async (req, res) => {
     try {
+        const { status, category } = req.query;
+        const filter = {};
+
+        if (status) filter.status = status
+        if (category) filter.category = category
+
+        const issues = await Issue.find(filter)
+
+        return res.json(issues)
 
     } catch (error) {
         console.log("Error in admin Controller :", error.message);

@@ -9,7 +9,7 @@ router.post("/login", loginUser);
 router.post("/logout", logout);
 router.get("/me", authMiddleware, (req, res) => {
     res.json({
-        user: {user: req.user}
+        user: req.user
     });
 });
 
