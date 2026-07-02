@@ -142,19 +142,15 @@ const getAllIssues = async (req, res) => {
 const getIssueById = async (req, res) => {
     try {
         const { id } = req.params;
-
+        // console.log("id",id)
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ error: "Invalid Issue ID" });
         }
-
         const issue = await Issue.findById(id);
-
         if (!issue) {
             return res.status(404).json({ error: "Issue not found" });
         }
-
         return res.json({ issue });
-
     } catch (error) {
         console.log("Error in admin Controller:", error.message);
         return res.status(500).json({ error: "Internal server error" });
@@ -163,7 +159,49 @@ const getIssueById = async (req, res) => {
 
 const assignOfficer = async (req, res) => {
     try {
+        const { id } = req.params;
+        // console.log("id",id)
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid Issue ID" });
+        }
 
+        const issue = await IssueTrack.findOne({
+            issue: id,
+        });
+        if (!issue) {
+            return res.status(404).json({ error: "Issue not found" });
+        }
+        if (issue.officer) {
+            return res.status(400).json({
+                error: "Officer already assigned"
+            });
+        }
+        const { officerId } = req.body;
+        if (!mongoose.Types.ObjectId.isValid(officerId)) {
+            return res.status(400).json({ error: "Invalid Officer ID" });
+        }
+
+        const officer = await User.findOne({
+            _id: officerId,
+            role: "officer"
+        });
+
+        if (!officer) {
+            return res.status(404).json({ error: "officer not found" });
+        }
+        issue.officer = officerId
+
+        //trial
+        await Issue.findByIdAndUpdate(id, {
+            status: "Assigned"
+        });
+        //
+
+        await issue.save();
+        return res.json({
+            message: "Officer assigned successfully",
+            issue
+        });
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
@@ -172,7 +210,37 @@ const assignOfficer = async (req, res) => {
 
 const reassignOfficer = async (req, res) => {
     try {
+        const { id } = req.params;
+        // console.log("id",id)
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid Issue ID" });
+        }
 
+        const issue = await IssueTrack.findOne({
+            issue: id,
+        });
+        if (!issue) {
+            return res.status(404).json({ error: "Issue not found" });
+        }
+        const { officerId } = req.body;
+        if (!mongoose.Types.ObjectId.isValid(officerId)) {
+            return res.status(400).json({ error: "Invalid Officer ID" });
+        }
+
+        const officer = await User.findOne({
+            _id: officerId,
+            role: "officer"
+        });
+
+        if (!officer) {
+            return res.status(404).json({ error: "officer not found" });
+        }
+        issue.officer = officerId
+        await issue.save();
+        return res.json({
+            message: "Officer assigned successfully",
+            issue
+        });
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
@@ -181,7 +249,17 @@ const reassignOfficer = async (req, res) => {
 
 const deleteIssue = async (req, res) => {
     try {
+        const { id } = req.params;
+        const issue = await Issue.findById(id);
+        if (!issue) {
+            return res.status(404).json({ error: "Issue not found" });
+        }
+        await IssueTrack.deleteMany({
+            issue: id
+        });
 
+        await Issue.findByIdAndDelete(id);
+        return res.json({ message: "Issue deleted" });
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
@@ -190,6 +268,15 @@ const deleteIssue = async (req, res) => {
 
 const filterIssues = async (req, res) => {
     try {
+        const { status, category } = req.query;
+        const filter = {};
+
+        if (status) filter.status = status
+        if (category) filter.category = category
+
+        const issues = await Issue.find(filter)
+
+        return res.json(issues)
 
     } catch (error) {
         console.log("Error in admin Controller :", error.message);

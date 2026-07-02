@@ -8,7 +8,9 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", logout);
 router.get("/me", authMiddleware, (req, res) => {
-    res.json({user: req.user})
+    res.json({
+        user: req.user
+    });
 });
 
 module.exports = router;

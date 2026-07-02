@@ -1,14 +1,16 @@
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import officerService from "../services/officerService";
+import { useAuth } from '../context/AuthContext';
 
 function OfficerSidebar() {
     const navigate = useNavigate();
+    const { logout } = useAuth();
 
-    const handleLogout=async()=>{
-        await officerService.logout();
+
+    const handleLogout = async () => {
+        await logout();
         navigate("/");
-        }
+    }
 
     return (
         <div>
