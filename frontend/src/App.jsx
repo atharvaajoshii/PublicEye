@@ -17,6 +17,8 @@ import IssueManagement from "./pages/admin/IssueManagement";
 import UserManagement from "./pages/admin/UserManagement";
 import OfficerManagement from "./pages/admin/OfficerManagement";
 import Reports from "./pages/admin/Reports";
+import Dashboard from "./pages/Dashboard";
+import AllIssues from "./pages/AllIssues";
 
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/issue/:id" element={<IssueDetails />} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/allissues" element={<ProtectedRoute><AllIssues /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/report" element={<ProtectedRoute><ReportIssue /></ProtectedRoute>}/>
         <Route path="/officer/dashboard" element={<ProtectedRoute roles={["officer"]}><OfficerDashboard /></ProtectedRoute>} />

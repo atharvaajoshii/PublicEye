@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Landing(){
     return(
         <div>
-            <h1>ladning</h1>
+            <h1>landing</h1>
             <br />
             <Link to={"/login"}>login</Link>
             <br />
