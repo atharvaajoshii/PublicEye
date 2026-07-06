@@ -40,9 +40,9 @@ function App() {
         <Route path="/admin/manage-issues" element={<ProtectedRoute roles={["admin"]}><IssueManagement/></ProtectedRoute>} />
         <Route path="/admin/manage-users" element={<ProtectedRoute roles={["admin"]}><UserManagement/></ProtectedRoute>} />
         <Route path="/admin/manage-officers" element={<ProtectedRoute roles={["admin"]}><OfficerManagement/></ProtectedRoute>} />
+        //the below line u change atharva, based on ur admin page
         <Route path="/admin/reports" element={<ProtectedRoute roles={["admin"]}><Reports/></ProtectedRoute>} />
-        <Route path="/issue/:issueId/report" element={<ReportIssue />}/>
-      </Routes>
+        <Route path="/issue/:issueId/report" element={  <ProtectedRoute roles={["officer"]}>  <OfficerReport /></ProtectedRoute> }/> </Routes>
     </BrowserRouter>
   );
 }
