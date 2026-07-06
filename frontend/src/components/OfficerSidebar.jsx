@@ -17,7 +17,7 @@ function OfficerSidebar() {
             <Link to='/officer/dashboard'>Dashboard</Link>
             <Link to='/officer/manage-issues'>Issues</Link>
             <Link to='/officer/map'>Map</Link>
-            <Link to='/officer/analytics'>Analytics</Link>
+            <Link to='/analytics'>Analytics</Link>
             <p onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</p>
         </div>
     )

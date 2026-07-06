@@ -117,6 +117,12 @@ function ManageIssues() {
                                         navigate(`/issue/${issue.issue._id}`);
                                     }}
                                 >View Details</button>
+                                <button type="button"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        navigate(`/issue/${issue.issue._id}`);
+                                    }}
+                                >Report</button>
                             </div>
                             <div>
                                 <p>Votes: {issue.issue?.votes}</p>
