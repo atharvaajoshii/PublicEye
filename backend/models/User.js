@@ -1,27 +1,41 @@
 const mongoose = require("mongoose");
 
-const reportSchema = new mongoose.Schema(
-{
-    issue: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Issue",
-        required: true
-    },
-    officer: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
-    },
-    reason: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String
-    }
-},
-{
-    timestamps: true
-});
+const userSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
 
-module.exports = mongoose.model("Report", reportSchema);
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            lowercase: true,
+            trim: true,
+        },
+
+        password: {
+            type: String,
+            required: true,
+        },
+
+        role: {
+            type: String,
+            enum: ["citizen", "officer", "admin"],
+            default: "citizen",
+        },
+
+        status: {
+            type: String,
+            enum: ["Active", "Suspended"],
+            default: "Active",
+        },
+    },
+    {
+        timestamps: true,
+    }
+);
+
+module.exports = mongoose.model("User", userSchema);
