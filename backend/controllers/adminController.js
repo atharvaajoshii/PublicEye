@@ -80,53 +80,122 @@ const analytics = async (req, res) => {
 
 const getAllOfficers = async (req, res) => {
     try {
+        const officers = await User.find({ role: "officer" });
 
-        return res.json({ officer });
+        return res.json({ officers });
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" })
+        return res.status(500).json({ error: "Internal server error" });
     }
-}
+};
 
 const getOfficerById = async (req, res) => {
     try {
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid Officer ID" });
+        }
+
+        const officer = await User.findOne({
+            _id: id,
+            role: "officer",
+        });
+
+        if (!officer) {
+            return res.status(404).json({ error: "Officer not found" });
+        }
 
         return res.json({ officer });
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" })
+        return res.status(500).json({ error: "Internal server error" });
     }
-}
+};
 
 const createOfficers = async (req, res) => {
     try {
+        const { name, email, password } = req.body;
 
-        return res.json({ officer });
+        const existingOfficer = await User.findOne({ email });
+
+        if (existingOfficer) {
+            return res.status(400).json({ error: "Officer already exists" });
+        }
+
+        const officer = await User.create({
+            name,
+            email,
+            password,
+            role: "officer",
+        });
+
+        return res.status(201).json({
+            message: "Officer created successfully",
+            officer,
+        });
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" })
+        return res.status(500).json({ error: "Internal server error" });
     }
-}
+};
 
 const updateOfficers = async (req, res) => {
     try {
+        const { id } = req.params;
 
-        return res.json({ officer });
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid Officer ID" });
+        }
+
+        const officer = await User.findOneAndUpdate(
+            {
+                _id: id,
+                role: "officer",
+            },
+            req.body,
+            { new: true }
+        );
+
+        if (!officer) {
+            return res.status(404).json({ error: "Officer not found" });
+        }
+
+        return res.json({
+            message: "Officer updated successfully",
+            officer,
+        });
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" })
+        return res.status(500).json({ error: "Internal server error" });
     }
-}
+};
 
 const deleteOfficers = async (req, res) => {
     try {
+        const { id } = req.params;
 
-        return res.json({ officer });
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid Officer ID" });
+        }
+
+        const officer = await User.findOneAndDelete({
+            _id: id,
+            role: "officer",
+        });
+
+        if (!officer) {
+            return res.status(404).json({ error: "Officer not found" });
+        }
+
+        return res.json({
+            message: "Officer deleted successfully",
+        });
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" })
+        return res.status(500).json({ error: "Internal server error" });
     }
-}
+};
 
 
 const getAllIssues = async (req, res) => {
@@ -340,22 +409,111 @@ const toggleUserStatus = async (req, res) => {
     }
 }
 
-const getAllReports = async(req,res)=>{
-    
-}
+const getAllReports = async (req, res) => {
+    try {
+        const reports = await Report.find()
+            .populate("issue")
+            .populate("officer", "name email")
+            .sort({ createdAt: -1 });
 
-const getReportById = async(req,res)=>{
+        return res.json({ reports });
+    } catch (error) {
+        console.log("Error in admin Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+};
 
-}
+const getReportById = async (req, res) => {
+    try {
+        const { id } = req.params;
 
-const approveReport = async(req,res)=>{
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid Report ID" });
+        }
 
-}
+        const report = await Report.findById(id)
+            .populate("issue")
+            .populate("officer", "name email");
 
-const rejectReport = async(req,res)=>{
+        if (!report) {
+            return res.status(404).json({ error: "Report not found" });
+        }
 
-}
+        return res.json({ report });
+    } catch (error) {
+        console.log("Error in admin Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+};
 
+const approveReport = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid Report ID" });
+        }
+
+        const report = await Report.findById(id);
+
+        if (!report) {
+            return res.status(404).json({ error: "Report not found" });
+        }
+
+        if (report.status !== "Pending") {
+            return res.status(400).json({
+                error: `Report is already ${report.status}`
+            });
+        }
+
+        report.status = "Approved";
+        await report.save();
+
+        // Optional: Remove the associated issue
+        await Issue.findByIdAndDelete(report.issue);
+
+        return res.json({
+            message: "Report approved successfully",
+            report,
+        });
+    } catch (error) {
+        console.log("Error in admin Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+const rejectReport = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid Report ID" });
+        }
+
+        const report = await Report.findById(id);
+
+        if (!report) {
+            return res.status(404).json({ error: "Report not found" });
+        }
+
+        if (report.status !== "Pending") {
+            return res.status(400).json({
+                error: `Report is already ${report.status}`
+            });
+        }
+
+        report.status = "Rejected";
+        await report.save();
+
+        return res.json({
+            message: "Report rejected successfully",
+            report,
+        });
+    } catch (error) {
+        console.log("Error in admin Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+};
 module.exports = {
     dashboard,
     analytics,
