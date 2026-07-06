@@ -179,7 +179,7 @@ const deleteOfficers = async (req, res) => {
             return res.status(400).json({ error: "Invalid Officer ID" });
         }
 
-        const officer = await User.findOneAndDelete({
+        const officer = await User.findOne({
             _id: id,
             role: "officer",
         });
@@ -187,10 +187,27 @@ const deleteOfficers = async (req, res) => {
         if (!officer) {
             return res.status(404).json({ error: "Officer not found" });
         }
+        const assignedIssues = await IssueTrack.find({ officer: id });
+        await IssueTrack.updateMany(
+            { officer: id },
+            { $unset: { officer: "" } }   // or { officer: null }
+        );
+
+        // Mark issues as Pending
+        const issueIds = assignedIssues.map(track => track.issue);
+
+        await Issue.updateMany(
+            { _id: { $in: issueIds } },
+            { status: "Pending" }
+        );
+
+        // Delete officer
+        await User.findByIdAndDelete(id);
 
         return res.json({
             message: "Officer deleted successfully",
         });
+
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" });

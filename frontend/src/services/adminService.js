@@ -7,15 +7,87 @@ const config = {
 };
 
 const adminService = {
-    getDashboard() { return axios.get(`${API}/dashboard`, config); },
-    getAnalytics() { return axios.get(`${API}/analytics`, config); },
-    getUsers() { return axios.get(`${API}/users`, config); },
-    getAllOfficers() { return axios.get(`${API}/officers`, config); },
-    getOfficerById(id) { return axios.get(`${API}/officers/${id}`, config); },
-    createOfficers(data) { return axios.post(`${API}/officers`,data, config); },
-    updateOfficers(id, data) { return axios.put(`${API}/officers/${id}`, data, config); },
-    deleteOfficers(id) { return axios.delete(`${API}/officers/${id}`, config); },
-    getIssues() { return axios.get(`${API}/issues`); },
+
+    getDashboard() {
+        return axios.get(`${API}/dashboard`, config);
+    },
+    getAnalytics() {
+        return axios.get(`${API}/analytics`, config);
+    },
+
+
+
+    getAllUsers() {
+        return axios.get(`${API}/users`, config);
+    },
+    getUserById(id) {
+        return axios.get(`${API}/users/${id}`, config);
+    },
+    toggleUserStatus(id) {
+        return axios.patch(`${API}/users/${id}/status`, {}, config);
+    },
+
+
+    getAllOfficers() {
+        return axios.get(`${API}/officers`, config);
+    },
+    getOfficerById(id) {
+        return axios.get(`${API}/officers/${id}`, config);
+    },
+    createOfficer(data) {
+        return axios.post(`${API}/officers`, data, config);
+    },
+    updateOfficer(id, data) {
+        return axios.put(`${API}/officers/${id}`, data, config);
+    },
+    deleteOfficer(id) {
+        return axios.delete(`${API}/officers/${id}`, config);
+    },
+
+
+    getAllIssues() {
+        return axios.get(`${API}/issue/all`, config);
+    },
+    getIssueById(id) {
+        return axios.get(`${API}/issue/${id}`, config);
+    },
+    assignOfficer(id, officerId) {
+        return axios.patch(
+            `${API}/issue/${id}/assignofficer`,
+            { officerId },
+            config
+        );
+    },
+    reassignOfficer(id, officerId) {
+        return axios.patch(
+            `${API}/issue/${id}/reassignofficer`,
+            { officerId },
+            config
+        );
+    },
+    deleteIssue(id) {
+        return axios.delete(`${API}/issue/${id}/deleteissue`, config);
+    },
+    filterIssues(params) {
+        return axios.get(`${API}/issues/filter`, {
+            ...config,
+            params,
+        });
+    },
+
+
+    getAllReports() {
+        return axios.get(`${API}/reports`, config);
+    },
+    getReportById(id) {
+        return axios.get(`${API}/reports/${id}`, config);
+    },
+    approveReport(id) {
+        return axios.patch(`${API}/reports/${id}/approve`, {}, config);
+    },
+    rejectReport(id) {
+        return axios.patch(`${API}/reports/${id}/reject`, {}, config);
+    },
 };
 
 export default adminService;
