@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Issue = require("../models/Issue");
 const IssueTrack = require("../models/IssueTrack");
 const User = require("../models/User");
+const Report = require("../models/Report");
 
 const {
     getCategoryStats,
@@ -283,9 +284,77 @@ const filterIssues = async (req, res) => {
         return res.status(500).json({ error: "Internal server error" })
     }
 }
-// const issues = async (req, res) => { }
-const users = async (req, res) => { }
-const reports = async (req, res) => { }
+
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+
+        return res.json({ users })
+    } catch (error) {
+        console.log("Error in admin Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" })
+    }
+}
+
+const getUserById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid user ID" });
+        }
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ error: "user not found" });
+        }
+        return res.json({ user });
+    } catch (error) {
+        console.log("Error in admin Controller:", error.message);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+const toggleUserStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid user ID" });
+        }
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ error: "user not found" });
+        }
+        if (user.status === "Active") {
+            user.status = "Suspended";
+        } else {
+            user.status = "Active";
+        }
+        await user.save();
+
+        return res.json({
+            message: `User ${user.status === "Active" ? "unblocked" : "blocked"} successfully`,
+            user
+        });
+    } catch (error) {
+        console.log("Error in admin Controller:", error.message);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+const getAllReports = async(req,res)=>{
+    
+}
+
+const getReportById = async(req,res)=>{
+
+}
+
+const approveReport = async(req,res)=>{
+
+}
+
+const rejectReport = async(req,res)=>{
+
+}
 
 module.exports = {
     dashboard,
@@ -304,6 +373,12 @@ module.exports = {
     deleteIssue,
     filterIssues,
 
-    users,
-    reports
+    getAllUsers,
+    getUserById,
+    toggleUserStatus,
+
+    getAllReports,
+    getReportById,
+    approveReport,
+    rejectReport,
 };
