@@ -120,7 +120,7 @@ function ManageIssues() {
                                 <button type="button"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        navigate(`/issue/${issue.issue._id}`);
+                                        navigate(`/issue/${issue.issue._id}/report`);
                                     }}
                                 >Report</button>
                             </div>
@@ -151,7 +151,7 @@ function ManageIssues() {
                                     value={issue.progress}
                                     disabled={issue.issue.status !== "In Progress"}
                                     onClick={(e) => e.stopPropagation()}
-                                    onTouchEnd={(e) =>
+                                    onChange={(e) =>
                                         handleProgressChange(
                                             issue.issue._id,
                                             Number(e.target.value)

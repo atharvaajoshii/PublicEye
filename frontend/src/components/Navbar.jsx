@@ -17,6 +17,7 @@ function Navbar() {
                 </div>
                 <div className="nav-right">
                     <Link to="/profile">Profile</Link>
+                    <Link to="/analytics">Analytics</Link>
                     <Link to="/login">Logout</Link> {/* this is the proper version  i guess */}
                 </div>
             </nav>
