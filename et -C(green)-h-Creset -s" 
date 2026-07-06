@@ -1,0 +1,789 @@
+[33mcommit 3b0d136d5fa3126208acd0f581f47cc780b98aad[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m
+Author: a-dithya13 <adithyask123456@gmail.com>
+Date:   Fri Jul 3 01:04:48 2026
+
+     Added user sidebar and updated navbar
+
+M	frontend/src/App.jsx
+M	frontend/src/components/Navbar.jsx
+M	frontend/src/components/Sidebar.jsx
+M	frontend/src/pages/Dashboard.jsx
+M	frontend/src/pages/Landing.jsx
+
+[33mcommit cd076bbb69065bd0ce6af6c7d1a794f7da1e1c30[m
+Merge: 2cc9379 8a0fde5
+Author: a-dithya13 <adithyask123456@gmail.com>
+Date:   Thu Jul 2 23:10:27 2026
+
+    Merge branch 'dev' of https://github.com/atharvaajoshii/PublicEye into dev
+
+[33mcommit 8a0fde53b3accc6d73477a2c2f2b793d12e1edb6[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Thu Jul 2 02:10:10 2026
+
+    filter issues
+
+M	backend/controllers/adminController.js
+M	backend/middleware/authMiddleware.js
+M	backend/routes/adminRoutes.js
+M	backend/routes/authRoutes.js
+
+[33mcommit 2cc937951286d414dcd20d5b7d350f22acfbdef6[m
+Author: a-dithya13 <adithyask123456@gmail.com>
+Date:   Tue Jun 30 09:36:56 2026
+
+    cleaner userRoutes
+
+M	backend/routes/userRoutes.js
+
+[33mcommit e718fa7371066e3c09035f1b9e66cbb0ca128444[m
+Merge: e004674 1a64599
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Tue Jun 30 09:34:24 2026
+
+    Merge branch 'dev' of https://github.com/atharvaajoshii/PublicEye into dev
+
+[33mcommit e004674e3631ec7319f22084fd2430e3bede4b9b[m
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Tue Jun 30 09:32:30 2026
+
+    --
+
+M	backend/controllers/issueController.js
+A	backend/issue-images/1782746803295.png
+M	backend/routes/authRoutes.js
+
+[33mcommit 1a645996b0c7f25de644bf3cabd7d344d07f6b04[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Tue Jun 30 00:23:23 2026
+
+    issues crud operations done except filter
+
+M	backend/controllers/adminController.js
+M	backend/controllers/userController.js
+M	backend/routes/adminRoutes.js
+M	backend/routes/userRoutes.js
+M	frontend/src/App.jsx
+M	frontend/src/components/OfficerSidebar.jsx
+M	frontend/src/pages/Profile.jsx
+M	frontend/src/services/adminService.js
+
+[33mcommit cf2a41708d4144255886561395b6f00ad56f113e[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Mon Jun 29 23:49:05 2026
+
+    admin issue operations - assign,reassign
+
+M	backend/controllers/adminController.js
+M	backend/routes/adminRoutes.js
+
+[33mcommit b31d55b61eb345b862724702fb97ec9de511fc22[m
+Author: a-dithya13 <adithyask123456@gmail.com>
+Date:   Mon Jun 29 23:39:12 2026
+
+    changed userroutes
+
+M	backend/routes/userRoutes.js
+
+[33mcommit d6a6b4afec24ea421296224776331ad61c1b8b37[m
+Author: a-dithya13 <adithyask123456@gmail.com>
+Date:   Mon Jun 29 22:54:15 2026
+
+    app.js and userController.js
+
+M	backend/app.js
+M	backend/controllers/userController.js
+
+[33mcommit 0d9b6e395eec4907c3991284fd4036fa3ac64547[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 29 23:13:28 2026
+
+    --
+
+M	backend/controllers/officerController.js
+M	backend/routes/officerRoutes.js
+M	frontend/src/App.jsx
+A	frontend/src/components/OfficerSidebar.jsx
+M	frontend/src/pages/Analytics.jsx
+M	frontend/src/pages/ManageIssues.jsx
+M	frontend/src/pages/OfficerDashboard.jsx
+D	frontend/src/pages/OfficerLogin.jsx
+M	frontend/src/pages/admin/AdminAnalytics.jsx
+M	frontend/src/services/officerService.js
+
+[33mcommit de25a1a1064a5a78d042bce02b6ad525daa294e1[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Mon Jun 29 22:59:16 2026
+
+    admin issues
+
+M	backend/controllers/adminController.js
+M	backend/routes/adminRoutes.js
+M	frontend/src/pages/admin/IssueManagement.jsx
+M	frontend/src/pages/admin/OfficerManagement.jsx
+M	frontend/src/pages/admin/Reports.jsx
+M	frontend/src/pages/admin/UserManagement.jsx
+
+[33mcommit 16aa3935791bc25bb877f8ce3083920264f528fe[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Mon Jun 29 22:11:41 2026
+
+    officer logout fixed
+
+M	frontend/src/components/AdminSidebar.jsx
+
+[33mcommit 136cc4566122be5ce8100c5c024ef15aab4524a2[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 29 21:55:36 2026
+
+    -
+
+M	backend/package.json
+M	frontend/src/components/AdminSidebar.jsx
+M	frontend/src/services/adminService.js
+
+[33mcommit 06f44c6b93bd688a4e8ed11d3358d9020077aeab[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Mon Jun 29 21:54:40 2026
+
+    protected route applied to officers
+
+M	frontend/src/App.jsx
+
+[33mcommit 94a62c47436301bbe36c5f0e161e8787bea16012[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Mon Jun 29 21:52:11 2026
+
+    protected route applied to officers
+
+M	frontend/src/App.jsx
+M	frontend/src/components/ProtectedRoute.jsx
+M	frontend/src/pages/Login.jsx
+
+[33mcommit 2e063b93d11634bfdf1e4f216d68ed7ec63a2542[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 29 21:11:30 2026
+
+    admin login
+
+M	frontend/src/pages/Login.jsx
+
+[33mcommit 6a865075e7d347a047f1b19fc8e65a1fe29ffa67[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 29 21:10:28 2026
+
+    admin login
+
+M	frontend/src/pages/Login.jsx
+
+[33mcommit 859d5c8fec5ddbca14164ab9edc7a31de7d61c1d[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 29 20:53:00 2026
+
+    Add admin dashboard, analytics and authentication
+
+M	backend/app.js
+M	backend/controllers/adminController.js
+M	backend/controllers/authController.js
+M	backend/middleware/roleMiddleware.js
+M	backend/routes/adminRoutes.js
+M	backend/routes/authRoutes.js
+M	frontend/src/App.jsx
+M	frontend/src/components/AdminSidebar.jsx
+M	frontend/src/components/ProtectedRoute.jsx
+M	frontend/src/pages/admin/AdminAnalytics.jsx
+M	frontend/src/pages/admin/AdminDashboard.jsx
+M	frontend/src/services/adminService.js
+
+[33mcommit 1d7c3ee45456f71cce128f7a09ae7ce743e2fd1f[m
+Merge: 52236c7 79fab8d
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Mon Jun 29 20:38:28 2026
+
+    merge conflict
+
+[33mcommit 52236c79b8a7d0a7ff6977566abce36c8f7af0d9[m
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Mon Jun 29 20:33:15 2026
+
+    minor bugs fix
+
+M	backend/controllers/adminController.js
+M	backend/routes/adminRoutes.js
+
+[33mcommit 79fab8dc50e425ced70c50497ac85090540ea102[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Mon Jun 29 20:26:34 2026
+
+    commented unwanted things in adminroutes and controllers
+
+M	backend/controllers/adminController.js
+M	backend/routes/adminRoutes.js
+
+[33mcommit 8009fd6f3a23e6411350a482fa6cd4a0a1f821bd[m
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Mon Jun 29 20:14:50 2026
+
+    rough frontend for issue handling
+
+M	backend/config/db.js
+M	frontend/src/App.jsx
+M	frontend/src/components/IssueCard.jsx
+M	frontend/src/components/Timeline.jsx
+M	frontend/src/pages/IssueDetails.jsx
+M	frontend/src/pages/Profile.jsx
+
+[33mcommit 3a87a10eec29a7086d5b7b31660012a8db1dd362[m
+Merge: 1a9ead2 3db9fb5
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Mon Jun 29 19:38:02 2026
+
+    Merge branch 'dev' of https://github.com/atharvaajoshii/PublicEye into dev
+
+[33mcommit 1a9ead22dea0cc2fecc485bee14e8c77404248a4[m
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Mon Jun 29 19:16:49 2026
+
+    issue handling backend complete
+
+M	backend/app.js
+M	backend/config/db.js
+A	backend/controllers/issueController.js
+R100	backend/controllers/issueController(aak).js	backend/issue-images/.gitkeep
+D	backend/middleware/uploadMiddleware(aak).js
+A	backend/middleware/uploadMiddleware.js
+M	backend/package-lock.json
+M	backend/package.json
+D	backend/routes/issueRoutes(aak).js
+A	backend/routes/issueRoutes.js
+M	frontend/src/components/IssueForm.jsx
+D	frontend/src/components/IssueService.jsx
+A	frontend/src/components/issueService.jsx
+M	package-lock.json
+M	package.json
+
+[33mcommit 3db9fb5542ea506b8e18fc9a9bc16d566f7156ec[m
+Merge: 5dc31f0 0caf4be
+Author: Atmika Nayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 29 18:39:04 2026
+
+    Merge pull request #3 from atharvaajoshii/admin
+    
+    Admin
+
+[33mcommit 0caf4beccdc92c39030714dddd59f102a75791e4[m[33m ([m[1;31morigin/admin[m[33m)[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 29 18:34:05 2026
+
+    admin dashboard, analytics
+
+M	backend/app.js
+M	backend/controllers/adminController.js
+M	backend/routes/adminRoutes.js
+M	backend/utils/analytics.js
+M	frontend/src/App.jsx
+A	frontend/src/components/AdminSidebar.jsx
+M	frontend/src/pages/admin/AdminAnalytics.jsx
+M	frontend/src/pages/admin/AdminDashboard.jsx
+M	frontend/src/pages/admin/OfficerManagement.jsx
+A	frontend/src/services/adminService.js
+
+[33mcommit cbf22cc720299250e8d6f384c96ccd947f547ed9[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 29 15:39:31 2026
+
+    admin files
+
+A	backend/controllers/adminController.js
+A	backend/routes/adminRoutes.js
+A	frontend/src/pages/admin/AdminAnalytics.jsx
+A	frontend/src/pages/admin/AdminDashboard.jsx
+A	frontend/src/pages/admin/IssueManagement.jsx
+A	frontend/src/pages/admin/OfficerManagement.jsx
+A	frontend/src/pages/admin/Reports.jsx
+A	frontend/src/pages/admin/UserManagement.jsx
+
+[33mcommit 5dc31f0d92933a9e5f975a3e0ff1138bab2a762b[m
+Merge: eb2bb3e da6064b
+Author: a-dithya13 <adithyask123456@gmail.com>
+Date:   Mon Jun 29 15:19:07 2026
+
+    Merge branch 'dev' of https://github.com/atharvaajoshii/PublicEye into dev
+
+[33mcommit eb2bb3e278979e623091571238da7e839dd79132[m
+Merge: 1e8fa8e d87b2cd
+Author: a-dithya13 <adithyask123456@gmail.com>
+Date:   Mon Jun 29 15:15:50 2026
+
+    Merge branch 'adithya' into dev
+
+[33mcommit da6064b289b9eb0850bcccdcf351ec514027686d[m
+Merge: 1e8fa8e 765539e
+Author: Atmika Nayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 29 14:47:17 2026
+
+    Merge pull request #2 from atharvaajoshii/feature/manage-issues
+    
+    Implement Officer Manage Issues Module
+
+[33mcommit 765539e80fa869998d1be90fed21320094093777[m[33m ([m[1;31morigin/feature/manage-issues[m[33m)[m
+Merge: 5123a02 1e8fa8e
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 29 14:44:28 2026
+
+    Resolve merge conflicts with dev
+
+[33mcommit 5123a027d3a61cd26b6843411bf09786a240611a[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 29 14:38:26 2026
+
+    basic manage issues
+
+M	backend/controllers/officerController.js
+M	backend/routes/officerRoutes.js
+M	frontend/src/App.jsx
+M	frontend/src/pages/ManageIssues.jsx
+
+[33mcommit d87b2cd5a41da1f0645f31515ab428ca239d4076[m
+Author: a-dithya13 <adithyask123456@gmail.com>
+Date:   Mon Jun 29 13:05:12 2026
+
+    Began userController Authentication
+
+M	backend/controllers/userController.js
+
+[33mcommit 924d0ac1742e12fead5b31981330fe2f7b388f0e[m
+Author: a-dithya13 <adithyask123456@gmail.com>
+Date:   Sat Jun 27 14:42:08 2026
+
+    added userRoutes
+
+M	backend/routes/userRoutes.js
+
+[33mcommit 1e8fa8e07bf7c3a83197a158fda8c7f5faf8e25a[m
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Fri Jun 26 23:43:27 2026
+
+    issueform modified
+
+M	frontend/src/App.jsx
+M	frontend/src/components/IssueForm.jsx
+
+[33mcommit 7328ca0cf5f989fe4f104a7175b998e49ecd79b8[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Fri Jun 26 20:46:21 2026
+
+    basic analytics module
+
+M	backend/controllers/officerController.js
+M	backend/models/IssueTrack.js
+M	backend/routes/officerRoutes.js
+M	backend/utils/analytics.js
+M	frontend/package-lock.json
+M	frontend/package.json
+M	frontend/src/App.jsx
+M	frontend/src/components/AnalyticsChart.jsx
+M	frontend/src/pages/Analytics.jsx
+M	frontend/src/pages/OfficerDashboard.jsx
+
+[33mcommit a5d7b69c9b170ce1044a21cf9e7567a3e47664a0[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Fri Jun 26 09:47:25 2026
+
+    officer dashboard'
+
+M	backend/app.js
+M	frontend/package-lock.json
+M	frontend/src/App.jsx
+M	frontend/src/pages/OfficerDashboard.jsx
+
+[33mcommit 1411820e168de5838c0c31a4ff423e65e20d4220[m
+Merge: 605e619 7a45cbd
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Thu Jun 25 20:37:06 2026
+
+    merge
+
+[33mcommit 605e619240ade8157e7c483f44dea1ebf113578a[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Thu Jun 25 20:33:52 2026
+
+    officerdashboard draft
+
+M	backend/app.js
+M	backend/config/db.js
+M	backend/controllers/officerController.js
+M	backend/routes/officerRoutes.js
+M	frontend/src/pages/OfficerDashboard.jsx
+A	package-lock.json
+A	package.json
+
+[33mcommit 7a45cbd572052a493e9a75a2c9d64ce59f032f66[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Thu Jun 25 17:19:10 2026
+
+    authservice and authCOntext
+
+M	frontend/src/App.jsx
+M	frontend/src/components/ProtectedRoute.jsx
+M	frontend/src/context/AuthContext.jsx
+M	frontend/src/index.js
+M	frontend/src/pages/Login.jsx
+M	frontend/src/pages/Profile.jsx
+M	frontend/src/pages/Register.jsx
+M	frontend/src/services/authService.js
+
+[33mcommit ab59041c54fe7909af5e8c1e97b21b5a25a4a0b8[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Tue Jun 23 23:56:49 2026
+
+    authorization frontend backend integration completed
+
+M	backend/app.js
+M	backend/controllers/authController.js
+M	backend/middleware/authMiddleware.js
+M	backend/routes/authRoutes.js
+M	frontend/package-lock.json
+M	frontend/package.json
+M	frontend/src/App.jsx
+M	frontend/src/pages/Landing.jsx
+M	frontend/src/pages/Login.jsx
+M	frontend/src/pages/Profile.jsx
+M	frontend/src/pages/Register.jsx
+
+[33mcommit cc4da3c61c11225a4e588e2aef333cc91a6acfa5[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Tue Jun 23 21:37:43 2026
+
+    logout routes
+
+M	backend/controllers/authController.js
+M	backend/routes/authRoutes.js
+
+[33mcommit eb2c88e88016f3058cb81f45a64aaf7d156da9ba[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Tue Jun 23 21:23:33 2026
+
+    authmiddleware
+
+M	backend/controllers/authController.js
+M	backend/middleware/authMiddleware.js
+M	backend/routes/authRoutes.js
+
+[33mcommit ad8299fe9761432b7c4213cd9761a8805ae7192d[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Tue Jun 23 21:03:58 2026
+
+    login completed
+
+M	backend/app.js
+M	backend/controllers/authController.js
+M	backend/package-lock.json
+M	backend/package.json
+
+[33mcommit a1c4b7d46bb6a85e061c1a9bac640dd71df98564[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Tue Jun 23 10:09:43 2026
+
+    register
+
+M	backend/app.js
+M	backend/controllers/authController.js
+M	backend/routes/authRoutes.js
+
+[33mcommit c61c2ea6a324246341b1164d0f2c19f898876ee1[m
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Tue Jun 23 09:20:14 2026
+
+    report issue
+
+M	frontend/src/components/IssueForm.jsx
+
+[33mcommit 8a472543083a836ee84d7b7852c2a9fd05b2ac7f[m[33m ([m[1;31morigin/adithya[m[33m)[m
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Mon Jun 22 20:02:44 2026
+
+    aak file name change and issue form comp
+
+M	frontend/package-lock.json
+M	frontend/package.json
+M	frontend/src/App.jsx
+D	frontend/src/components/IssueCard(aak).jsx
+A	frontend/src/components/IssueCard.jsx
+D	frontend/src/components/IssueForm(aak).jsx
+A	frontend/src/components/IssueForm.jsx
+D	frontend/src/components/IssueService(aak).jsx
+A	frontend/src/components/IssueService.jsx
+D	frontend/src/components/Timeline(aak).jsx
+A	frontend/src/components/Timeline.jsx
+D	frontend/src/pages/IssueDetails(aak).jsx
+A	frontend/src/pages/IssueDetails.jsx
+D	frontend/src/pages/Profile(aak).jsx
+A	frontend/src/pages/Profile.jsx
+D	frontend/src/pages/ReportIssue(aak).jsx
+A	frontend/src/pages/ReportIssue.jsx
+
+[33mcommit 4e661f409a644bb09881b873d4cf547fc874e0ea[m
+Merge: 45ef833 f1e1383
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 22 19:31:53 2026
+
+    Merge branch 'feature/officer-dashboard' into dev
+
+[33mcommit f1e138335e71e2e403931e8a5cc6e9b740e63082[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 22 19:31:08 2026
+
+    -
+
+A	backend/controllers/officerController.js
+D	backend/routes/officerRoutes(Atmika).js
+A	backend/routes/officerRoutes.js
+D	backend/utils/analytics(Atmika).js
+A	backend/utils/analytics.js
+D	frontend/src/components/AnalyticsChart(Atmika).jsx
+A	frontend/src/components/AnalyticsChart.jsx
+D	frontend/src/components/Map(Atmika).jsx
+A	frontend/src/components/Map.jsx
+D	frontend/src/hooks/useLocation(Atmika).js
+R100	backend/controllers/officerController(Atmika).js	frontend/src/hooks/useLocation.js
+D	frontend/src/pages/Analytics(Atmika).jsx
+A	frontend/src/pages/Analytics.jsx
+D	frontend/src/pages/ManageIssues(Atmika).jsx
+A	frontend/src/pages/ManageIssues.jsx
+D	frontend/src/pages/OfficerDashboard(Atmika).jsx
+A	frontend/src/pages/OfficerDashboard.jsx
+D	frontend/src/services/officerService(Atmika).js
+A	frontend/src/services/officerService.js
+
+[33mcommit 45ef83389a19ed67f203419fe3cc1b3689f330b3[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 22 19:26:22 2026
+
+    rename
+
+R100	backend/controllers/officerController(Atmika).js	backend/controllers/officerController.js
+R100	backend/utils/analytics(Atmika).js	backend/utils/analytics.js
+R100	frontend/src/components/AnalyticsChart(Atmika).jsx	frontend/src/components/AnalyticsChart.jsx
+R100	frontend/src/components/Map(Atmika).jsx	frontend/src/components/Map.jsx
+R100	frontend/src/pages/Analytics(Atmika).jsx	frontend/src/pages/Analytics.jsx
+R100	frontend/src/pages/ManageIssues(Atmika).jsx	frontend/src/pages/ManageIssues.jsx
+R100	frontend/src/pages/OfficerDashboard(Atmika).jsx	frontend/src/pages/OfficerDashboard.jsx
+R100	frontend/src/services/officerService(Atmika).js	frontend/src/services/officerService.js
+
+[33mcommit 67d55066bd286fe15f90a990b5b38deff41a780d[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 22 18:58:17 2026
+
+    rename"
+
+R100	frontend/src/hooks/useLocation(Atmika).js	frontend/src/hooks/useLocation.js
+
+[33mcommit 496aa0f6fa3edef2615695c9df50a79bc0615895[m
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Tue Jun 23 00:05:36 2026
+
+    aak files
+
+R100	backend/controllers/issueController.js	backend/controllers/issueController(aak).js
+R100	backend/middleware/uploadMiddleware.js	backend/middleware/uploadMiddleware(aak).js
+R100	backend/routes/issueRoutes.js	backend/routes/issueRoutes(aak).js
+R100	frontend/src/components/IssueCard.jsx	frontend/src/components/IssueCard(aak).jsx
+R100	frontend/src/components/IssueForm.jsx	frontend/src/components/IssueForm(aak).jsx
+R100	frontend/src/components/Timeline.jsx	frontend/src/components/IssueService(aak).jsx
+R100	frontend/src/pages/IssueDetails.jsx	frontend/src/components/Timeline(aak).jsx
+R100	frontend/src/pages/Profile.jsx	frontend/src/pages/IssueDetails(aak).jsx
+R100	frontend/src/pages/ReportIssue.jsx	frontend/src/pages/Profile(aak).jsx
+A	frontend/src/pages/ReportIssue(aak).jsx
+
+[33mcommit 0cb630b5c09cac8668e3fbd2f2e3d3677e450d6d[m
+Author: AtmikaNayak <atmikanayak021206@gmail.com>
+Date:   Mon Jun 22 17:41:55 2026
+
+    rename
+
+M	backend/app.js
+R100	backend/controllers/officerController.js	backend/controllers/officerController(Atmika).js
+R100	backend/routes/officerRoutes.js	backend/routes/officerRoutes(Atmika).js
+R100	backend/utils/analytics.js	backend/utils/analytics(Atmika).js
+R100	frontend/src/components/AnalyticsChart.jsx	frontend/src/components/AnalyticsChart(Atmika).jsx
+R100	frontend/src/components/Map.jsx	frontend/src/components/Map(Atmika).jsx
+R100	frontend/src/hooks/useLocation.js	frontend/src/hooks/useLocation(Atmika).js
+R100	frontend/src/pages/Analytics.jsx	frontend/src/pages/Analytics(Atmika).jsx
+R100	frontend/src/pages/ManageIssues.jsx	frontend/src/pages/ManageIssues(Atmika).jsx
+R100	frontend/src/pages/OfficerDashboard.jsx	frontend/src/pages/OfficerDashboard(Atmika).jsx
+R100	frontend/src/services/officerService.js	frontend/src/services/officerService(Atmika).js
+
+[33mcommit 6f1645e06285637186c94fa8535311a70bb04bf6[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Sun Jun 21 22:03:16 2026
+
+    forgot to remove test insert command
+
+M	backend/config/db.js
+
+[33mcommit 8f01461b28bd990cd958bb906e0711eb988fbcdd[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Sun Jun 21 21:58:05 2026
+
+    models and connection to db done
+
+M	backend/app.js
+M	backend/config/db.js
+M	backend/models/IssueTrack.js
+M	backend/package-lock.json
+M	backend/package.json
+
+[33mcommit aca1fff95770045435c5ab7fd8acfe0e5c89c8db[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Sun Jun 21 21:17:19 2026
+
+    models
+
+D	backend/models/Comment.js
+M	backend/models/Issue.js
+A	backend/models/IssueTrack.js
+M	backend/models/Notification.js
+M	backend/models/User.js
+A	backend/models/Vote.js
+
+[33mcommit 10af5e0bb017e916a3971e15c741b3976258fcb2[m
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Sun Jun 21 21:14:16 2026
+
+    main.jsx -> index.js
+
+M	frontend/package-lock.json
+A	frontend/src/index.js
+D	frontend/src/main.jsx
+
+[33mcommit ae056826a4d99a4a8a4d484f955b945f5706be2d[m
+Merge: 44b89b6 3fdc72c
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Sun Jun 21 20:42:18 2026
+
+    Merge branch 'main' of https://github.com/atharvaajoshii/PublicEye
+
+[33mcommit 44b89b6e1e733cc46740c30612a2767dce6a2123[m
+Author: aakankshakpoojari <aakankshakpoojari265@gmail.com>
+Date:   Sun Jun 21 20:36:00 2026
+
+    nodemon and app.js
+
+M	.gitignore
+A	backend/app.js
+M	backend/package-lock.json
+M	backend/package.json
+
+[33mcommit 3fdc72c03d07c0dac38486fa8afbcc7b7d4055af[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Sun Jun 21 15:41:40 2026
+
+    readme
+
+M	README.md
+D	frontend/README.md
+
+[33mcommit 17e4389d6bf8d04d594dde1bf8eced9c28179e12[m[33m ([m[1;32mmain[m[33m)[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Sun Jun 21 15:40:30 2026
+
+    folder structure
+
+A	LICENSE
+A	README.md
+A	backend/app.js
+A	backend/config/db.js
+A	backend/controllers/authController.js
+A	backend/controllers/commentController.js
+A	backend/controllers/issueController.js
+A	backend/controllers/officerController.js
+A	backend/controllers/userController.js
+A	backend/middleware/authMiddleware.js
+A	backend/middleware/roleMiddleware.js
+A	backend/middleware/uploadMiddleware.js
+A	backend/models/Comment.js
+A	backend/models/Issue.js
+A	backend/models/Notification.js
+A	backend/models/User.js
+A	backend/routes/authRoutes.js
+A	backend/routes/commentRoutes.js
+A	backend/routes/issueRoutes.js
+A	backend/routes/officerRoutes.js
+A	backend/routes/userRoutes.js
+A	backend/utils/analytics.js
+A	backend/utils/geolocation.js
+D	frontend/src/App.js
+A	frontend/src/App.jsx
+A	frontend/src/components/AnalyticsChart.jsx
+A	frontend/src/components/IssueCard.jsx
+A	frontend/src/components/IssueForm.jsx
+A	frontend/src/components/Map.jsx
+A	frontend/src/components/Navbar.jsx
+A	frontend/src/components/ProtectedRoute.jsx
+A	frontend/src/components/Sidebar.jsx
+A	frontend/src/components/StatusBadge.jsx
+A	frontend/src/components/Timeline.jsx
+A	frontend/src/context/AuthContext.jsx
+A	frontend/src/hooks/useAuth.js
+A	frontend/src/hooks/useLocation.js
+D	frontend/src/index.js
+A	frontend/src/main.jsx
+A	frontend/src/pages/AllIssues.jsx
+A	frontend/src/pages/Analytics.jsx
+A	frontend/src/pages/Dashboard.jsx
+A	frontend/src/pages/IssueDetails.jsx
+A	frontend/src/pages/Landing.jsx
+A	frontend/src/pages/Login.jsx
+A	frontend/src/pages/ManageIssues.jsx
+A	frontend/src/pages/MyReports.jsx
+A	frontend/src/pages/NotFound.jsx
+A	frontend/src/pages/OfficerDashboard.jsx
+A	frontend/src/pages/OfficerLogin.jsx
+A	frontend/src/pages/Profile.jsx
+A	frontend/src/pages/Register.jsx
+A	frontend/src/pages/ReportIssue.jsx
+A	frontend/src/services/authService.js
+A	frontend/src/services/issueService.js
+A	frontend/src/services/officerService.js
+A	frontend/src/services/userService.js
+A	frontend/src/styles/auth.css
+A	frontend/src/styles/dashboard.css
+A	frontend/src/styles/issue.css
+A	frontend/src/styles/profile.css
+
+[33mcommit 35bd1c4693af3303d467068a6479d89d43b1d5fe[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Sun Jun 21 15:10:30 2026
+
+    Replace frontend submodule with directory
+
+D	frontend
+A	frontend/README.md
+A	frontend/package-lock.json
+A	frontend/package.json
+A	frontend/public/favicon.ico
+A	frontend/public/index.html
+A	frontend/public/logo192.png
+A	frontend/public/logo512.png
+A	frontend/public/manifest.json
+A	frontend/public/robots.txt
+A	frontend/src/App.css
+A	frontend/src/App.js
+A	frontend/src/App.test.js
+A	frontend/src/index.css
+A	frontend/src/index.js
+A	frontend/src/logo.svg
+A	frontend/src/reportWebVitals.js
+A	frontend/src/setupTests.js
+
+[33mcommit 523e3f6c25c8b6936fc87129dfd333c3e82ea031[m
+Author: atharvaajoshii <jatharva1701@gmail.com>
+Date:   Sun Jun 21 15:05:28 2026
+
+    Initial commit
+
+A	.gitignore
+A	backend/package-lock.json
+A	backend/package.json
+A	frontend

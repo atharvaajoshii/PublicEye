@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom"
 import AnalyticsChart from "../components/AnalyticsChart"
 import officerService from "../services/officerService";
 
+import { GoChevronLeft } from "react-icons/go";
+
 function Analytics() {
     const navigate = useNavigate();
 
@@ -38,6 +40,9 @@ function Analytics() {
 
     return (
         <div>
+            <button onClick={() => navigate(-1)}>
+            <GoChevronLeft />Back
+            </button>
             <h1>Analytics</h1>
             <div>
                 <h1>Average Resolution Time</h1>
