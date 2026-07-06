@@ -8,6 +8,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const issueRoutes = require("./routes/issueRoutes");
 const userRoutes = require("./routes/userRoutes");
 const reportRoutes = require("./routes/reportRoutes");
+const analyticsRoutes = require("./routes/analyticsRoutes");
 
 const app = express();
 const authRoutes = require("./routes/authRoutes");
@@ -39,6 +40,7 @@ app.use("/api/officer", officerRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/issues", issueRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 app.listen(5000, () => {
     console.log("Server Running");

@@ -2,15 +2,6 @@
 const Issue = require("../models/Issue");
 const IssueTrack = require("../models/IssueTrack");
 const User = require("../models/User");
-const {
-    getCategoryStats,
-    getMonthlyStats,
-    getResolutionTrend,
-    getAreaDistribution,
-    getStatusDistribution,
-    getAverageResolutionTime,
-    getTopVotedIssues
-} = require("../utils/analytics");
 
 const dashboard = async (req, res) => {
     try {
@@ -41,41 +32,6 @@ const dashboard = async (req, res) => {
         return res.status(500).json({ error: "Internal server error" })
     }
 
-}
-
-const analytics = async (req, res) => {
-    try {
-        const [
-            category,
-            monthly,
-            resolution,
-            area,
-            status,
-            avgTime,
-            topVotes
-        ] = await Promise.all([
-            getCategoryStats(),
-            getMonthlyStats(),
-            getResolutionTrend(),
-            getAreaDistribution(),
-            getStatusDistribution(),
-            getAverageResolutionTime(),
-            getTopVotedIssues()
-        ]);
-
-        return res.json({
-            category,
-            monthly,
-            resolution,
-            area,
-            status,
-            avgTime,
-            topVotes
-        });
-    } catch (error) {
-        console.log("Error in officer Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" })
-    }
 }
 
 const manageIssues = async (req, res) => {
@@ -228,4 +184,4 @@ const updateIssueProgress = async (req, res) => {
     }
 }
 
-module.exports = { dashboard, analytics, manageIssues, updateIssueStatus, updateIssueProgress };
+module.exports = { dashboard, manageIssues, updateIssueStatus, updateIssueProgress };

@@ -1,9 +1,44 @@
 // Atmika
 
 const Issue = require("../models/Issue");
+const IssueTrack = require("../models/IssueTrack");
 
-const getCategoryStats = async () => {
-    const stats = await Issue.aggregate([
+const getIssueFilter = async (userId, role) => {
+
+    if (role === "admin") {
+        return {};
+    }
+
+    if (role === "user") {
+        return {
+            user: userId
+        };
+    }
+
+    if (role === "officer") {
+
+        const tracks = await IssueTrack.find({
+            officer: userId
+        });
+
+        const issueIds = tracks.map(track => track.issue);
+
+        return {
+            _id: {
+                $in: issueIds
+            }
+        };
+    }
+
+};
+
+const getCategoryStats = async (filter) => {
+
+    return await Issue.aggregate([
+
+        {
+            $match: filter
+        },
         {
             $group: {
                 _id: "$category",
@@ -23,11 +58,15 @@ const getCategoryStats = async () => {
             }
         }
     ]);
-    return stats;
 }
 
-const getMonthlyStats = async () => {
+const getMonthlyStats = async (filter) => {
+
     const stats = await Issue.aggregate([
+
+        {
+            $match: filter
+        },
         {
             $group: {
                 _id: { $month: "$createdAt" },
@@ -64,10 +103,11 @@ const getMonthlyStats = async () => {
     return data;
 }
 
-const getResolutionTrend = async () => {
+const getResolutionTrend = async (filter) => {
+
     const stats = await Issue.aggregate([
         {
-            $match: { status: "Resolved" }
+            $match: { ...filter, status: "Resolved" }
         },
         {
             $group: {
@@ -106,14 +146,18 @@ const getResolutionTrend = async () => {
     return data;
 }
 
-const getAreaDistribution = async () => {
+const getAreaDistribution = async (filter) => {
+
     const stats = await Issue.aggregate([
+
+
         {
-            $match:{
-            location:{
-               $ne:null
+            $match: {
+                ...filter,
+                location: {
+                    $ne: null
+                }
             }
-           }
         },
         {
             $group: {
@@ -132,14 +176,18 @@ const getAreaDistribution = async () => {
     return stats;
 }
 
-const getStatusDistribution = async () => {
+const getStatusDistribution = async(filter)=>{
+
     const stats = await Issue.aggregate([
+
+
         {
-            $match:{
-            status:{
-               $ne:null
+            $match: {
+                ...filter,
+                status: {
+                    $ne: null
+                }
             }
-           }
         },
         {
             $group: {
@@ -155,18 +203,21 @@ const getStatusDistribution = async () => {
             }
         },
         {
-            $sort:{
-                issues:-1
+            $sort: {
+                issues: -1
             }
         }
     ]);
     return stats;
 }
 
-const getAverageResolutionTime = async () => {
+const getAverageResolutionTime = async(filter)=>{
+
     const stats = await Issue.aggregate([
+
         {
             $match: {
+                ...filter,
                 status: "Resolved"
             }
         },
@@ -181,10 +232,10 @@ const getAverageResolutionTime = async () => {
             }
         },
         {
-            $group:{
-                _id:null,
-                averageDays:{
-                    $avg:"$days"
+            $group: {
+                _id: null,
+                averageDays: {
+                    $avg: "$days"
                 }
             }
         },
@@ -198,11 +249,13 @@ const getAverageResolutionTime = async () => {
     return stats[0] || { averageDays: 0 };
 }
 
-const getTopVotedIssues = async () => {
-    return await Issue.find().sort({ votes: -1 }).limit(10).select("title votes")
+const getTopVotedIssues = async(filter)=>{
+
+    return await Issue.find(filter).sort({ votes: -1 }).limit(10).select("title votes")
 }
 
 module.exports = {
+    getIssueFilter,
     getCategoryStats,
     getMonthlyStats,
     getResolutionTrend,

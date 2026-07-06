@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
 
 import AnalyticsChart from "../components/AnalyticsChart"
-import officerService from "../services/officerService";
+import analyticsService from "../services/analyticsService";
 
 import { GoChevronLeft } from "react-icons/go";
 
@@ -29,7 +29,7 @@ function Analytics() {
 
     const fetchAnalytics = async () => {
         try {
-            const res = await officerService.getAnalytics();
+            const res = await analyticsService.getAnalytics();
 
             setAnalytics(res.data);
 
