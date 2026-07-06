@@ -51,6 +51,16 @@ function ManageIssues() {
         }
     }
 
+    const handleProgressChange = async (issueId, newProgress) => {
+        try {
+            await officerService.updateProgress(issueId, newProgress);
+
+            fetchIssues();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div>
             <OfficerSidebar></OfficerSidebar>
@@ -110,24 +120,41 @@ function ManageIssues() {
                             </div>
                             <div>
                                 <p>Votes: {issue.issue?.votes}</p>
-
-                                <select
-                                    value={issue.issue.status}
+                                
+                                    <select
+                                        value={issue.issue.status}
+                                        onClick={(e) => e.stopPropagation()}
+                                        onChange={(e) =>
+                                            handleStatusChange(
+                                                issue.issue._id,
+                                                e.target.value
+                                            )
+                                        }
+                                    >
+                                        <option value="Pending">Pending</option>
+                                        <option value="Assigned">Assigned</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Resolved">Resolved</option>
+                                        <option value="Rejected">Rejected</option>
+                                    </select>
+                                    <div>
+                                <input
+                                    type="range"
+                                    min={0}
+                                    max={100}
+                                    value={issue.progress}
+                                    disabled={issue.issue.status !== "In Progress"}
                                     onClick={(e) => e.stopPropagation()}
-                                    onChange={(e) =>
-                                        handleStatusChange(
+                                    onTouchEnd={(e) =>
+                                        handleProgressChange(
                                             issue.issue._id,
-                                            e.target.value
+                                            Number(e.target.value)
                                         )
                                     }
-                                >
-                                    <option value="Pending">Pending</option>
-                                    <option value="Assigned">Assigned</option>
-                                    <option value="In Progress">In Progress</option>
-                                    <option value="Resolved">Resolved</option>
-                                    <option value="Rejected">Rejected</option>
-                                </select>
-                                <p>Assigned date : {" "}{new Date(issue.createdAt).toLocaleDateString()}</p>
+                                />
+                                <span>{issue.progress}%</span>
+                                </div>
+                                    <p>Assigned date : {" "}{new Date(issue.createdAt).toLocaleDateString()}</p>
                             </div>
                         </div>
                     ))}

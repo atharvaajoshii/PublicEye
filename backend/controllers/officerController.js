@@ -93,37 +93,37 @@ const manageIssues = async (req, res) => {
 
         issues = issues.filter(item => item.issue);
 
-        if(search){
+        if (search) {
             issues = issues.filter(
                 item => item.issue?.title?.toLowerCase().includes(search.toLowerCase())
             );
         }
 
-        if(status){
+        if (status) {
             issues = issues.filter(
                 item => item.issue?.status === status
             );
         }
 
-        if(category){
+        if (category) {
             issues = issues.filter(
                 item => item.issue?.category === category
             );
         }
 
-        if(sort === "votes"){
+        if (sort === "votes") {
             issues = [...issues].sort((a, b) => (b.issue?.votes || 0) - (a.issue?.votes || 0));
         }
 
-        if(sort === "newest"){
+        if (sort === "newest") {
             issues = [...issues].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         }
 
-        if(sort === "oldest"){
+        if (sort === "oldest") {
             issues = [...issues].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
         }
 
-        return res.json({issues});
+        return res.json({ issues });
     } catch (error) {
         console.log("Error in officer Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
@@ -156,12 +156,76 @@ const updateIssueStatus = async (req, res) => {
             }
         );
 
-        res.json({message: "Status updated successfully",issue});
+        if (!issue) {
+            return res.status(404).json({
+                message: "Issue not found"
+            });
+        }
+
+        const progressMap = {
+            Pending: 0,
+            Assigned: 15,
+            Resolved: 100,
+            Rejected: 0
+        };
+
+        if (status in progressMap) {
+            assignment.progress = progressMap[status];
+            await assignment.save();
+        }
+
+        res.json({ message: "Status updated successfully", issue, assignment });
     } catch (error) {
         console.log("Error in officer Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
     }
 }
 
+const updateIssueProgress = async (req, res) => {
+    try {
+        const officerId = req.user.id;
+        const { id } = req.params;
+        const { progress } = req.body;
 
-module.exports = { dashboard, analytics, manageIssues, updateIssueStatus };
+        const assignment = await IssueTrack.findOne({
+            issue: id,
+            officer: officerId
+        });
+
+        if (!assignment) {
+            return res.status(403).json({
+                message: "You are not assigned to this issue."
+            });
+        }
+
+        const issue = await Issue.findById(id);
+
+        if (!issue) {
+            return res.status(404).json({
+                message: "Issue not found"
+            });
+        }
+
+        if (issue.status !== "In Progress") {
+            return res.status(400).json({
+                message: "Progress can only be updated when the issue is In Progress."
+            });
+        }
+
+        if (progress < 0 || progress > 100) {
+            return res.status(400).json({
+                message: "Progress must be between 0 and 100."
+            });
+        }
+
+        assignment.progress = progress;
+        await assignment.save();
+
+        res.json({ message: "Progress updated successfully", issue });
+    } catch (error) {
+        console.log("Error in officer Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" })
+    }
+}
+
+module.exports = { dashboard, analytics, manageIssues, updateIssueStatus, updateIssueProgress };
