@@ -283,7 +283,7 @@ const filterIssues = async (req, res) => {
         return res.status(500).json({ error: "Internal server error" })
     }
 }
-const issues = async (req, res) => { }
+// const issues = async (req, res) => { }
 const users = async (req, res) => { }
 const reports = async (req, res) => { }
 
@@ -305,6 +305,5 @@ module.exports = {
     filterIssues,
 
     users,
-    issues,
     reports
 };

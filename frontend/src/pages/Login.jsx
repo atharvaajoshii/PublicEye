@@ -27,7 +27,7 @@ function Login() {
             } else if (res.user.role === "officer") {
                 navigate("/officer/dashboard");
             } else {
-                navigate("/profile");
+                navigate("/dashboard");
             }
             
         } catch (error) {

@@ -1,21 +1,27 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
-    name: String,
-    location: String,
-    role: {
-        type: String,
-        default: "citizen"
+const reportSchema = new mongoose.Schema(
+{
+    issue: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Issue",
+        required: true
     },
-    phoneNumber: String,
-    profilePhoto: String,
-    email: {
-        type: String,
-        unique: true
+    officer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     },
-    password: String
-},{
-    timestamps:true
+    reason: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String
+    }
+},
+{
+    timestamps: true
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Report", reportSchema);
