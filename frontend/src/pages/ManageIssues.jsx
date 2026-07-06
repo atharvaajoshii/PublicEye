@@ -139,7 +139,7 @@ function ManageIssues() {
                                     </select>
                                     <div>
                                 <input
-                                    type="range"
+                                    type="number"
                                     min={0}
                                     max={100}
                                     value={issue.progress}
