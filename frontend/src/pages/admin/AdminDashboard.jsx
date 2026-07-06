@@ -43,7 +43,7 @@ function AdminDashboard() {
         <div>
             <AdminSidebar />
             <div>
-                <div>
+                <div >
                     <div>
                         <h1>Total Officers</h1>
                         <p>{stats.totalOfficers}</p>

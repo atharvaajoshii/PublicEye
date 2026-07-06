@@ -2,6 +2,10 @@
 
 const Issue = require("../models/Issue");
 const IssueTrack = require("../models/IssueTrack");
+const mongoose = require("mongoose");
+const axios = require("axios");
+
+require("dotenv").config();
 
 const getIssueFilter = async (userId, role) => {
 
@@ -9,9 +13,9 @@ const getIssueFilter = async (userId, role) => {
         return {};
     }
 
-    if (role === "user") {
+    if (role === "citizen") {
         return {
-            user: userId
+            user: new mongoose.Types.ObjectId(userId)
         };
     }
 
@@ -29,6 +33,8 @@ const getIssueFilter = async (userId, role) => {
             }
         };
     }
+
+    throw new Error(`Unknown role: ${role}`);
 
 };
 
@@ -146,34 +152,69 @@ const getResolutionTrend = async (filter) => {
     return data;
 }
 
+// const getAreaDistribution = async (filter) => {
+
+//     const stats = await Issue.aggregate([
+
+//         {
+//             $match: {
+//                 ...filter,
+//                 location: {
+//                     $ne: null
+//                 }
+//             }
+//         },
+//         {
+//             $group: {
+//                 _id: "$location",
+//                 issues: { $sum: 1 },
+//             }
+//         },
+//         {
+//             $project: {
+//                 _id: 0,
+//                 area: "$_id",
+//                 issues: 1
+//             }
+//         }
+//     ]);
+//     return stats;
+// }
+
 const getAreaDistribution = async (filter) => {
 
-    const stats = await Issue.aggregate([
+    const issues = await Issue.find(filter)
+        .select("latitude longitude");
 
+    const cityCount = {};
 
-        {
-            $match: {
-                ...filter,
-                location: {
-                    $ne: null
-                }
-            }
-        },
-        {
-            $group: {
-                _id: "$location",
-                issues: { $sum: 1 },
-            }
-        },
-        {
-            $project: {
-                _id: 0,
-                area: "$_id",
-                issues: 1
-            }
+    for (const issue of issues) {
+
+        if (!issue.latitude || !issue.longitude) continue;
+
+        try {
+            const url = `https://api.geoapify.com/v1/geocode/reverse?lat=${issue.latitude}&lon=${issue.longitude}&apiKey=${process.env.GEOAPIFY_API_KEY}`;
+
+            const { data } = await axios.get(url);
+
+            const city =
+                data.features?.[0]?.properties?.city ||
+                data.features?.[0]?.properties?.town ||
+                data.features?.[0]?.properties?.village ||
+                data.features?.[0]?.properties?.county ||
+                "Unknown";
+
+            cityCount[city] = (cityCount[city] || 0) + 1;
+
+        } catch (err) {
+            console.log("Reverse geocoding failed:", err.message);
         }
-    ]);
-    return stats;
+    }
+
+    return Object.entries(cityCount).map(([area, issues]) => ({
+        area,
+        issues
+    }));
 }
 
 const getStatusDistribution = async(filter)=>{
@@ -249,9 +290,14 @@ const getAverageResolutionTime = async(filter)=>{
     return stats[0] || { averageDays: 0 };
 }
 
-const getTopVotedIssues = async(filter)=>{
+// const getTopVotedIssues = async(filter)=>{
 
-    return await Issue.find(filter).sort({ votes: -1 }).limit(10).select("title votes")
+//     return await Issue.find(filter).sort({ votes: -1 }).limit(10).select("title votes")
+// }
+
+const getTopVotedIssues = async (filter) => {
+    const issues = await Issue.find(filter);
+    return issues;
 }
 
 module.exports = {
