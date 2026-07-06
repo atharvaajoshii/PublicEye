@@ -7,6 +7,7 @@ function IssueManagement() {
     const [selectedIssue, setSelectedIssue] = useState(null);
     const [selectedOfficer, setSelectedOfficer] = useState("");
     const [loading, setLoading] = useState(true);
+    const [issueTrack, setIssueTrack] = useState(null);
 
     const fetchData = async () => {
         try {
@@ -33,7 +34,13 @@ function IssueManagement() {
     const handleView = async (id) => {
         try {
             const res = await adminService.getIssueById(id);
+
             setSelectedIssue(res.data.issue);
+            setIssueTrack(res.data.issueTrack);
+
+            setSelectedOfficer(
+                res.data.issueTrack?.officer?._id || ""
+            );
         } catch (err) {
             console.log(err);
         }
@@ -54,14 +61,8 @@ function IssueManagement() {
                     selectedOfficer
                 );
             }
-
             await fetchData();
-
-            const updated = await adminService.getIssueById(
-                selectedIssue._id
-            );
-
-            setSelectedIssue(updated.data.issue);
+            await handleView(selectedIssue._id);
             alert("Officer assigned successfully");
         } catch (err) {
             console.log(err);
@@ -74,7 +75,8 @@ function IssueManagement() {
         try {
             await adminService.deleteIssue(id);
 
-            setSelectedIssue(null);
+            setIssueTrack(null);
+            setSelectedOfficer("");
             fetchData();
         } catch (err) {
             console.log(err);
@@ -137,13 +139,12 @@ function IssueManagement() {
 
                                         <span
                                             className={`px-3 py-1 rounded-full text-sm
-                                            ${
-                                                issue.status === "Resolved"
+                                            ${issue.status === "Resolved"
                                                     ? "bg-green-100 text-green-700"
                                                     : issue.status === "Assigned"
-                                                    ? "bg-blue-100 text-blue-700"
-                                                    : "bg-yellow-100 text-yellow-700"
-                                            }`}
+                                                        ? "bg-blue-100 text-blue-700"
+                                                        : "bg-yellow-100 text-yellow-700"
+                                                }`}
                                         >
                                             {issue.status}
                                         </span>
@@ -212,6 +213,15 @@ function IssueManagement() {
                                 <strong>Status:</strong>{" "}
                                 {selectedIssue.status}
                             </p>
+                            <p>
+                                <strong>Assigned Officer:</strong>{" "}
+                                {issueTrack?.officer?.name || "Not Assigned"}
+                            </p>
+
+                            <p>
+                                <strong>Officer Email:</strong>{" "}
+                                {issueTrack?.officer?.email || "-"}
+                            </p>
 
                             <p>
                                 <strong>Location:</strong>{" "}
@@ -250,7 +260,11 @@ function IssueManagement() {
 
                                 <button
                                     onClick={handleAssign}
-                                    className="mt-4 w-full bg-green-600 text-white py-2 rounded"
+                                    disabled={selectedIssue.status === "Resolved"}
+                                    className={`mt-4 w-full py-2 rounded text-white ${selectedIssue.status === "Resolved"
+                                        ? "bg-gray-400 cursor-not-allowed"
+                                        : "bg-green-600 hover:bg-green-700"
+                                        }`}
                                 >
                                     {selectedIssue.status === "Assigned"
                                         ? "Reassign Officer"

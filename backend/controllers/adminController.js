@@ -234,10 +234,14 @@ const getIssueById = async (req, res) => {
             return res.status(400).json({ error: "Invalid Issue ID" });
         }
         const issue = await Issue.findById(id);
-        if (!issue) {
-            return res.status(404).json({ error: "Issue not found" });
-        }
-        return res.json({ issue });
+
+        const issueTrack = await IssueTrack.findOne({ issue: id })
+            .populate("officer", "name email");
+
+        return res.json({
+            issue,
+            issueTrack
+        });
     } catch (error) {
         console.log("Error in admin Controller:", error.message);
         return res.status(500).json({ error: "Internal server error" });
