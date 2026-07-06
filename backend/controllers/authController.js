@@ -51,6 +51,9 @@ const loginUser = async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: "user not found" })
         }
+        if (user.status === "Suspended") {
+            return res.status(403).json({ message: "You are temporarily blocked" })
+        }
         const ispasswordcorrect = await bcrypt.compare(password, user.password || "");
         if (!ispasswordcorrect) {
             return res.status(400).json({ message: "invalid password" })
