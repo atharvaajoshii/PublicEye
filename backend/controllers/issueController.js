@@ -46,7 +46,43 @@ const createIssue = async (req, res) => {
         });
     }
 };
+// part created by adithya for dashboard 
+const getUserIssue = async(request,response) => {
+    try{
+        console.log("Inside getUserIssue");
+        const issues = await Issue.find(
+            {
+                user : request.user.id
+            }
+        )
+          return  response.json({
+            success:true,
+            userIssues:issues
+          })       
+    }
+    catch (error) {
+        response.status(500).json({
+            message: error.message
+        });
+    }
+}
+const getAllIssues = async (request, response) => {
+    try {
+        const issues = await Issue.find();
 
+        response.json({
+            success: true,
+            issues
+        });
+
+    } catch (error) {
+        response.status(500).json({
+            message: error.message
+        });
+    }
+};
 module.exports = {
-    createIssue
+    createIssue,
+    getUserIssue,
+    getAllIssues
 };

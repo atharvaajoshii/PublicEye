@@ -6,7 +6,9 @@ const authMiddleware = require("../middleware/authMiddleware");
 const upload = require("../middleware/uploadMiddleware");
 
 const {
-    createIssue
+    createIssue,
+    getUserIssue,
+    getAllIssues
 } = require("../controllers/issueController");
 
 router.post(
@@ -15,5 +17,6 @@ router.post(
     upload.single("image"),
     createIssue
 );
-
+router.get('/',authMiddleware,getUserIssue) //adithya karkera 
+router.get("/all", authMiddleware, getAllIssues);
 module.exports = router; 
