@@ -19,7 +19,7 @@ import OfficerManagement from "./pages/admin/OfficerManagement";
 import Reports from "./pages/admin/Reports";
 import Dashboard from "./pages/Dashboard";
 import AllIssues from "./pages/AllIssues";
-
+import OfficerReport from "./pages/OfficerReport";
 
 function App() {
   return (
@@ -43,6 +43,7 @@ function App() {
         <Route path="/admin/manage-users" element={<ProtectedRoute roles={["admin"]}><UserManagement/></ProtectedRoute>} />
         <Route path="/admin/manage-officers" element={<ProtectedRoute roles={["admin"]}><OfficerManagement/></ProtectedRoute>} />
         <Route path="/admin/reports" element={<ProtectedRoute roles={["admin"]}><Reports/></ProtectedRoute>} />
+        <Route path="/issue/:issueId/report" element={<ReportIssue />}/>
       </Routes>
     </BrowserRouter>
   );

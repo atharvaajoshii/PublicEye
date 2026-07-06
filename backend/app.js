@@ -7,6 +7,7 @@ const officerRoutes = require("./routes/officerRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const issueRoutes = require("./routes/issueRoutes");
 const userRoutes = require("./routes/userRoutes");
+const reportRoutes = require("./routes/reportRoutes");
 
 const app = express();
 const authRoutes = require("./routes/authRoutes");
@@ -30,6 +31,8 @@ app.use(express.json());
 connectDB();
 
 app.use(cookieParser());
+
+app.use("/api/report", reportRoutes);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/officer", officerRoutes);
