@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
+import Sidebar from "../../components/Sidebar";
 
 import AdminSidebar from "../../components/AdminSidebar"
 import adminService from "../../services/adminService";
@@ -41,7 +42,7 @@ function AdminDashboard() {
 
     return (
         <div>
-            <AdminSidebar />
+            <Sidebar />
             <div>
                 <div >
                     <div>

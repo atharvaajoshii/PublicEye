@@ -1,5 +1,5 @@
 import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
+// import Navbar from "../components/Navbar";
 import WelcomeSection from "../components/dashboard/WelcomeSection";
 import StatusChart from "../components/dashboard/StatusChart";
  import StatusGrid from "../components/dashboard/StatsGrid";
@@ -28,7 +28,7 @@ function Dashboard() {
     },[]);
     return (
         <div>
-            <Navbar />
+            {/* <Navbar /> */}
             <Sidebar />
             <main className="dashboard-content">
                 <WelcomeSection user = {user}/>
