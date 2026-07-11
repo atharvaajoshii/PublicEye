@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
+import Sidebar from "../../components/Sidebar";
 
 function IssueManagement() {
     const [issues, setIssues] = useState([]);
@@ -85,12 +86,14 @@ function IssueManagement() {
     if (loading)
         return (
             <div>
+                <Sidebar/>
                 Loading...
             </div>
         );
 
     return (
         <div className="p-6">
+            <Sidebar/>
             <h1 className="text-3xl font-bold mb-6">
                 Issue Management
             </h1>

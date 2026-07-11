@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
+import Sidebar from "../../components/Sidebar";
+
 
 function Reports() {
     const [reports, setReports] = useState([]);
@@ -60,6 +62,7 @@ function Reports() {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-96">
+                <Sidebar />
                 Loading...
             </div>
         );
@@ -67,7 +70,7 @@ function Reports() {
 
     return (
         <div className="p-6">
-
+            <Sidebar />
             <h1 className="text-3xl font-bold mb-6">
                 Report Management
             </h1>
@@ -114,13 +117,12 @@ function Reports() {
                                     <td className="p-3">
 
                                         <span
-                                            className={`px-3 py-1 rounded-full text-sm ${
-                                                report.status === "Approved"
+                                            className={`px-3 py-1 rounded-full text-sm ${report.status === "Approved"
                                                     ? "bg-green-100 text-green-700"
                                                     : report.status === "Rejected"
-                                                    ? "bg-red-100 text-red-700"
-                                                    : "bg-yellow-100 text-yellow-700"
-                                            }`}
+                                                        ? "bg-red-100 text-red-700"
+                                                        : "bg-yellow-100 text-yellow-700"
+                                                }`}
                                         >
                                             {report.status}
                                         </span>
@@ -203,11 +205,10 @@ function Reports() {
                                     disabled={
                                         selectedReport.status !== "Pending"
                                     }
-                                    className={`flex-1 py-2 rounded text-white ${
-                                        selectedReport.status !== "Pending"
+                                    className={`flex-1 py-2 rounded text-white ${selectedReport.status !== "Pending"
                                             ? "bg-gray-400 cursor-not-allowed"
                                             : "bg-green-600 hover:bg-green-700"
-                                    }`}
+                                        }`}
                                 >
                                     Approve
                                 </button>
@@ -217,11 +218,10 @@ function Reports() {
                                     disabled={
                                         selectedReport.status !== "Pending"
                                     }
-                                    className={`flex-1 py-2 rounded text-white ${
-                                        selectedReport.status !== "Pending"
+                                    className={`flex-1 py-2 rounded text-white ${selectedReport.status !== "Pending"
                                             ? "bg-gray-400 cursor-not-allowed"
                                             : "bg-red-600 hover:bg-red-700"
-                                    }`}
+                                        }`}
                                 >
                                     Reject
                                 </button>

@@ -30,8 +30,8 @@ function Sidebar() {
     // Citizen
     // =========================
     const citizenLinks = [
-        { name: "Home", path: "/", icon: <IoHomeSharp /> },
-        { name: "Dashboard", path: "/dashboard", icon: <AiOutlineDashboard /> },
+        { name: "Home", path: "/dashboard", icon: <IoHomeSharp /> },
+        // { name: "Dashboard", path: "/dashboard", icon: <AiOutlineDashboard /> },
         { name: "All Issues", path: "/all-issues", icon: <GoIssueTracks /> },
         { name: "Report", path: "/report", icon: <GoReport /> },
         { name: "Profile", path: "/profile", icon: <CgProfile /> },
