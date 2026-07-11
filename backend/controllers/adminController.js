@@ -490,7 +490,10 @@ const approveReport = async (req, res) => {
         report.status = "Approved";
         await report.save();
 
-        // Optional: Remove the associated issue
+        await IssueTrack.deleteMany({
+            issue: report.issue,
+        });
+
         await Issue.findByIdAndDelete(report.issue);
 
         return res.json({
