@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom"
 
 import { useAuth } from "../context/AuthContext";
 import officerService from "../services/officerService";
-import OfficerSidebar from "../components/OfficerSidebar"
 
 function OfficerDashboard() {
 
