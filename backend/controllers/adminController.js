@@ -234,10 +234,14 @@ const getIssueById = async (req, res) => {
             return res.status(400).json({ error: "Invalid Issue ID" });
         }
         const issue = await Issue.findById(id);
-        if (!issue) {
-            return res.status(404).json({ error: "Issue not found" });
-        }
-        return res.json({ issue });
+
+        const issueTrack = await IssueTrack.findOne({ issue: id })
+            .populate("officer", "name email");
+
+        return res.json({
+            issue,
+            issueTrack
+        });
     } catch (error) {
         console.log("Error in admin Controller:", error.message);
         return res.status(500).json({ error: "Internal server error" });
@@ -252,42 +256,47 @@ const assignOfficer = async (req, res) => {
             return res.status(400).json({ error: "Invalid Issue ID" });
         }
 
-        const issue = await IssueTrack.findOne({
-            issue: id,
-        });
+        const issue = await Issue.findById(id);
         if (!issue) {
             return res.status(404).json({ error: "Issue not found" });
         }
-        if (issue.officer) {
+
+        const existingTrack = await IssueTrack.findOne({
+            issue: id,
+        });
+        if (existingTrack) {
             return res.status(400).json({
-                error: "Officer already assigned"
+                error: "Officer already assigned",
             });
         }
-        const { officerId } = req.body;
-        if (!mongoose.Types.ObjectId.isValid(officerId)) {
-            return res.status(400).json({ error: "Invalid Officer ID" });
-        }
 
+        const { officerId } = req.body;
+
+        if (!mongoose.Types.ObjectId.isValid(officerId)) {
+            return res.status(400).json({
+                error: "Invalid Officer ID",
+            });
+        }
         const officer = await User.findOne({
             _id: officerId,
-            role: "officer"
+            role: "officer",
         });
-
         if (!officer) {
-            return res.status(404).json({ error: "officer not found" });
+            return res.status(404).json({
+                error: "Officer not found",
+            });
         }
-        issue.officer = officerId
-
-        //trial
-        await Issue.findByIdAndUpdate(id, {
-            status: "Assigned"
+        await IssueTrack.create({
+            issue: issue._id,
+            officer: officerId,
+            progress: 0,
         });
-        //
 
+        issue.status = "Assigned";
         await issue.save();
+
         return res.json({
             message: "Officer assigned successfully",
-            issue
         });
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
@@ -303,11 +312,13 @@ const reassignOfficer = async (req, res) => {
             return res.status(400).json({ error: "Invalid Issue ID" });
         }
 
-        const issue = await IssueTrack.findOne({
+        const issueTrack = await IssueTrack.findOne({
             issue: id,
         });
-        if (!issue) {
-            return res.status(404).json({ error: "Issue not found" });
+        if (!issueTrack) {
+            return res.status(404).json({
+                error: "Issue is not assigned yet",
+            });
         }
         const { officerId } = req.body;
         if (!mongoose.Types.ObjectId.isValid(officerId)) {
@@ -322,11 +333,11 @@ const reassignOfficer = async (req, res) => {
         if (!officer) {
             return res.status(404).json({ error: "officer not found" });
         }
-        issue.officer = officerId
-        await issue.save();
+        issueTrack.officer = officerId;
+        await issueTrack.save();
         return res.json({
-            message: "Officer assigned successfully",
-            issue
+            message: "Officer reassigned successfully",
+            issueTrack,
         });
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
@@ -486,7 +497,10 @@ const approveReport = async (req, res) => {
         report.status = "Approved";
         await report.save();
 
-        // Optional: Remove the associated issue
+        await IssueTrack.deleteMany({
+            issue: report.issue,
+        });
+
         await Issue.findByIdAndDelete(report.issue);
 
         return res.json({

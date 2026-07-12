@@ -7,7 +7,6 @@ const config = {
 };
 
 const adminService = {
-
     getDashboard() {
         return axios.get(`${API}/dashboard`, config);
     },

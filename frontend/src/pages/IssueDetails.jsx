@@ -2,6 +2,9 @@
 
 import React from "react";
 import Timeline from "../components/Timeline";
+import Sidebar from "../components/Sidebar";
+import { useNavigate } from "react-router-dom"
+import { GoChevronLeft } from "react-icons/go";
 
 function IssueDetails() {
   const issue = {
@@ -12,9 +15,16 @@ function IssueDetails() {
     status: "Pending",
     votes: 5
   };
+      const navigate = useNavigate();
 
   return (
     <div>
+      <Sidebar />
+      <button onClick={() => navigate(-1)}>
+        <GoChevronLeft />Back
+      </button>
+
+
       <h1>{issue.title}</h1>
 
       <p>{issue.description}</p>

@@ -1,3 +1,4 @@
+import Sidebar from "../components/Sidebar";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -13,6 +14,7 @@ function Profile() {
 
   return (
     <div>
+      <Sidebar/>
       <h1>Profile</h1>
       <p>Name: {user?.name}</p>
       <p>Email: {user?.email}</p>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
+import Sidebar from "../../components/Sidebar";
 
 function IssueManagement() {
     const [issues, setIssues] = useState([]);
@@ -7,6 +8,7 @@ function IssueManagement() {
     const [selectedIssue, setSelectedIssue] = useState(null);
     const [selectedOfficer, setSelectedOfficer] = useState("");
     const [loading, setLoading] = useState(true);
+    const [issueTrack, setIssueTrack] = useState(null);
 
     const fetchData = async () => {
         try {
@@ -33,7 +35,13 @@ function IssueManagement() {
     const handleView = async (id) => {
         try {
             const res = await adminService.getIssueById(id);
+
             setSelectedIssue(res.data.issue);
+            setIssueTrack(res.data.issueTrack);
+
+            setSelectedOfficer(
+                res.data.issueTrack?.officer?._id || ""
+            );
         } catch (err) {
             console.log(err);
         }
@@ -54,14 +62,8 @@ function IssueManagement() {
                     selectedOfficer
                 );
             }
-
             await fetchData();
-
-            const updated = await adminService.getIssueById(
-                selectedIssue._id
-            );
-
-            setSelectedIssue(updated.data.issue);
+            await handleView(selectedIssue._id);
             alert("Officer assigned successfully");
         } catch (err) {
             console.log(err);
@@ -74,156 +76,119 @@ function IssueManagement() {
         try {
             await adminService.deleteIssue(id);
 
-            setSelectedIssue(null);
+            setIssueTrack(null);
+            setSelectedOfficer("");
             fetchData();
         } catch (err) {
             console.log(err);
         }
     };
-
     if (loading)
         return (
-            <div className="flex justify-center items-center h-96">
+            <div>
+                <Sidebar/>
                 Loading...
             </div>
         );
 
     return (
         <div className="p-6">
-
+            <Sidebar/>
             <h1 className="text-3xl font-bold mb-6">
                 Issue Management
             </h1>
-
             <div className="grid grid-cols-3 gap-6">
-
                 {/* Left */}
+                <div>
 
-                <div className="col-span-2 bg-white rounded shadow overflow-auto">
-
-                    <table className="w-full">
-
-                        <thead className="bg-gray-100">
-
+                    <table>
+                        <thead>
                             <tr>
-                                <th className="p-3 text-left">Title</th>
-                                <th className="p-3 text-left">Category</th>
-                                <th className="p-3 text-left">Status</th>
-                                <th className="p-3 text-center">
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>
                                     Actions
                                 </th>
                             </tr>
 
                         </thead>
-
                         <tbody>
-
                             {issues.map((issue) => (
-
-                                <tr
-                                    key={issue._id}
-                                    className="border-b hover:bg-gray-50"
-                                >
-
-                                    <td className="p-3">
+                                <tr key={issue._id}>
+                                    <td>
                                         {issue.title}
                                     </td>
-
-                                    <td className="p-3">
+                                    <td>
                                         {issue.category}
                                     </td>
+                                    <td>
 
-                                    <td className="p-3">
-
-                                        <span
-                                            className={`px-3 py-1 rounded-full text-sm
-                                            ${
-                                                issue.status === "Resolved"
-                                                    ? "bg-green-100 text-green-700"
-                                                    : issue.status === "Assigned"
-                                                    ? "bg-blue-100 text-blue-700"
-                                                    : "bg-yellow-100 text-yellow-700"
-                                            }`}
-                                        >
+                                        <span>
                                             {issue.status}
                                         </span>
 
                                     </td>
-
-                                    <td className="p-3 flex justify-center gap-2">
-
+                                    <td>
                                         <button
                                             onClick={() =>
                                                 handleView(issue._id)
                                             }
-                                            className="bg-blue-500 text-white px-3 py-1 rounded"
                                         >
                                             View
                                         </button>
-
                                         <button
                                             onClick={() =>
                                                 handleDelete(issue._id)
                                             }
-                                            className="bg-red-500 text-white px-3 py-1 rounded"
                                         >
                                             Delete
                                         </button>
-
                                     </td>
-
                                 </tr>
-
                             ))}
-
                         </tbody>
-
                     </table>
-
                 </div>
-
                 {/* Right */}
-
-                <div className="bg-white rounded shadow p-6">
-
-                    <h2 className="text-xl font-semibold mb-4">
+                <div>
+                    <h2>
                         Issue Details
                     </h2>
-
                     {selectedIssue ? (
                         <>
-
                             <p>
                                 <strong>Title:</strong>{" "}
                                 {selectedIssue.title}
                             </p>
-
                             <p>
                                 <strong>Description:</strong>{" "}
                                 {selectedIssue.description}
                             </p>
-
                             <p>
                                 <strong>Category:</strong>{" "}
                                 {selectedIssue.category}
                             </p>
-
                             <p>
                                 <strong>Status:</strong>{" "}
                                 {selectedIssue.status}
                             </p>
-
+                            <p>
+                                <strong>Assigned Officer:</strong>{" "}
+                                {issueTrack?.officer?.name || "Not Assigned"}
+                            </p>
+                            <p>
+                                <strong>Officer Email:</strong>{" "}
+                                {issueTrack?.officer?.email || "-"}
+                            </p>
                             <p>
                                 <strong>Location:</strong>{" "}
                                 {selectedIssue.location}
                             </p>
-
-                            <div className="mt-6">
-
-                                <label className="font-semibold">
+                            <div>
+                                <label>
                                     Assign Officer
                                 </label>
-
                                 <select
                                     value={selectedOfficer}
                                     onChange={(e) =>
@@ -231,12 +196,10 @@ function IssueManagement() {
                                             e.target.value
                                         )
                                     }
-                                    className="w-full border rounded p-2 mt-2"
                                 >
                                     <option value="">
                                         Select Officer
                                     </option>
-
                                     {officers.map((officer) => (
                                         <option
                                             key={officer._id}
@@ -245,33 +208,25 @@ function IssueManagement() {
                                             {officer.name}
                                         </option>
                                     ))}
-
                                 </select>
-
                                 <button
                                     onClick={handleAssign}
-                                    className="mt-4 w-full bg-green-600 text-white py-2 rounded"
+                                    disabled={selectedIssue.status === "Resolved"}
                                 >
                                     {selectedIssue.status === "Assigned"
                                         ? "Reassign Officer"
                                         : "Assign Officer"}
                                 </button>
-
                             </div>
-
                         </>
                     ) : (
-                        <p className="text-gray-500">
+                        <p>
                             Select an issue to view details.
                         </p>
                     )}
-
                 </div>
-
             </div>
-
         </div>
     );
 }
-
 export default IssueManagement;

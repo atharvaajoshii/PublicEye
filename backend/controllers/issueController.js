@@ -1,4 +1,5 @@
 const Issue = require("../models/Issue");
+const IssueTrack = require("../models/IssueTrack");
 
 const createIssue = async (req, res) => {
     try {
@@ -12,12 +13,7 @@ const createIssue = async (req, res) => {
             publicVoting
         } = req.body;
 
-        const image = req.file
-            ? req.file.filename
-            : "";
-        console.log("BODY:", req.body);
-        console.log("FILE:", req.file);
-        console.log("USER:", req.user);
+        const image = req.file ? req.file.filename : "";
 
         const issue = new Issue({
             title,
@@ -28,17 +24,20 @@ const createIssue = async (req, res) => {
             category,
             publicVoting,
             image,
-
             user: req.user.id
         });
 
         await issue.save();
 
+        // Create tracking document for this issue
+        await IssueTrack.create({
+            issue: issue._id
+        });
+
         res.status(201).json({
             message: "Issue created successfully",
             issue
         });
-        
 
     } catch (error) {
         res.status(500).json({

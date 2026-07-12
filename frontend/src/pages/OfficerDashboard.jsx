@@ -1,5 +1,5 @@
 // Atmika
-
+import Sidebar from "../components/Sidebar";  
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 
@@ -45,7 +45,7 @@ function OfficerDashboard() {
 
   return (
     <div>
-      <OfficerSidebar />
+      <Sidebar />
       <div>
         <div>
           <h1>Total Assigned</h1>
