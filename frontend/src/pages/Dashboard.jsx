@@ -28,7 +28,6 @@ function Dashboard() {
     },[]);
     return (
         <div>
-            {/* <Navbar /> */}
             <Sidebar />
             <main className="dashboard-content">
                 <WelcomeSection user = {user}/>
