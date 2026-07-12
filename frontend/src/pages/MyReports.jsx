@@ -15,6 +15,7 @@ function MyReports() {
     };
     return (
         <div>
+            
             <h1>My Reports</h1>
             {issues.map((issue) => (
                 <div key={issue._id}>

@@ -6,6 +6,7 @@ import { AiOutlineDashboard } from "react-icons/ai";
 import { IoHomeSharp, IoLogOutSharp } from "react-icons/io5";
 import { GoIssueTracks, GoReport } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
+import MyReports from "../pages/MyReports";
 
 function Sidebar() {
     const navigate = useNavigate();
@@ -34,6 +35,7 @@ function Sidebar() {
         // { name: "Dashboard", path: "/dashboard", icon: <AiOutlineDashboard /> },
         { name: "All Issues", path: "/all-issues", icon: <GoIssueTracks /> },
         { name: "Report", path: "/report", icon: <GoReport /> },
+        // { name: "My Reports", path: "/myreports", icon: <GoReport/> },
         { name: "Profile", path: "/profile", icon: <CgProfile /> },
     ];
 

@@ -31,7 +31,7 @@ function Register() {
                 <input type="text" name="name" placeholder="name" onChange={(e) => setName(e.target.value)} required />
                 <input type="email" name="email" placeholder="email" onChange={(e) => setEmail(e.target.value)} required />
                 <input type="password" name="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} required />
-                <Link to={"/login"}>dont have an account</Link>
+                <Link to={"/login"}>already have an account!</Link>
                 <button type="submit">Register</button>
             </form>
         </div>
