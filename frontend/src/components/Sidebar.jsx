@@ -37,6 +37,7 @@ function Sidebar() {
         { name: "Report", path: "/report", icon: <GoReport /> },
         // { name: "My Reports", path: "/myreports", icon: <GoReport/> },
         { name: "Profile", path: "/profile", icon: <CgProfile /> },
+        { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
     ];
 
     // =========================
