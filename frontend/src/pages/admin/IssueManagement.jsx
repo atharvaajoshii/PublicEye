@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
 import Sidebar from "../../components/Sidebar";
+import toast from 'react-hot-toast';
 
 function IssueManagement() {
     const [issues, setIssues] = useState([]);
@@ -64,9 +65,10 @@ function IssueManagement() {
             }
             await fetchData();
             await handleView(selectedIssue._id);
-            alert("Officer assigned successfully");
+            toast.success("Officer assigned successfully");
         } catch (err) {
             console.log(err);
+            toast.error("error assigning officer")
         }
     };
 

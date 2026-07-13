@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { createIssue } from "./issueService";
+import toast from 'react-hot-toast';
 
 function IssueForm() {
   const [formData, setFormData] = useState({
@@ -50,14 +51,14 @@ const handleSubmit = async (e) => {
     try {
         const result = await createIssue(data);
 
-        alert("Issue reported successfully!");
+        toast.success("Issue reported successfully!");
 
         console.log(result);
 
     } catch (error) {
         console.error(error);
 
-        alert("Failed to submit issue.");
+        toast.error("Failed to submit issue.");
     }
 };
   return (

@@ -7,6 +7,8 @@ import { IoHomeSharp, IoLogOutSharp } from "react-icons/io5";
 import { GoIssueTracks, GoReport } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 import MyReports from "../pages/MyReports";
+import toast from 'react-hot-toast';
+
 
 function Sidebar() {
     const navigate = useNavigate();
@@ -14,12 +16,10 @@ function Sidebar() {
 
     const handleLogout = async () => {
         await logout();
+        toast.success("logged out!")
         navigate("/");
     };
 
-    // =========================
-    // Guest (Landing Page)
-    // =========================
     const guestLinks = [
         { name: "Home", path: "/", icon: <IoHomeSharp /> },
         { name: "All Issues", path: "/all-issues", icon: <GoIssueTracks /> },
@@ -27,9 +27,6 @@ function Sidebar() {
         { name: "Register", path: "/register", icon: <CgProfile /> },
     ];
 
-    // =========================
-    // Citizen
-    // =========================
     const citizenLinks = [
         { name: "Home", path: "/dashboard", icon: <IoHomeSharp /> },
         // { name: "Dashboard", path: "/dashboard", icon: <AiOutlineDashboard /> },
@@ -40,9 +37,6 @@ function Sidebar() {
         { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
     ];
 
-    // =========================
-    // Officer
-    // =========================
     const officerLinks = [
         { name: "Dashboard", path: "/officer/dashboard", icon: <AiOutlineDashboard /> },
         { name: "Issues", path: "/officer/manage-issues", icon: <GoIssueTracks /> },
@@ -50,9 +44,6 @@ function Sidebar() {
         { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
     ];
 
-    // =========================
-    // Admin
-    // =========================
     const adminLinks = [
         { name: "Dashboard", path: "/admin/dashboard", icon: <AiOutlineDashboard /> },
         { name: "Officers", path: "/admin/manage-officers", icon: <CgProfile /> }, // Placeholder

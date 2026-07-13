@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import toast from 'react-hot-toast';
 
 
 
@@ -21,6 +22,7 @@ function Login() {
                     withCredentials: true
                 }
             )
+            toast.success("logged in as "+res.user.name)
             console.log("login successful")
             if (res.user.role === "admin") {
                 navigate("/admin/dashboard");
@@ -31,7 +33,7 @@ function Login() {
             }
             
         } catch (error) {
-            alert(error.response?.data?.message || "Registration failed");
+            toast.error(error.response?.data?.message || "Login failed");
         }
     }
     return (

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { submitReport } from "../services/reportService";
+import toast from 'react-hot-toast';
 
 function ReportForm() {
   const { issueId } = useParams();
@@ -23,10 +24,10 @@ function ReportForm() {
 
     try {
       await submitReport(issueId, formData);
-      alert("Report submitted successfully");
+      toast.success("Report submitted successfully");
       navigate("/officer/dashboard");
     } catch (error) {
-      alert(error.response?.data?.message || "Failed to submit report");
+      toast.error(error.response?.data?.message || "Failed to submit report");
     }
   };
 

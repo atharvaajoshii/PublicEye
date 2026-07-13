@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
 import Sidebar from "../../components/Sidebar";
-
+import toast from 'react-hot-toast';
 
 function Reports() {
     const [reports, setReports] = useState([]);
@@ -40,9 +40,10 @@ function Reports() {
             await adminService.approveReport(selectedReport._id);
             await fetchReports();
             setSelectedReport(null);
-            alert("Report approved successfully");
+            toast.success("Report approved successfully");
         } catch (err) {
             console.log(err);
+            toast.error("failed to approve")
         }
     };
 
@@ -53,9 +54,10 @@ function Reports() {
             await adminService.rejectReport(selectedReport._id);
             await fetchReports();
             setSelectedReport(null);
-            alert("Report rejected successfully");
+            toast.success("Report rejected successfully");
         } catch (err) {
             console.log(err);
+            toast.error("failed to reject")
         }
     };
 

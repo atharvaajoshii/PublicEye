@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
 import Sidebar from "../../components/Sidebar";
+import toast from 'react-hot-toast';
 
 function UserManagement() {
     const [users, setUsers] = useState([]);
@@ -34,7 +35,7 @@ function UserManagement() {
 
     const handleToggleStatus = async (id) => {
         try {
-            await adminService.toggleUserStatus(id);
+            const res = await adminService.toggleUserStatus(id);
 
             fetchUsers();
 
@@ -42,23 +43,26 @@ function UserManagement() {
                 const res = await adminService.getUserById(id);
                 setSelectedUser(res.data.user);
             }
+            toast.success(res.data.message)
         } catch (err) {
             console.log(err);
+            toast.error(err.response?.data?.error || "Failed to update user status");
+
         }
     };
 
     if (loading) {
         return (
             <div className="flex justify-center items-center h-80">
-                <Sidebar/>
+                <Sidebar />
                 Loading...
             </div>
         );
     }
-    
+
     return (
         <div className="p-6">
-            <Sidebar/>
+            <Sidebar />
             <h1 className="text-3xl font-bold mb-6">
                 User Management
             </h1>
@@ -99,11 +103,10 @@ function UserManagement() {
 
                                     <td className="px-5 py-4">
                                         <span
-                                            className={`px-3 py-1 rounded-full text-sm ${
-                                                user.status === "Active"
-                                                    ? "bg-green-100 text-green-700"
-                                                    : "bg-red-100 text-red-700"
-                                            }`}
+                                            className={`px-3 py-1 rounded-full text-sm ${user.status === "Active"
+                                                ? "bg-green-100 text-green-700"
+                                                : "bg-red-100 text-red-700"
+                                                }`}
                                         >
                                             {user.status}
                                         </span>
@@ -122,11 +125,10 @@ function UserManagement() {
                                             onClick={() =>
                                                 handleToggleStatus(user._id)
                                             }
-                                            className={`px-3 py-1 rounded text-white ${
-                                                user.status === "Active"
-                                                    ? "bg-red-500 hover:bg-red-600"
-                                                    : "bg-green-500 hover:bg-green-600"
-                                            }`}
+                                            className={`px-3 py-1 rounded text-white ${user.status === "Active"
+                                                ? "bg-red-500 hover:bg-red-600"
+                                                : "bg-green-500 hover:bg-green-600"
+                                                }`}
                                         >
                                             {user.status === "Active"
                                                 ? "Block"
@@ -176,11 +178,10 @@ function UserManagement() {
                                 <p className="text-gray-500">Status</p>
 
                                 <span
-                                    className={`px-3 py-1 rounded-full text-sm ${
-                                        selectedUser.status === "Active"
-                                            ? "bg-green-100 text-green-700"
-                                            : "bg-red-100 text-red-700"
-                                    }`}
+                                    className={`px-3 py-1 rounded-full text-sm ${selectedUser.status === "Active"
+                                        ? "bg-green-100 text-green-700"
+                                        : "bg-red-100 text-red-700"
+                                        }`}
                                 >
                                     {selectedUser.status}
                                 </span>

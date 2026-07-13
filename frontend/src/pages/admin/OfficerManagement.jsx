@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
 import Sidebar from "../../components/Sidebar";
+import toast from 'react-hot-toast';
 
 function OfficerManagement() {
     const [officers, setOfficers] = useState([]);
@@ -53,14 +54,14 @@ function OfficerManagement() {
 
     const handleCreate = async () => {
         try {
-            await adminService.createOfficer(formData);
-
+            const res = await adminService.createOfficer(formData);
+            console.log(res)
             setFormData({
                 name: "",
                 email: "",
                 password: "",
             });
-
+            toast.success(res.data.officer.name+" officer created successfulyy")
             fetchOfficers();
         } catch (err) {
             console.log(err);
@@ -75,22 +76,25 @@ function OfficerManagement() {
                 selectedOfficer._id,
                 formData
             );
-
+            toast.success("updated successfully")
             fetchOfficers();
             handleView(selectedOfficer._id);
         } catch (err) {
             console.log(err);
+            toast.error("error updating officer")
         }
     };
 
     const handleDelete = async () => {
         if (!selectedOfficer) return;
-
+        const name = selectedOfficer.name
+        console.log(name)
         if (!window.confirm("Delete this officer?")) return;
 
         try {
-            await adminService.deleteOfficer(selectedOfficer._id);
+            const res = await adminService.deleteOfficer(selectedOfficer._id);
 
+            toast.success("Officer "+name+" deleted successfully")
             setSelectedOfficer(null);
 
             setFormData({
@@ -98,10 +102,10 @@ function OfficerManagement() {
                 email: "",
                 password: "",
             });
-
             fetchOfficers();
         } catch (err) {
             console.log(err);
+            toast.error("failed to delete officer")
         }
     };
 
