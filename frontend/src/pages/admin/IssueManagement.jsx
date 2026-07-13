@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
 import Sidebar from "../../components/Sidebar";
 import toast from 'react-hot-toast';
+import "../../styles/atharva.css"
 
 function IssueManagement() {
     const [issues, setIssues] = useState([]);
@@ -88,144 +89,154 @@ function IssueManagement() {
     if (loading)
         return (
             <div>
-                <Sidebar/>
+                <Sidebar />
                 Loading...
             </div>
         );
 
     return (
-        <div className="p-6">
-            <Sidebar/>
-            <h1 className="text-3xl font-bold mb-6">
-                Issue Management
-            </h1>
-            <div className="grid grid-cols-3 gap-6">
-                {/* Left */}
-                <div>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Status</th>
-                                <th>
-                                    Actions
-                                </th>
-                            </tr>
-
-                        </thead>
-                        <tbody>
-                            {issues.map((issue) => (
-                                <tr key={issue._id}>
-                                    <td>
-                                        {issue.title}
-                                    </td>
-                                    <td>
-                                        {issue.category}
-                                    </td>
-                                    <td>
-
-                                        <span>
-                                            {issue.status}
-                                        </span>
-
-                                    </td>
-                                    <td>
-                                        <button
-                                            onClick={() =>
-                                                handleView(issue._id)
-                                            }
-                                        >
-                                            View
-                                        </button>
-                                        <button
-                                            onClick={() =>
-                                                handleDelete(issue._id)
-                                            }
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
+        <div className="users-table">
+            <Sidebar />
+            <div className="content">
+                <h1 className="page-title">
+                    Issue Management
+                </h1>
+                <div className="management-container">
+                    {/* Issues Table */}
+                    <div className="table-section">
+                        <table className="issues-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-                {/* Right */}
-                <div>
-                    <h2>
-                        Issue Details
-                    </h2>
-                    {selectedIssue ? (
-                        <>
-                            <p>
-                                <strong>Title:</strong>{" "}
-                                {selectedIssue.title}
-                            </p>
-                            <p>
-                                <strong>Description:</strong>{" "}
-                                {selectedIssue.description}
-                            </p>
-                            <p>
-                                <strong>Category:</strong>{" "}
-                                {selectedIssue.category}
-                            </p>
-                            <p>
-                                <strong>Status:</strong>{" "}
-                                {selectedIssue.status}
-                            </p>
-                            <p>
-                                <strong>Assigned Officer:</strong>{" "}
-                                {issueTrack?.officer?.name || "Not Assigned"}
-                            </p>
-                            <p>
-                                <strong>Officer Email:</strong>{" "}
-                                {issueTrack?.officer?.email || "-"}
-                            </p>
-                            <p>
-                                <strong>Location:</strong>{" "}
-                                {selectedIssue.location}
-                            </p>
-                            <div>
-                                <label>
-                                    Assign Officer
-                                </label>
-                                <select
-                                    value={selectedOfficer}
-                                    onChange={(e) =>
-                                        setSelectedOfficer(
-                                            e.target.value
-                                        )
-                                    }
-                                >
-                                    <option value="">
-                                        Select Officer
-                                    </option>
-                                    {officers.map((officer) => (
-                                        <option
-                                            key={officer._id}
-                                            value={officer._id}
-                                        >
-                                            {officer.name}
+                            </thead>
+                            <tbody>
+                                {issues.map((issue) => (
+                                    <tr
+                                        key={issue._id}
+                                        className={
+                                            selectedIssue?._id === issue._id
+                                                ? "selected-row"
+                                                : ""
+                                        }
+                                    >
+                                        <td>{issue.title}</td>
+                                        <td>{issue.category}</td>
+                                        <td>
+                                            <span className="status">
+                                                {issue.status}
+                                            </span>
+                                        </td>
+                                        <td className="actions">
+                                            <button
+                                                onClick={() =>
+                                                    handleView(issue._id)
+                                                }
+                                            >
+                                                View
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(issue._id)
+                                                }
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    {/* Details Panel */}
+                    <div className="details-section">
+                        <h2>Issue Details</h2>
+                        {selectedIssue ? (
+                            <div className="details-card">
+                                <h3>Issue Information</h3>
+                                <div className="detail-item">
+                                    <label>Title</label>
+                                    <p>{selectedIssue.title}</p>
+                                </div>
+                                <div className="detail-item">
+                                    <label>Description</label>
+                                    <p>{selectedIssue.description}</p>
+                                </div>
+                                <div className="detail-item">
+                                    <label>Category</label>
+                                    <p>{selectedIssue.category}</p>
+                                </div>
+                                <div className="detail-item">
+                                    <label>Status</label>
+                                    <p>{selectedIssue.status}</p>
+                                </div>
+                                <div className="detail-item">
+                                    <label>Location</label>
+                                    <p>{selectedIssue.location}</p>
+                                </div>
+                                <hr />
+                                <h3>Assigned Officer</h3>
+                                <div className="detail-item">
+                                    <label>Name</label>
+                                    <p>
+                                        {issueTrack?.officer?.name ||
+                                            "Not Assigned"}
+                                    </p>
+                                </div>
+                                <div className="detail-item">
+                                    <label>Email</label>
+                                    <p>
+                                        {issueTrack?.officer?.email || "-"}
+                                    </p>
+                                </div>
+                                <hr />
+                                <h3>Assignment</h3>
+                                <div className="detail-item">
+                                    <label>Select Officer</label>
+                                    <select
+                                        value={selectedOfficer}
+                                        onChange={(e) =>
+                                            setSelectedOfficer(
+                                                e.target.value
+                                            )
+                                        }
+                                    >
+                                        <option value="">
+                                            Select Officer
                                         </option>
-                                    ))}
-                                </select>
+
+                                        {officers.map((officer) => (
+                                            <option
+                                                key={officer._id}
+                                                value={officer._id}
+                                            >
+                                                {officer.name}
+                                            </option>
+                                        ))}
+
+                                    </select>
+                                </div>
                                 <button
                                     onClick={handleAssign}
-                                    disabled={selectedIssue.status === "Resolved"}
+                                    disabled={
+                                        selectedIssue.status === "Resolved"
+                                    }
                                 >
                                     {selectedIssue.status === "Assigned"
                                         ? "Reassign Officer"
                                         : "Assign Officer"}
                                 </button>
                             </div>
-                        </>
-                    ) : (
-                        <p>
-                            Select an issue to view details.
-                        </p>
-                    )}
+                        ) : (
+
+                            <div className="empty-state">
+                                Select an issue to view details.
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

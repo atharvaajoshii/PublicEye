@@ -258,8 +258,8 @@ const getIssueById = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ error: "Invalid Issue ID" });
         }
-        const issue = await Issue.findById(id);
-
+        const issue = await Issue.findById(id)
+            .populate("user", "name email");
         const issueTrack = await IssueTrack.findOne({ issue: id })
             .populate("officer", "name email");
 
@@ -428,7 +428,44 @@ const getUserById = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "user not found" });
         }
-        return res.json({ user });
+
+        // info to show in the view-user section
+        const totalIssues = await Issue.countDocuments({
+            user: id,
+        });
+        const pendingIssues = await Issue.countDocuments({
+            user: id,
+            status: "Pending",
+        });
+        const assignedIssues = await Issue.countDocuments({
+            user: id,
+            status: "Assigned",
+        });
+        const inProgressIssues = await Issue.countDocuments({
+            user: id,
+            status: "In Progress",
+        });
+        const resolvedIssues = await Issue.countDocuments({
+            user: id,
+            status: "Resolved",
+        });
+        const rejectedIssues = await Issue.countDocuments({
+            user: id,
+            status: "Rejected",
+        })
+
+        return res.json({
+            user,
+            stats: {
+                totalIssues,
+                pendingIssues,
+                assignedIssues,
+                inProgressIssues,
+                resolvedIssues,
+                rejectedIssues,
+            }
+        });
+
     } catch (error) {
         console.log("Error in admin Controller:", error.message);
         return res.status(500).json({ error: "Internal server error" });
