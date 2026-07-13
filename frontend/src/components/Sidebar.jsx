@@ -10,11 +10,14 @@ import MyReports from "../pages/MyReports";
 import toast from 'react-hot-toast';
 
 
-function Sidebar() {
+import "../styles/atmika.css"
+
+function Sidebar({ isOpen, closeSidebar }) {
     const navigate = useNavigate();
     const { user, logout } = useAuth();
 
     const handleLogout = async () => {
+        closeSidebar();
         await logout();
         toast.success("logged out!")
         navigate("/");
@@ -64,8 +67,10 @@ function Sidebar() {
     }
 
     return (
-        <aside className="sidebar">
-
+        <aside
+            className={`sidebar ${isOpen ? "open" : "collapsed"
+                }`}
+        >
             {/* Logo */}
             <div className="sidebar-header">
                 <img
@@ -79,28 +84,31 @@ function Sidebar() {
                 </span>
             </div>
 
-            {/* Profile */}
-            <div className="sidebar-user">
-                <img
-                    src="https://placehold.co/50x50"
-                    alt="Profile"
-                    className="profile-image"
-                />
-
-                <div className="user-info">
-                    <h4>{user?.name || "Guest"}</h4>
-                    <p>{user?.role || "Visitor"}</p>
-                </div>
-            </div>
-
             {/* Navigation */}
             <nav className="sidebar-links">
                 {links.map((link) => (
-                    <Link key={link.path} to={link.path}>
+                    <Link key={link.path} to={link.path}
+                        className="sidebarLinkChild"
+                        onClick={closeSidebar}
+                    >
                         {link.icon}
                         <span>{link.name}</span>
                     </Link>
                 ))}
+
+                {/* Profile */}
+                <div className="sidebar-user">
+                    <img
+                        src="https://placehold.co/50x50"
+                        alt="Profile"
+                        className="profile-image"
+                    />
+
+                    <div className="user-info">
+                        <h4>{user?.name || "Guest"}</h4>
+                        <p>{user?.role || "Visitor"}</p>
+                    </div>
+                </div>
             </nav>
 
             {/* Logout (Only when logged in) */}

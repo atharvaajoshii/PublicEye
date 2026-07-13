@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
-import Sidebar from "../components/Sidebar";
-
 
 import AnalyticsChart from "../components/AnalyticsChart"
 import analyticsService from "../services/analyticsService";
@@ -46,7 +44,6 @@ function Analytics() {
 
     return (
         <div>
-            <Sidebar/>
             <button onClick={() => navigate(-1)}>
             <GoChevronLeft />Back
             </button>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
-import Sidebar from "../../components/Sidebar";
 import toast from 'react-hot-toast';
 
 function UserManagement() {
@@ -54,7 +53,6 @@ function UserManagement() {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-80">
-                <Sidebar />
                 Loading...
             </div>
         );
@@ -62,7 +60,6 @@ function UserManagement() {
 
     return (
         <div className="p-6">
-            <Sidebar />
             <h1 className="text-3xl font-bold mb-6">
                 User Management
             </h1>

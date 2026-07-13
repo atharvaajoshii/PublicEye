@@ -88,14 +88,12 @@ function IssueManagement() {
     if (loading)
         return (
             <div>
-                <Sidebar/>
                 Loading...
             </div>
         );
 
     return (
         <div className="p-6">
-            <Sidebar/>
             <h1 className="text-3xl font-bold mb-6">
                 Issue Management
             </h1>
