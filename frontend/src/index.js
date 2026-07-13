@@ -12,7 +12,8 @@ root.render(
       <Toaster
         position="top-center"
         reverseOrder={true}
-      />      <App />
+      />
+      <App />
     </AuthProvider>
   </React.StrictMode>
 );
