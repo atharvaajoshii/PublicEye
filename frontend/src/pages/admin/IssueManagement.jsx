@@ -89,7 +89,6 @@ function IssueManagement() {
     if (loading)
         return (
             <div>
-                <Sidebar />
                 Loading...
             </div>
         );

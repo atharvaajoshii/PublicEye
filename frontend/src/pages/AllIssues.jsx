@@ -1,4 +1,3 @@
-import Sidebar from "../components/Sidebar";
 import React,{useEffect,useState} from "react";
 import axios from "axios";
 function AllIssues(){
@@ -20,7 +19,6 @@ function AllIssues(){
     },[]);
     return(
         <div>
-            <Sidebar/>
             <h1>All Issues</h1>
             {issues.map((issue)=>(
                 <div key={issue._id}>

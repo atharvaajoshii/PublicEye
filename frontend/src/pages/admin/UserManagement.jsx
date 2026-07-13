@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
-import Sidebar from "../../components/Sidebar";
 import toast from 'react-hot-toast';
 import DetailsOverlay from "../../components/DetailsOverlay";
 import "../../styles/atharva.css"
@@ -58,7 +57,6 @@ function UserManagement() {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-80">
-                <Sidebar />
                 Loading...
             </div>
         );

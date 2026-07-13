@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import issueService from '../services/issueService';
-import Sidebar from '../components/Sidebar';
 function ManageIssues_user() {
 
     // const { user } = useAuth(); not required due to userService
@@ -32,7 +31,6 @@ function ManageIssues_user() {
     }
     return (
         <div>
-            <Sidebar />
             <div>
                 <h1>Manage Issues</h1>
                 <div>

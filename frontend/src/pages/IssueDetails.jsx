@@ -2,7 +2,6 @@
 
 import React from "react";
 import Timeline from "../components/Timeline";
-import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom"
 import { GoChevronLeft } from "react-icons/go";
 
@@ -19,7 +18,6 @@ function IssueDetails() {
 
   return (
     <div>
-      <Sidebar />
       <button onClick={() => navigate(-1)}>
         <GoChevronLeft />Back
       </button>

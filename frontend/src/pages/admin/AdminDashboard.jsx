@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import Sidebar from "../../components/Sidebar";
 import adminService from "../../services/adminService";
 import "../../styles/atharva.css"
 
@@ -45,7 +44,6 @@ function AdminDashboard() {
 
     return (
         <div>
-            <Sidebar />
             <div className="dashboard">
                 <div className="stats-container">
                     <div className="stat-card">
