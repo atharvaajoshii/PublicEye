@@ -9,6 +9,7 @@ import officerService from "../services/officerService";
 function OfficerDashboard() {
 
   const { user } = useAuth();
+  const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate();
 
@@ -29,6 +30,7 @@ function OfficerDashboard() {
   }, [user]);
 
   const fetchDashboard = async () => {
+    setLoading(true);
     try {
       const res = await officerService.getDashboard();
 
@@ -39,6 +41,8 @@ function OfficerDashboard() {
 
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 

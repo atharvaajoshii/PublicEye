@@ -12,6 +12,7 @@ import { GoChevronLeft } from "react-icons/go";
 
 function Analytics() {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true)
 
     const [analytics, setAnalytics] = useState({
         category: [],
@@ -30,6 +31,7 @@ function Analytics() {
     }, [])
 
     const fetchAnalytics = async () => {
+        setLoading(true);
         try {
             const res = await analyticsService.getAnalytics();
 
@@ -37,6 +39,8 @@ function Analytics() {
 
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     }
 

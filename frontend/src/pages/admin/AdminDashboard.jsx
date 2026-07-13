@@ -9,6 +9,7 @@ import "../../styles/atharva.css"
 function AdminDashboard() {
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true)
 
     const [stats, setStats] = useState({
         totalUsers: 0,
@@ -25,6 +26,7 @@ function AdminDashboard() {
     }, [])
 
     const fetchDashboard = async () => {
+        setLoading(true);
         try {
 
             const res = await adminService.getDashboard();
@@ -36,6 +38,8 @@ function AdminDashboard() {
 
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     }
 
