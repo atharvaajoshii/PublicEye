@@ -3,6 +3,8 @@ import adminService from "../../services/adminService";
 import toast from 'react-hot-toast';
 import DetailsOverlay from "../../components/DetailsOverlay";
 import "../../styles/atharva.css"
+import Sidebar from "../../components/Sidebar";
+
 
 function UserManagement() {
     const [users, setUsers] = useState([]);
