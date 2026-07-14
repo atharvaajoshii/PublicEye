@@ -15,14 +15,18 @@ const createIssue = async (req, res) => {
 
         const image = req.file ? req.file.filename : "";
 
+        // Safely parse numbers or set to undefined/null if they are empty strings
+        const parsedLatitude = latitude && latitude.trim() !== "" ? Number(latitude) : undefined;
+        const parsedLongitude = longitude && longitude.trim() !== "" ? Number(longitude) : undefined;
+
         const issue = new Issue({
             title,
             description,
             location,
-            latitude,
-            longitude,
+            latitude: parsedLatitude,
+            longitude: parsedLongitude,
             category,
-            publicVoting,
+            publicVoting: publicVoting === 'true' || publicVoting === true, // handle formData string boolean
             image,
             user: req.user.id
         });
@@ -40,6 +44,7 @@ const createIssue = async (req, res) => {
         });
 
     } catch (error) {
+        console.error("CRITICAL BACKEND ERROR DURING ISSUE CREATION:", error);
         res.status(500).json({
             message: error.message
         });
@@ -80,8 +85,31 @@ const getAllIssues = async (request, response) => {
         });
     }
 };
+// Get a single issue by ID
+const getIssueById = async (request, response) => {
+    try {
+        const issue = await Issue.findById(request.params.id);
+        if (!issue) {
+            return response.status(404).json({
+                success: false,
+                message: "Issue not found"
+            });
+        }
+        response.json({
+            success: true,
+            issue
+        });
+    } catch (error) {
+        response.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
     createIssue,
     getUserIssue,
-    getAllIssues
+    getAllIssues,
+    getIssueById 
 };
