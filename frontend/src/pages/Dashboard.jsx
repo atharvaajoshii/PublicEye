@@ -1,4 +1,3 @@
-import Sidebar from "../components/Sidebar";
 // import Navbar from "../components/Navbar";
 import WelcomeSection from "../components/dashboard/WelcomeSection";
 import StatusChart from "../components/dashboard/StatusChart";
@@ -28,7 +27,6 @@ function Dashboard() {
     },[]);
     return (
         <div>
-            <Sidebar />
             <main className="dashboard-content">
                 <WelcomeSection user = {user}/>
                 <StatusGrid issues={issues} />

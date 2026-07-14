@@ -21,6 +21,8 @@ import AllIssues from "./pages/AllIssues";
 import OfficerReport from "./pages/OfficerReport";
 import ManageIssues_user from "./pages/ManageIssues_user";
 import MyReports from "./pages/MyReports";
+import Sidebar from "./components/Sidebar";
+import Layout from "./components/Layout"
 
 function App() {
   return (
@@ -31,149 +33,151 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/issue/:id" element={<IssueDetails />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route element={<Layout />}>
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/allissues"
-          element={
-            <ProtectedRoute>
-              <AllIssues />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/allissues"
+            element={
+              <ProtectedRoute>
+                <AllIssues />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/report"
-          element={
-            <ProtectedRoute>
-              <ReportIssue />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/report"
+            element={
+              <ProtectedRoute>
+                <ReportIssue />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/officer/dashboard"
-          element={
-            <ProtectedRoute roles={["officer"]}>
-              <OfficerDashboard />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/officer/dashboard"
+            element={
+              <ProtectedRoute roles={["officer"]}>
+                <OfficerDashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/analytics"
-          element={
-            <ProtectedRoute>
-              <Analytics />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/analytics"
+            element={
+              <ProtectedRoute>
+                <Analytics />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/officer/manage-issues"
-          element={
-            <ProtectedRoute roles={["officer"]}>
-              <ManageIssues />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/officer/manage-issues"
+            element={
+              <ProtectedRoute roles={["officer"]}>
+                <ManageIssues />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/issue/:issueId/report"
-          element={
-            <ProtectedRoute roles={["officer"]}>
-              <OfficerReport />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/issue/:issueId/report"
+            element={
+              <ProtectedRoute roles={["officer"]}>
+                <OfficerReport />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/dashboard"
-          element={
-            <ProtectedRoute roles={["admin"]}>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/manage-issues"
-          element={
-            <ProtectedRoute roles={["admin"]}>
-              <IssueManagement />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/manage-issues"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <IssueManagement />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/manage-users"
-          element={
-            <ProtectedRoute roles={["admin"]}>
-              <UserManagement />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/manage-users"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <UserManagement />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/manage-officers"
-          element={
-            <ProtectedRoute roles={["admin"]}>
-              <OfficerManagement />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/manage-officers"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <OfficerManagement />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/reports"
-          element={
-            <ProtectedRoute roles={["admin"]}>
-              <Reports />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/reports"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <Reports />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/manage-issues"
-          element={
-            <ProtectedRoute>
-              <ManageIssues_user />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/manage-issues"
+            element={
+              <ProtectedRoute>
+                <ManageIssues_user />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/myreports"
-          element={
-            <ProtectedRoute>
-              <MyReports />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/myreports"
+            element={
+              <ProtectedRoute>
+                <MyReports />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/all-issues"
-          element={
-            <ProtectedRoute>
-              <AllIssues />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/all-issues"
+            element={
+              <ProtectedRoute>
+                <AllIssues />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

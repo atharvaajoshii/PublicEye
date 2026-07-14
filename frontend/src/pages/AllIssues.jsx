@@ -1,7 +1,7 @@
 import Sidebar from "../components/Sidebar";
-import React, { useEffect, useState } from "react";
+import React,{useEffect,useState} from "react";
 import axios from "axios";
-import IssueCard from "../components/IssueCard"; // 1. Import your IssueCard component
+import IssueCard from "../components/IssueCard";
 
 function AllIssues() {
     const [issues, setIssues] = useState([]);
@@ -23,10 +23,10 @@ function AllIssues() {
 
     return (
         <div>
-            <Sidebar />
+            <Sidebar/>
             <h1>All Issues</h1>
             
-            {/* 2. Map the issues directly into your IssueCard component */}
+            
             <div className="issues-container">
                 {issues.map((issue) => (
                     <IssueCard key={issue._id} issue={issue} />

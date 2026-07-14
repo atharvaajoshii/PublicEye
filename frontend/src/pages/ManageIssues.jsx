@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
-import Sidebar from "../components/Sidebar";
 
 import { useAuth } from "../context/AuthContext";
 import officerService from "../services/officerService";
@@ -63,7 +62,6 @@ function ManageIssues() {
 
     return (
         <div>
-            <Sidebar/>
             <div>
                 <h1>Manage Issues</h1>
                 <div>

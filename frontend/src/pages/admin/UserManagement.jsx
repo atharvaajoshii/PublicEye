@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
-import Sidebar from "../../components/Sidebar";
 import toast from 'react-hot-toast';
+import DetailsOverlay from "../../components/DetailsOverlay";
+import "../../styles/atharva.css"
 
 function UserManagement() {
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [userStats, setUserStats] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const fetchUsers = async () => {
@@ -28,6 +30,7 @@ function UserManagement() {
         try {
             const res = await adminService.getUserById(id);
             setSelectedUser(res.data.user);
+            setUserStats(res.data.stats);
         } catch (err) {
             console.log(err);
         }
@@ -54,168 +57,199 @@ function UserManagement() {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-80">
-                <Sidebar />
                 Loading...
             </div>
         );
     }
 
     return (
-        <div className="p-6">
+        <div className="user-management">
             <Sidebar />
-            <h1 className="text-3xl font-bold mb-6">
-                User Management
-            </h1>
 
-            <div className="grid grid-cols-3 gap-6">
+            <div className="content">
 
-                {/* Users Table */}
+                <h1 className="page-title">User Management</h1>
 
-                <div className="col-span-2 bg-white rounded-lg shadow overflow-x-auto">
+                <div className="management-container">
 
-                    <table className="min-w-full">
+                    {/* Users Table */}
 
-                        <thead className="bg-gray-100">
-                            <tr>
-                                <th className="px-5 py-3 text-left">Name</th>
-                                <th className="px-5 py-3 text-left">Email</th>
-                                <th className="px-5 py-3 text-left">Role</th>
-                                <th className="px-5 py-3 text-left">Status</th>
-                                <th className="px-5 py-3 text-center">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
+                    <div className="table-section">
 
-                        <tbody>
-                            {users.map((user) => (
-                                <tr
-                                    key={user._id}
-                                    className="border-b hover:bg-gray-50"
-                                >
-                                    <td className="px-5 py-4">{user.name}</td>
+                        <table className="users-table">
 
-                                    <td className="px-5 py-4">{user.email}</td>
-
-                                    <td className="px-5 py-4 capitalize">
-                                        {user.role}
-                                    </td>
-
-                                    <td className="px-5 py-4">
-                                        <span
-                                            className={`px-3 py-1 rounded-full text-sm ${user.status === "Active"
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-red-100 text-red-700"
-                                                }`}
-                                        >
-                                            {user.status}
-                                        </span>
-                                    </td>
-
-                                    <td className="px-5 py-4 flex gap-2 justify-center">
-
-                                        <button
-                                            onClick={() => handleView(user._id)}
-                                            className="px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600"
-                                        >
-                                            View
-                                        </button>
-
-                                        <button
-                                            onClick={() =>
-                                                handleToggleStatus(user._id)
-                                            }
-                                            className={`px-3 py-1 rounded text-white ${user.status === "Active"
-                                                ? "bg-red-500 hover:bg-red-600"
-                                                : "bg-green-500 hover:bg-green-600"
-                                                }`}
-                                        >
-                                            {user.status === "Active"
-                                                ? "Block"
-                                                : "Unblock"}
-                                        </button>
-
-                                    </td>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
+                            </thead>
 
-                    </table>
+                            <tbody>
 
-                </div>
+                                {users.map((user) => (
+                                    <tr
+                                        key={user._id}
+                                        className={
+                                            selectedUser?._id === user._id
+                                                ? "selected-row"
+                                                : ""
+                                        }
+                                    >
+                                        <td>{user.name}</td>
 
-                {/* User Details */}
+                                        <td>{user.email}</td>
 
-                <div className="bg-white rounded-lg shadow p-6">
+                                        <td>{user.role}</td>
 
-                    <h2 className="text-xl font-semibold mb-4">
-                        User Details
-                    </h2>
+                                        <td>
+                                            <span className="status">
+                                                {user.status}
+                                            </span>
+                                        </td>
 
-                    {selectedUser ? (
-                        <div className="space-y-4">
+                                        <td className="actions">
 
-                            <div>
-                                <p className="text-gray-500">Name</p>
-                                <p className="font-medium">
-                                    {selectedUser.name}
-                                </p>
-                            </div>
+                                            <button
+                                                onClick={() => handleView(user._id)}
+                                            >
+                                                View
+                                            </button>
 
-                            <div>
-                                <p className="text-gray-500">Email</p>
-                                <p>{selectedUser.email}</p>
-                            </div>
+                                            <button
+                                                onClick={() =>
+                                                    handleToggleStatus(user._id)
+                                                }
+                                            >
+                                                {user.status === "Active"
+                                                    ? "Block"
+                                                    : "Unblock"}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    {/* Details Panel */}
+                    {selectedUser && (
+                        <DetailsOverlay
+                            open={true}
+                            title="User Details"
+                            onClose={() => {
+                                setSelectedUser(null);
+                                setUserStats(null);
+                            }}
+                            actions={
+                                <>
+                                    <button
+                                        onClick={() => handleToggleStatus(selectedUser._id)}
+                                    >
+                                        {selectedUser.status === "Active"
+                                            ? "Block User"
+                                            : "Unblock User"}
+                                    </button>
 
-                            <div>
-                                <p className="text-gray-500">Role</p>
-                                <p className="capitalize">
-                                    {selectedUser.role}
-                                </p>
-                            </div>
+                                    <button
+                                        onClick={() => {
+                                            setSelectedUser(null);
+                                            setUserStats(null);
+                                        }}
+                                    >
+                                        Close
+                                    </button>
+                                </>
+                            }
+                        >
+                            <section className="overlay-section">
+                                <h3>Profile</h3>
 
-                            <div>
-                                <p className="text-gray-500">Status</p>
+                                <div className="detail-grid">
+                                    <div className="detail-item">
+                                        <label>Name</label>
+                                        <span>{selectedUser.name}</span>
+                                    </div>
 
-                                <span
-                                    className={`px-3 py-1 rounded-full text-sm ${selectedUser.status === "Active"
-                                        ? "bg-green-100 text-green-700"
-                                        : "bg-red-100 text-red-700"
-                                        }`}
-                                >
-                                    {selectedUser.status}
-                                </span>
-                            </div>
+                                    <div className="detail-item">
+                                        <label>Email</label>
+                                        <span>{selectedUser.email}</span>
+                                    </div>
 
-                            <div>
-                                <p className="text-gray-500">
-                                    Joined On
-                                </p>
+                                    <div className="detail-item">
+                                        <label>Role</label>
+                                        <span>{selectedUser.role}</span>
+                                    </div>
 
-                                <p>
-                                    {new Date(
-                                        selectedUser.createdAt
-                                    ).toLocaleDateString()}
-                                </p>
-                            </div>
+                                    <div className="detail-item">
+                                        <label>Status</label>
+                                        <span>{selectedUser.status}</span>
+                                    </div>
+                                </div>
+                            </section>
 
-                            <div>
-                                <p className="text-gray-500">User ID</p>
+                            <hr className="overlay-divider" />
 
-                                <p className="break-all text-sm">
-                                    {selectedUser._id}
-                                </p>
-                            </div>
+                            <section className="overlay-section">
+                                <h3>Issue Statistics</h3>
 
-                        </div>
-                    ) : (
-                        <div className="text-gray-500">
-                            Select a user to view details.
-                        </div>
+                                <div className="detail-grid">
+                                    <div className="detail-item">
+                                        <label>Total Issues</label>
+                                        <span>{userStats?.totalIssues}</span>
+                                    </div>
+
+                                    <div className="detail-item">
+                                        <label>Pending</label>
+                                        <span>{userStats?.pendingIssues}</span>
+                                    </div>
+
+                                    <div className="detail-item">
+                                        <label>Assigned</label>
+                                        <span>{userStats?.assignedIssues}</span>
+                                    </div>
+
+                                    <div className="detail-item">
+                                        <label>In Progress</label>
+                                        <span>{userStats?.inProgressIssues}</span>
+                                    </div>
+
+                                    <div className="detail-item">
+                                        <label>Resolved</label>
+                                        <span>{userStats?.resolvedIssues}</span>
+                                    </div>
+
+                                    <div className="detail-item">
+                                        <label>Rejected</label>
+                                        <span>{userStats?.rejectedIssues}</span>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <hr className="overlay-divider" />
+
+                            <section className="overlay-section">
+                                <h3>Account Information</h3>
+
+                                <div className="detail-grid">
+                                    <div className="detail-item">
+                                        <label>Joined On</label>
+                                        <span>
+                                            {new Date(selectedUser.createdAt).toLocaleDateString()}
+                                        </span>
+                                    </div>
+
+                                    <div className="detail-item">
+                                        <label>User ID</label>
+                                        <span>{selectedUser._id}</span>
+                                    </div>
+                                </div>
+                            </section>
+                        </DetailsOverlay>
                     )}
-
                 </div>
-
             </div>
         </div>
     );
