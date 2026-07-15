@@ -9,7 +9,7 @@ const issueTrackSchema = new mongoose.Schema({
     officer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        required: false
     },
     progress: {
         type: Number,

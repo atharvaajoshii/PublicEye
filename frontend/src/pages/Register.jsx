@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import toast from 'react-hot-toast';
 
 function Register() {
     const navigate = useNavigate();
@@ -16,10 +17,10 @@ function Register() {
             await register({
                 name, email, password
             })
-            alert("registered!!")
+            toast.success("user registered successfully")
             navigate('/login')
         } catch (error) {
-            alert(error.response?.data?.message || "Registration failed");
+            toast.error(error.response?.data?.message || "Registration failed");
         }
 
     }

@@ -2,14 +2,13 @@
 
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import Sidebar from "../../components/Sidebar";
-
-import AdminSidebar from "../../components/AdminSidebar"
 import adminService from "../../services/adminService";
+import "../../styles/atharva.css"
 
 function AdminDashboard() {
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true)
 
     const [stats, setStats] = useState({
         totalUsers: 0,
@@ -26,6 +25,7 @@ function AdminDashboard() {
     }, [])
 
     const fetchDashboard = async () => {
+        setLoading(true);
         try {
 
             const res = await adminService.getDashboard();
@@ -37,56 +37,63 @@ function AdminDashboard() {
 
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <div>
-            <Sidebar />
-            <div>
-                <div >
-                    <div>
+            <div className="dashboard">
+                <div className="stats-container">
+                    <div className="stat-card">
                         <h1>Total Officers</h1>
                         <p>{stats.totalOfficers}</p>
                     </div>
-                    <div>
+                    <div className="stat-card">
                         <h1>Total Users</h1>
                         <p>{stats.totalUsers}</p>
                     </div>
-                    <div>
+                    <div className="stat-card">
                         <h1>Total Issues</h1>
                         <p>{stats.totalIssues}</p>
                     </div>
                 </div>
-                <div>
-                    <div>
-                        <h1>Pending Isssues</h1>
+                <div className="issue-sections">
+                    <div className="issue-box">
+                        <h1>Pending Issues</h1>
                         {pendingIssues.map((issue) => (
-                            <div key={issue._id}
+                            <div
+                                key={issue._id}
+                                className="issue-card"
                                 onClick={() => navigate(`/issue/${issue._id}`)}
-                                style={{ cursor: "pointer" }}>
-                                <h3>{issue?.title}</h3>
-                                <p>Votes: {issue?.votes}</p>
+                            >
+                                <h3>{issue.title}</h3>
+                                <p>Votes: {issue.votes}</p>
                             </div>
                         ))}
                     </div>
-                    <div>
-                        <h1>Resolved Isssues</h1>
+                    <div className="issue-box">
+                        <h1>Resolved Issues</h1>
                         {resolvedIssues.map((issue) => (
-                            <div key={issue._id}
+                            <div
+                                key={issue._id}
+                                className="issue-card"
                                 onClick={() => navigate(`/issue/${issue._id}`)}
-                                style={{ cursor: "pointer" }}>
-                                <h3>{issue?.title}</h3>
+                            >
+                                <h3>{issue.title}</h3>
                             </div>
                         ))}
                     </div>
-                    <div>
-                        <h1>Isssues Reported Today</h1>
+                    <div className="issue-box">
+                        <h1>Issues Reported Today</h1>
                         {reportedToday.map((issue) => (
-                            <div key={issue._id}
+                            <div
+                                key={issue._id}
+                                className="issue-card"
                                 onClick={() => navigate(`/issue/${issue._id}`)}
-                                style={{ cursor: "pointer" }}>
-                                <h3>{issue?.title}</h3>
+                            >
+                                <h3>{issue.title}</h3>
                             </div>
                         ))}
                     </div>

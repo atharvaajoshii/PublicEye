@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
-import Sidebar from "../components/Sidebar";
-
 
 import AnalyticsChart from "../components/AnalyticsChart"
 import analyticsService from "../services/analyticsService";
@@ -12,6 +10,7 @@ import { GoChevronLeft } from "react-icons/go";
 
 function Analytics() {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true)
 
     const [analytics, setAnalytics] = useState({
         category: [],
@@ -30,6 +29,7 @@ function Analytics() {
     }, [])
 
     const fetchAnalytics = async () => {
+        setLoading(true);
         try {
             const res = await analyticsService.getAnalytics();
 
@@ -37,12 +37,13 @@ function Analytics() {
 
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <div>
-            <Sidebar/>
             <button onClick={() => navigate(-1)}>
             <GoChevronLeft />Back
             </button>

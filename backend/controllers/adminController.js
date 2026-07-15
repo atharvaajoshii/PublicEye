@@ -1,5 +1,6 @@
 // Atmika
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const Issue = require("../models/Issue");
 const IssueTrack = require("../models/IssueTrack");
@@ -116,58 +117,82 @@ const getOfficerById = async (req, res) => {
 const createOfficers = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-
-        const existingOfficer = await User.findOne({ email });
-
-        if (existingOfficer) {
-            return res.status(400).json({ error: "Officer already exists" });
+        if (!name || !email || !password) {
+            throw new Error("All fields are required");
         }
 
+        const existingOfficer = await User.findOne({ email });
+        if (existingOfficer) {
+            return res.status(400).json({
+                message: "Officer already exists",
+            });
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
         const officer = await User.create({
             name,
             email,
-            password,
+            password: hashedPassword,
             role: "officer",
         });
-
         return res.status(201).json({
             message: "Officer created successfully",
-            officer,
+            officer: {
+                id: officer._id,
+                name: officer.name,
+                email: officer.email,
+                role: officer.role,
+            },
         });
     } catch (error) {
-        console.log("Error in admin Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" });
+        console.log("Error in Admin Controller:", error.message);
+        return res.status(400).json({
+            message: error.message,
+        });
     }
 };
 
 const updateOfficers = async (req, res) => {
     try {
         const { id } = req.params;
-
+        const { name, email, password } = req.body;
         if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ error: "Invalid Officer ID" });
+            return res.status(400).json({
+                message: "Invalid Officer ID",
+            });
         }
-
+        const updateData = {};
+        if (name) updateData.name = name;
+        if (email) updateData.email = email;
+        if (password) {
+            updateData.password = await bcrypt.hash(password, 10);
+        }
         const officer = await User.findOneAndUpdate(
             {
                 _id: id,
                 role: "officer",
             },
-            req.body,
+            updateData,
             { new: true }
         );
-
         if (!officer) {
-            return res.status(404).json({ error: "Officer not found" });
+            return res.status(404).json({
+                message: "Officer not found",
+            });
         }
-
-        return res.json({
+        return res.status(200).json({
             message: "Officer updated successfully",
-            officer,
+            officer: {
+                id: officer._id,
+                name: officer.name,
+                email: officer.email,
+                role: officer.role,
+            },
         });
     } catch (error) {
-        console.log("Error in admin Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" });
+        console.log("Error in Admin Controller:", error.message);
+        return res.status(500).json({
+            message: "Internal server error",
+        });
     }
 };
 
@@ -233,8 +258,8 @@ const getIssueById = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ error: "Invalid Issue ID" });
         }
-        const issue = await Issue.findById(id);
-
+        const issue = await Issue.findById(id)
+            .populate("user", "name email");
         const issueTrack = await IssueTrack.findOne({ issue: id })
             .populate("officer", "name email");
 
@@ -403,7 +428,44 @@ const getUserById = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "user not found" });
         }
-        return res.json({ user });
+
+        // info to show in the view-user section
+        const totalIssues = await Issue.countDocuments({
+            user: id,
+        });
+        const pendingIssues = await Issue.countDocuments({
+            user: id,
+            status: "Pending",
+        });
+        const assignedIssues = await Issue.countDocuments({
+            user: id,
+            status: "Assigned",
+        });
+        const inProgressIssues = await Issue.countDocuments({
+            user: id,
+            status: "In Progress",
+        });
+        const resolvedIssues = await Issue.countDocuments({
+            user: id,
+            status: "Resolved",
+        });
+        const rejectedIssues = await Issue.countDocuments({
+            user: id,
+            status: "Rejected",
+        })
+
+        return res.json({
+            user,
+            stats: {
+                totalIssues,
+                pendingIssues,
+                assignedIssues,
+                inProgressIssues,
+                resolvedIssues,
+                rejectedIssues,
+            }
+        });
+
     } catch (error) {
         console.log("Error in admin Controller:", error.message);
         return res.status(500).json({ error: "Internal server error" });

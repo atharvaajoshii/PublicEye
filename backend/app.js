@@ -13,6 +13,7 @@ const analyticsRoutes = require("./routes/analyticsRoutes");
 const app = express();
 const authRoutes = require("./routes/authRoutes");
 const cors = require("cors");
+const path = require("path");
 
 app.use(cors({
   origin: [
@@ -41,6 +42,8 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/issues", issueRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/issue-images", express.static(path.join(__dirname, "issue-images")));
+
 
 app.listen(5000, () => {
     console.log("Server Running");

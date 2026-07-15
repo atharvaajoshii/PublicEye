@@ -1,15 +1,14 @@
 // Atmika
-import Sidebar from "../components/Sidebar";  
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 
 import { useAuth } from "../context/AuthContext";
 import officerService from "../services/officerService";
-import OfficerSidebar from "../components/OfficerSidebar"
 
 function OfficerDashboard() {
 
   const { user } = useAuth();
+  const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate();
 
@@ -30,6 +29,7 @@ function OfficerDashboard() {
   }, [user]);
 
   const fetchDashboard = async () => {
+    setLoading(true);
     try {
       const res = await officerService.getDashboard();
 
@@ -40,12 +40,13 @@ function OfficerDashboard() {
 
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <div>
-      <Sidebar />
       <div>
         <div>
           <h1>Total Assigned</h1>

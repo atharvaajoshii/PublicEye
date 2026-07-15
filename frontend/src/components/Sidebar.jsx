@@ -7,19 +7,22 @@ import { IoHomeSharp, IoLogOutSharp } from "react-icons/io5";
 import { GoIssueTracks, GoReport } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 import MyReports from "../pages/MyReports";
+import toast from 'react-hot-toast';
 
-function Sidebar() {
+
+import "../styles/atmika.css"
+
+function Sidebar({ isOpen, closeSidebar }) {
     const navigate = useNavigate();
     const { user, logout } = useAuth();
 
     const handleLogout = async () => {
+        closeSidebar();
         await logout();
+        toast.success("logged out!")
         navigate("/");
     };
 
-    // =========================
-    // Guest (Landing Page)
-    // =========================
     const guestLinks = [
         { name: "Home", path: "/", icon: <IoHomeSharp /> },
         { name: "All Issues", path: "/all-issues", icon: <GoIssueTracks /> },
@@ -27,9 +30,6 @@ function Sidebar() {
         { name: "Register", path: "/register", icon: <CgProfile /> },
     ];
 
-    // =========================
-    // Citizen
-    // =========================
     const citizenLinks = [
         { name: "Home", path: "/dashboard", icon: <IoHomeSharp /> },
         // { name: "Dashboard", path: "/dashboard", icon: <AiOutlineDashboard /> },
@@ -37,11 +37,9 @@ function Sidebar() {
         { name: "Report", path: "/report", icon: <GoReport /> },
         // { name: "My Reports", path: "/myreports", icon: <GoReport/> },
         { name: "Profile", path: "/profile", icon: <CgProfile /> },
+        { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
     ];
 
-    // =========================
-    // Officer
-    // =========================
     const officerLinks = [
         { name: "Dashboard", path: "/officer/dashboard", icon: <AiOutlineDashboard /> },
         { name: "Issues", path: "/officer/manage-issues", icon: <GoIssueTracks /> },
@@ -49,9 +47,6 @@ function Sidebar() {
         { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
     ];
 
-    // =========================
-    // Admin
-    // =========================
     const adminLinks = [
         { name: "Dashboard", path: "/admin/dashboard", icon: <AiOutlineDashboard /> },
         { name: "Officers", path: "/admin/manage-officers", icon: <CgProfile /> }, // Placeholder
@@ -72,8 +67,10 @@ function Sidebar() {
     }
 
     return (
-        <aside className="sidebar">
-
+        <aside
+            className={`sidebar ${isOpen ? "open" : "collapsed"
+                }`}
+        >
             {/* Logo */}
             <div className="sidebar-header">
                 <img
@@ -87,28 +84,31 @@ function Sidebar() {
                 </span>
             </div>
 
-            {/* Profile */}
-            <div className="sidebar-user">
-                <img
-                    src="https://placehold.co/50x50"
-                    alt="Profile"
-                    className="profile-image"
-                />
-
-                <div className="user-info">
-                    <h4>{user?.name || "Guest"}</h4>
-                    <p>{user?.role || "Visitor"}</p>
-                </div>
-            </div>
-
             {/* Navigation */}
             <nav className="sidebar-links">
                 {links.map((link) => (
-                    <Link key={link.path} to={link.path}>
+                    <Link key={link.path} to={link.path}
+                        className="sidebarLinkChild"
+                        onClick={closeSidebar}
+                    >
                         {link.icon}
                         <span>{link.name}</span>
                     </Link>
                 ))}
+
+                {/* Profile */}
+                <div className="sidebar-user">
+                    <img
+                        src="https://placehold.co/50x50"
+                        alt="Profile"
+                        className="profile-image"
+                    />
+
+                    <div className="user-info">
+                        <h4>{user?.name || "Guest"}</h4>
+                        <p>{user?.role || "Visitor"}</p>
+                    </div>
+                </div>
             </nav>
 
             {/* Logout (Only when logged in) */}
