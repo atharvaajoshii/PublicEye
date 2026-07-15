@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
-import Sidebar from "../../components/Sidebar";
 import toast from 'react-hot-toast';
 import "../../styles/atharva.css"
+import "../../styles/overlay.css"
+import DetailsOverlay from "../../components/DetailsOverlay";
+import IssueImage from "../../components/IssueImage";
 
 function IssueManagement() {
     const [issues, setIssues] = useState([]);
@@ -95,7 +97,6 @@ function IssueManagement() {
 
     return (
         <div className="users-table">
-            <Sidebar />
             <div className="content">
                 <h1 className="page-title">
                     Issue Management
@@ -151,91 +152,104 @@ function IssueManagement() {
                         </table>
                     </div>
                     {/* Details Panel */}
-                    <div className="details-section">
-                        <h2>Issue Details</h2>
-                        {selectedIssue ? (
-                            <div className="details-card">
+                    {selectedIssue && (
+                        <DetailsOverlay
+                            open={true}
+                            title="Issue Details"
+                            onClose={() => {
+                                setSelectedIssue(null);
+                                setIssueTrack(null);
+                                setSelectedOfficer("");
+                            }}
+                            actions={
+                                <>
+                                    <button
+                                        onClick={handleAssign}
+                                        disabled={selectedIssue.status === "Resolved"}
+                                    >
+                                        {selectedIssue.status === "Assigned"
+                                            ? "Reassign Officer"
+                                            : "Assign Officer"}
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setSelectedIssue(null);
+                                            setIssueTrack(null);
+                                            setSelectedOfficer("");
+                                        }}
+                                    >
+                                        Close
+                                    </button>
+                                </>
+                            }
+                        >
+                            <section className="overlay-section">
                                 <h3>Issue Information</h3>
-                                <div className="detail-item">
-                                    <label>Title</label>
-                                    <p>{selectedIssue.title}</p>
+                                <div className="detail-grid">
+                                    <div className="detail-item">
+                                        <label>Title</label>
+                                        <span>{selectedIssue.title}</span>
+                                    </div>
+                                    <div className="detail-item">
+                                        <label>Description</label>
+                                        <span>{selectedIssue.description}</span>
+                                    </div>
+                                    <div className="detail-item">
+                                        <label>Category</label>
+                                        <span>{selectedIssue.category}</span>
+                                    </div>
+                                    <div className="detail-item">
+                                        <label>Status</label>
+                                        <span>{selectedIssue.status}</span>
+                                    </div>
+                                    <div className="detail-item">
+                                        <label>Location</label>
+                                        <span>{selectedIssue.location}</span>
+                                    </div>
                                 </div>
-                                <div className="detail-item">
-                                    <label>Description</label>
-                                    <p>{selectedIssue.description}</p>
-                                </div>
-                                <div className="detail-item">
-                                    <label>Category</label>
-                                    <p>{selectedIssue.category}</p>
-                                </div>
-                                <div className="detail-item">
-                                    <label>Status</label>
-                                    <p>{selectedIssue.status}</p>
-                                </div>
-                                <div className="detail-item">
-                                    <label>Location</label>
-                                    <p>{selectedIssue.location}</p>
-                                </div>
-                                <hr />
+                            </section>
+                            <hr className="overlay-divider" />
+                            <section className="overlay-section">
                                 <h3>Assigned Officer</h3>
-                                <div className="detail-item">
-                                    <label>Name</label>
-                                    <p>
-                                        {issueTrack?.officer?.name ||
-                                            "Not Assigned"}
-                                    </p>
+                                <div className="detail-grid">
+                                    <div className="detail-item">
+                                        <label>Name</label>
+                                        <span>{issueTrack?.officer?.name || "Not Assigned"}</span>
+                                    </div>
+
+                                    <div className="detail-item">
+                                        <label>Email</label>
+                                        <span>{issueTrack?.officer?.email || "-"}</span>
+                                    </div>
                                 </div>
-                                <div className="detail-item">
-                                    <label>Email</label>
-                                    <p>
-                                        {issueTrack?.officer?.email || "-"}
-                                    </p>
-                                </div>
-                                <hr />
+                            </section>
+                            <hr className="overlay-divider" />
+                            <section className="overlay-section">
                                 <h3>Assignment</h3>
                                 <div className="detail-item">
                                     <label>Select Officer</label>
                                     <select
                                         value={selectedOfficer}
-                                        onChange={(e) =>
-                                            setSelectedOfficer(
-                                                e.target.value
-                                            )
-                                        }
+                                        onChange={(e) => setSelectedOfficer(e.target.value)}
                                     >
-                                        <option value="">
-                                            Select Officer
-                                        </option>
+                                        <option value="">Select Officer</option>
 
                                         {officers.map((officer) => (
-                                            <option
-                                                key={officer._id}
-                                                value={officer._id}
-                                            >
+                                            <option key={officer._id} value={officer._id}>
                                                 {officer.name}
                                             </option>
                                         ))}
-
                                     </select>
                                 </div>
-                                <button
-                                    onClick={handleAssign}
-                                    disabled={
-                                        selectedIssue.status === "Resolved"
-                                    }
-                                >
-                                    {selectedIssue.status === "Assigned"
-                                        ? "Reassign Officer"
-                                        : "Assign Officer"}
-                                </button>
-                            </div>
-                        ) : (
+                            </section>
+                            <hr className="overlay-divider" />
+                            <section className="overlay-section">
+                                <h3>Issue Image</h3>
 
-                            <div className="empty-state">
-                                Select an issue to view details.
-                            </div>
-                        )}
-                    </div>
+                                <IssueImage issueId={selectedIssue._id} />
+                            </section>
+                        </DetailsOverlay>
+                    )}
                 </div>
             </div>
         </div>

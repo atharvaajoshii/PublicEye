@@ -3,7 +3,7 @@ import adminService from "../../services/adminService";
 import toast from 'react-hot-toast';
 import DetailsOverlay from "../../components/DetailsOverlay";
 import "../../styles/atharva.css"
-import Sidebar from "../../components/Sidebar";
+import "../../styles/overlay.css"
 
 
 function UserManagement() {
@@ -66,8 +66,6 @@ function UserManagement() {
 
     return (
         <div className="user-management">
-            <Sidebar />
-
             <div className="content">
 
                 <h1 className="page-title">User Management</h1>
@@ -108,7 +106,7 @@ function UserManagement() {
                                         <td>{user.role}</td>
 
                                         <td>
-                                            <span className="status">
+                                            <span className={`status ${user.status.toLowerCase()}`}>
                                                 {user.status}
                                             </span>
                                         </td>
