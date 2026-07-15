@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import userService from "../services/userService";
 import issueService from "../services/issueService";
 import React from "react";
+import "../styles/dashboard.css" ;
 function Dashboard() {
     const [user, setUser] = useState(null);
     useEffect(() => {
@@ -27,7 +28,7 @@ function Dashboard() {
         fetchIssues();
     },[]);
     return (
-        <div>
+        <div className="dashboard-layout">
             <Sidebar />
             <main className="dashboard-content">
                 <WelcomeSection user = {user}/>

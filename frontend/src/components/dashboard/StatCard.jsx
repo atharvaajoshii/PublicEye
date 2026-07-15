@@ -1,8 +1,7 @@
-import React from "react";
-
+import React from "react"; 
 function StatCard(props){
     return(
-        <div>
+        <div className="StatCard">
             <h2>{props.title}</h2>
              <h3>{props.count}</h3>
         </div>

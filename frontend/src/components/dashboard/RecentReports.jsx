@@ -5,7 +5,7 @@ function RecentReports(props){
         console.log(issue)//just for learning purpuse tos ee if it works let it be here to understand the code 
    })
     return(
-        <div>
+        <div className="StatCard">
             {props.issues.map((issue) =>(
                 <div key={issue._id}>
                     <h3>{issue.title}</h3>

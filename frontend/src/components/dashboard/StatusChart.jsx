@@ -28,7 +28,7 @@ function StatusChart(props){
         }
     ]
         return(
-        <div style={{ width: "100%" , height:300}}> {/* why do we use double bracket here */}
+        <div style={{ width: "100%" , height:300}} className="StatCard" > {/* why do we use double bracket here */}
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     <Pie
