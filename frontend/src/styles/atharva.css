@@ -3,3 +3,36 @@
     cursor: not-allowed;
     pointer-events: none;
 }
+.main{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    background-color: #FFF8EB;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+.content{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+    justify-content: center;
+}
+.management-container,.table-section{
+    width: 100%;
+}
+table{
+    width: 100%;
+    text-align: left;
+    border: 0.1px solid#ccc;
+}
+td{
+    border: 0.1px solid#ccc;
+    padding: 10px;
+}
+.actions{
+    display: flex;
+    gap: 20px;
+    justify-content:space-evenly;
+}

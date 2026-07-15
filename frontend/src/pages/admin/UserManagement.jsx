@@ -58,14 +58,14 @@ function UserManagement() {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center h-80">
+            <div className="main loading">
                 Loading...
             </div>
         );
     }
 
     return (
-        <div className="user-management">
+        <div className="main user-management">
             <div className="content">
 
                 <h1 className="page-title">User Management</h1>

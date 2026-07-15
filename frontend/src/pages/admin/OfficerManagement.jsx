@@ -103,12 +103,12 @@ function OfficerManagement() {
     };
     if (loading)
         return (
-            <div className="loading">
+            <div className="main loading">
                 Loading...
             </div>
         );
     return (
-        <div className="user-management">
+        <div className="main user-management">
             {/* <Sidebar /> */}
             <div className="content">
                 <div className="page-header">

@@ -80,23 +80,24 @@ function IssueManagement() {
 
         try {
             await adminService.deleteIssue(id);
-
+            toast.success("Issue deleted successfully");
             setIssueTrack(null);
             setSelectedOfficer("");
             fetchData();
         } catch (err) {
             console.log(err);
+            toast.error("error deleting Issue")
         }
     };
     if (loading)
         return (
-            <div>
+            <div className="loading main">
                 Loading...
             </div>
         );
 
     return (
-        <div className="users-table">
+        <div className="main users-table">
             <div className="content">
                 <h1 className="page-title">
                     Issue Management
