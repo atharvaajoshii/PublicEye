@@ -1,0 +1,338 @@
+/*
+css for officer dashboard and officer all pages
+if u havent listened to ' Save My Heart' by Jason Reeves then its about time u did:)
+*/
+
+.officer-loading {
+  padding: 50px;
+  text-align: center;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #7B57CE;
+  font-weight: bold;
+}
+
+.officer-dashboard-container {
+  padding: 24px;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #fbf9f5; 
+  min-height: 100vh;
+  color: #2E114D;
+}
+
+.officer-dashboard-main-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #7B57CE; 
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+.officer-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+
+.officer-stat-card {
+  background-color: #FFF8EB; 
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(46, 17, 77, 0.05);
+  text-align: center;
+}
+
+.officer-stat-card h1 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #666;
+  margin: 0 0 8px 0;
+}
+
+.officer-stat-card p {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.card-total { border-left: 5px solid #7B57CE; color: #7B57CE; }     
+.card-assigned { border-left: 5px solid #e67e22; color: #e67e22; }  
+.card-inprogress { border-left: 5px solid #3498db; color: #3498db; } 
+.card-resolved { border-left: 5px solid #8F9D68; color: #8F9D68; }   
+.card-rejected { border-left: 5px solid #e74c3c; color: #e74c3c; }  
+
+.officer-content-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.officer-section-panel {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #FFF8EB;
+  box-shadow: 0 4px 6px -1px rgba(46, 17, 77, 0.03);
+}
+
+.officer-panel-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2E114D;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #FFF8EB;
+}
+
+.officer-panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.officer-clickable-item-card {
+  background-color: #FFF8EB; 
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.officer-clickable-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px -2px rgba(123, 87, 206, 0.12);
+  border-color: rgba(123, 87, 206, 0.2);
+}
+
+.officer-clickable-item-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #7B57CE; 
+}
+
+.officer-clickable-item-card .meta-text {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.activity-card h3 {
+  color: #2E114D;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: #8F9D68;
+  color: #ffffff;
+}
+
+.timestamp-text {
+  margin: 6px 0 0 0;
+  font-size: 11px;
+  color: #999;
+}
+.officer-filters-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #FFF8EB;
+  box-shadow: 0 4px 6px -1px rgba(46, 17, 77, 0.02);
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.officer-input-search {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  border: 2px solid #FFF8EB;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #2E114D;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.officer-input-search:focus {
+  border-color: #7B57CE; 
+}
+
+.officer-select-filter {
+  padding: 10px 14px;
+  border: 2px solid #FFF8EB;
+  background-color: #FFF8EB;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #2E114D;
+  cursor: pointer;
+  outline: none;
+}
+
+.officer-select-filter:focus {
+  border-color: #7B57CE;
+}
+
+.officer-issues-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.officer-no-records-text {
+  color: #999;
+  text-align: center;
+  padding: 40px;
+  font-style: italic;
+}
+
+.officer-issue-row-card {
+  background-color: #ffffff;
+  border: 1px solid #FFF8EB;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.officer-issue-row-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(46, 17, 77, 0.05);
+}
+
+.officer-card-info-side {
+  flex: 2;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.officer-category-badge {
+  background-color: #FFF8EB;
+  color: #7B57CE;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(123, 87, 206, 0.1);
+}
+
+.officer-card-issue-title {
+  margin: 4px 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2E114D;
+}
+
+.officer-card-actions-wrapper {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.officer-btn {
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+.officer-btn:hover {
+  opacity: 0.9;
+}
+
+.btn-primary {
+  background-color: #7B57CE; 
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background-color: #8F9D68; 
+  color: #ffffff;
+}
+
+.officer-card-status-side {
+  flex: 1;
+  min-width: 220px;
+  background-color: #FFF8EB; 
+  padding: 16px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.officer-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.officer-control-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.3px;
+}
+
+.officer-select-inline {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(46, 17, 77, 0.1);
+  font-family: inherit;
+  font-size: 13px;
+  color: #2E114D;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.officer-progress-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.officer-input-number {
+  width: 70px;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(46, 17, 77, 0.1);
+  font-family: inherit;
+  font-size: 13px;
+  text-align: center;
+}
+
+.officer-input-number:disabled {
+  background-color: #eee;
+  cursor: not-allowed;
+}
+
+.officer-percentage-indicator {
+  font-size: 14px;
+  font-weight: bold;
+  color: #8F9D68; 
+}
