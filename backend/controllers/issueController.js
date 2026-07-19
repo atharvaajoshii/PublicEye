@@ -34,9 +34,10 @@ const createIssue = async (req, res) => {
         await issue.save();
 
         // Create tracking document for this issue
-        await IssueTrack.create({
-            issue: issue._id
-        });
+        // await IssueTrack.create({
+        //     issue: issue._id
+        // });
+        //no need to create here aak, its there in admin controller dont put this again!!
 
         res.status(201).json({
             message: "Issue created successfully",
