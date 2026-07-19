@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
 import officerService from "../services/officerService";
-import "../styles/aakanksha.css"; 
+import IssueImage from "../components/IssueImage"; 
+
+import "../styles/atharva.css";
 
 function ManageIssues() {
-
     const { user } = useAuth();
     const navigate = useNavigate();
 
@@ -18,9 +19,8 @@ function ManageIssues() {
     const [category, setCategory] = useState("");
     const [sort, setSort] = useState("");
 
-    useEffect(() => {
-        if (user) fetchIssues();
-    }, [user, search, status, category, sort]);
+    const [expandedIssue, setExpandedIssue] = useState(null);
+    const [selectedIssueDetails, setSelectedIssueDetails] = useState(null);
 
     const fetchIssues = async () => {
         try {
@@ -30,27 +30,57 @@ function ManageIssues() {
                 category,
                 sort
             });
-            setIssues(res.data.issues);
+            setIssues(res.data.issues || []);
         } catch (error) {
-            console.log(error);
+            console.log("Error fetching issues:", error);
         }
+    };
+
+    useEffect(() => {
+        if (user) fetchIssues();
+    }, [user, search, status, category, sort]);
+
+    const handleToggleDetails = async (e, issueId, rawItemData) => {
+        e.stopPropagation(); 
+
+        if (expandedIssue === issueId) {
+            setExpandedIssue(null);
+            setSelectedIssueDetails(null);
+            return;
+        }
+
+        setExpandedIssue(issueId);
+        setSelectedIssueDetails(rawItemData);
     };
 
     const handleStatusChange = async (issueId, newStatus) => {
         try {
             await officerService.updateStatus(issueId, newStatus);
             fetchIssues();
+            if (expandedIssue === issueId) {
+                setSelectedIssueDetails(prev => ({
+                    ...prev,
+                    issue: { ...prev.issue, status: newStatus }
+                }));
+            }
         } catch (error) {
-            console.log(error);
+            console.log("Error updating status:", error);
         }
     };
 
     const handleProgressChange = async (issueId, newProgress) => {
+        if (newProgress < 0 || newProgress > 100) return;
         try {
             await officerService.updateProgress(issueId, newProgress);
             fetchIssues();
+            if (expandedIssue === issueId) {
+                setSelectedIssueDetails(prev => ({
+                    ...prev,
+                    progress: newProgress
+                }));
+            }
         } catch (error) {
-            console.log(error);
+            console.log("Error updating progress:", error);
         }
     };
 
@@ -59,7 +89,7 @@ function ManageIssues() {
             <div>
                 <h1 className="officer-dashboard-main-title">Manage Workspace Issues</h1>
                 
-                
+                {/* Filters Toolbar */}
                 <div className="officer-filters-toolbar">
                     <input 
                         type="search" 
@@ -108,100 +138,118 @@ function ManageIssues() {
                     </select>
                 </div>
 
-            
-                <div className="officer-issues-list-container">
+                {/* Issues List */}
+                <div className="issue-list">
                     {issues.length === 0 ? (
                         <p className="officer-no-records-text">No matching workspace issues found.</p>
-                    ) : null}
+                    ) : (
+                        issues.map((item) => {
+                            const coreIssue = item?.issue;
+                            if (!coreIssue) return null;
 
-                    {issues.map((issue) => (
-                        <div 
-                            key={issue.issue?._id}
-                            className="officer-issue-row-card"
-                            onClick={() => navigate(`/issue/${issue.issue?._id}`)}
-                        >
-                            
-                            <div className="officer-card-info-side">
-                                <span className="officer-category-badge">{issue.issue?.category}</span>
-                                <h3 className="officer-card-issue-title">{issue.issue?.title}</h3>
-                                
-                                <div className="officer-card-actions-wrapper">
-                                    <button 
-                                        type="button"
-                                        className="officer-btn btn-primary"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            navigate(`/issue/${issue.issue?._id}`);
-                                        }}
-                                    >
-                                        View Details
-                                    </button>
-                                    <button 
-                                        type="button"
-                                        className="officer-btn btn-secondary"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            navigate(`/issue/${issue.issue?._id}/report`);
-                                        }}
-                                    >
-                                        Report
-                                    </button>
-                                </div>
-                            </div>
+                            const isExpanded = expandedIssue === coreIssue._id;
 
-                         
-                            <div className="officer-card-status-side">
-                                <p className="meta-text"><strong>{issue.issue?.votes}</strong> Votes</p>
-                                
-                                <div className="officer-control-group">
-                                    <label className="officer-control-label">Status Update:</label>
-                                    <select
-                                        className="officer-select-inline"
-                                        value={issue.issue?.status}
-                                        onClick={(e) => e.stopPropagation()}
-                                        onChange={(e) =>
-                                            handleStatusChange(
-                                                issue.issue?._id,
-                                                e.target.value
-                                            )
-                                        }
+                            return (
+                                <div 
+                                    key={coreIssue._id}
+                                    className={`issue-card ${isExpanded ? "expanded" : ""}`}
+                                >
+                                    {/* Main Row Block Header */}
+                                    <div 
+                                        className="issue-header"
+                                        onClick={(e) => handleToggleDetails(e, coreIssue._id, item)}
                                     >
-                                        <option value="Pending">Pending</option>
-                                        <option value="Assigned">Assigned</option>
-                                        <option value="In Progress">In Progress</option>
-                                        <option value="Resolved">Resolved</option>
-                                        <option value="Rejected">Rejected</option>
-                                    </select>
-                                </div>
+                                        <div className="officer-card-info-side">
+                                            <span className="issue-category">{coreIssue.category}</span>
+                                            <h3 className="officer-card-issue-title">{coreIssue.title}</h3>
+                                            
+                                            <div className="officer-card-actions-wrapper">
+                                                <button 
+                                                    type="button"
+                                                    className="officer-btn btn-primary"
+                                                    onClick={(e) => handleToggleDetails(e, coreIssue._id, item)}
+                                                >
+                                                    {isExpanded ? "Hide Details" : "View Details"}
+                                                </button>
+                                                <button 
+                                                    type="button"
+                                                    className="officer-btn btn-secondary"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        navigate(`/issue/${coreIssue._id}/report`);
+                                                    }}
+                                                >
+                                                    Report
+                                                </button>
+                                            </div>
+                                        </div>
 
-                                <div className="officer-control-group">
-                                    <label className="officer-control-label">Progress Metric:</label>
-                                    <div className="officer-progress-input-wrapper">
-                                        <input
-                                            type="number"
-                                            className="officer-input-number"
-                                            min={0}
-                                            max={100}
-                                            value={issue.progress || 0}
-                                            disabled={issue.issue?.status !== "In Progress"}
-                                            onClick={(e) => e.stopPropagation()}
-                                            onChange={(e) =>
-                                                handleProgressChange(
-                                                    issue.issue?._id,
-                                                    Number(e.target.value)
-                                                )
-                                            }
-                                        />
-                                        <span className="officer-percentage-indicator">{issue.progress || 0}%</span>
+                                        {/* Status / Inline Modifications side */}
+                                        <div className="officer-card-status-side" onClick={(e) => e.stopPropagation()}>
+                                            <p className="meta-text"><strong>{coreIssue.votes || 0}</strong> Votes</p>
+                                            
+                                            <div className="officer-control-group">
+                                                <label className="officer-control-label">STATUS UPDATE:</label>
+                                                <select
+                                                    className="officer-select-inline"
+                                                    value={coreIssue.status || "Assigned"}
+                                                    onChange={(e) => handleStatusChange(coreIssue._id, e.target.value)}
+                                                >
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Assigned">Assigned</option>
+                                                    <option value="In Progress">In Progress</option>
+                                                    <option value="Resolved">Resolved</option>
+                                                    <option value="Rejected">Rejected</option>
+                                                </select>
+                                            </div>
+
+                                            <div className="officer-control-group">
+                                                <label className="officer-control-label">PROGRESS METRIC:</label>
+                                                <div className="officer-progress-input-wrapper">
+                                                    <input
+                                                        type="number"
+                                                        className="officer-input-number"
+                                                        min={0}
+                                                        max={100}
+                                                        value={item.progress || 0}
+                                                        onChange={(e) => handleProgressChange(coreIssue._id, Number(e.target.value))}
+                                                    />
+                                                    <span className="officer-percentage-indicator">{item.progress || 0}%</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <p className="timestamp-text">
+                                                Assigned: {item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-GB') : "N/A"}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Dropdown Container using your CSS transition classes */}
+                                    <div className={`issue-details ${isExpanded ? "open" : ""}`}>
+                                        {isExpanded && selectedIssueDetails && (
+                                            <>
+                                                <div className="detail-grid">
+                                                    <div className="detail-item">
+                                                        <label>Description</label>
+                                                        <span>{selectedIssueDetails.issue?.description || "No description provided."}</span>
+                                                    </div>
+
+                                                    <div className="detail-item">
+                                                        <label>Location</label>
+                                                        <span>{selectedIssueDetails.issue?.location || "Not specified"}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="issue-image-wrapper">
+                                                    <IssueImage issueId={coreIssue._id} />
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
-                                
-                                <p className="timestamp-text">
-                                    Assigned: {issue.createdAt ? new Date(issue.createdAt).toLocaleDateString() : "N/A"}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
+                            );
+                        })
+                    )}
                 </div>
             </div>
         </div>
