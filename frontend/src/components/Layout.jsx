@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 
 import { Outlet } from "react-router-dom";
-
+import { FiMenu, FiX } from "react-icons/fi";
 function Layout() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -24,6 +24,24 @@ function Layout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(!isMobile);
   return (
     <>
+    {isMobile && (
+    <button
+        className={`mobile-menu-btn ${
+            isSidebarOpen ? "open" : ""
+        }`}
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+    >
+        {isSidebarOpen ? <FiX /> : <FiMenu />}
+    </button>
+)}
+      {isMobile && !isSidebarOpen && (
+        <button
+          className="mobile-menu-btn"
+          onClick={() => setIsSidebarOpen(true)}
+        >
+          <FiMenu />
+        </button>
+      )}
 
       {isMobile && isSidebarOpen && (
         <div className="overlay" onClick={() => setIsSidebarOpen(false)} />
