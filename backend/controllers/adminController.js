@@ -563,7 +563,9 @@ const approveReport = async (req, res) => {
             issue: report.issue,
         });
 
-        await Issue.findByIdAndDelete(report.issue);
+        await Issue.findByIdAndUpdate(report.issue, {
+            status: "Rejected",
+        });
 
         return res.json({
             message: "Report approved successfully",
