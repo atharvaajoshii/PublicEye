@@ -3,22 +3,25 @@
 import 'leaflet/dist/leaflet.css';
 import toast from 'react-hot-toast';
 
-
-
-import { MapContainer, TileLayer,useMapEvents } from "react-leaflet";
+import { getAddress } from "../services/getAddress";
+import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 
 function Map({ formData, setFormData }) {
 
-    function ClickHandler({setFormData}){
+    function ClickHandler({ setFormData }) {
         useMapEvents({
-            click(e){
-                const lat = e.latlng.lat
-                const lng= e.latlng.lng
-                setFormData(prev=>({
+            click: async (e) => {
+
+                const { lat, lng } = e.latlng;
+
+                const place = await getAddress(lat, lng);
+
+                setFormData(prev => ({
                     ...prev,
-                    latitude:lat,
-                    longitude:lng,
-                }))
+                    latitude: lat,
+                    longitude: lng,
+                    location: place.formatted
+                }));
             }
         })
     }

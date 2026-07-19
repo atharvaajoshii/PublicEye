@@ -19,7 +19,6 @@ router.post(
     createIssue
 );
 
-
 router.get('/',authMiddleware,getUserIssue) //adithya karkera 
 router.get("/all", authMiddleware, getAllIssues);
 router.get("/:id", authMiddleware, getIssueById); //aak
