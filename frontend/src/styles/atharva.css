@@ -36,3 +36,38 @@ td{
     gap: 20px;
     justify-content:space-evenly;
 }
+
+
+
+
+
+.officer-status-badge{
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.officer-status-badge.assigned{
+    background:#FFF8EB;
+    color:#e67e22;
+}
+
+.officer-status-badge.in\ progress{
+    background:#eef6ff;
+    color:#3498db;
+}
+
+.officer-status-badge.resolved{
+    background:#eef6e9;
+    color:#8F9D68;
+}
+
+.officer-status-badge.rejected{
+    background:#ffecec;
+    color:#e74c3c;
+}
+.btn-danger{
+    background:#e74c3c;
+    color:white;
+}
