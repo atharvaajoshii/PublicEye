@@ -338,3 +338,37 @@ td{
 .issue-image-link:hover .image-overlay{
     opacity:1;
 }
+.content{
+    width:95%;
+    max-width:1400px;
+    margin:0 auto;
+}
+.issue-list{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+}
+
+.issue-card{
+    width:100%;
+    border-radius:16px;
+}
+.page-header{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.page-title{
+    font-size:34px;
+    color:#7B57CE;
+    font-weight:700;
+}
+input{
+    border: 0.1px solid #ccc;
+    padding: 0.5rem;
+    border-radius: 0.8rem;
+}

@@ -3,9 +3,16 @@ const mongoose = require("mongoose");
 const reportSchema = new mongoose.Schema(
   {
     issue: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Issue",
-      required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Issue"
+    },
+
+    issueSnapshot: {
+        title: String,
+        description: String,
+        location: String,
+        category: String,
+        image: String
     },
     officer: {
       type: mongoose.Schema.Types.ObjectId,

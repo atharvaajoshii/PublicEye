@@ -11,6 +11,7 @@ function UserManagement() {
     const [selectedUser, setSelectedUser] = useState(null);
     const [userStats, setUserStats] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [expandedUser, setExpandedUser] = useState(null);
 
     const fetchUsers = async () => {
         try {
@@ -28,15 +29,25 @@ function UserManagement() {
         fetchUsers();
     }, []);
 
-    const handleView = async (id) => {
-        try {
-            const res = await adminService.getUserById(id);
-            setSelectedUser(res.data.user);
-            setUserStats(res.data.stats);
-        } catch (err) {
-            console.log(err);
+const handleView = async (id) => {
+    try {
+        if (expandedUser === id) {
+            setExpandedUser(null);
+            setSelectedUser(null);
+            setUserStats(null);
+            return;
         }
-    };
+
+        const res = await adminService.getUserById(id);
+
+        setExpandedUser(id);
+        setSelectedUser(res.data.user);
+        setUserStats(res.data.stats);
+
+    } catch (err) {
+        console.log(err);
+    }
+};
 
     const handleToggleStatus = async (id) => {
         try {
@@ -65,193 +76,171 @@ function UserManagement() {
     }
 
     return (
-        <div className="main user-management">
-            <div className="content">
+<div className="officer-dashboard-container">
 
-                <h1 className="page-title">User Management</h1>
+    <h1 className="officer-dashboard-main-title">
+        User Management
+    </h1>
 
-                <div className="management-container">
+    <div className="issue-list">
 
-                    {/* Users Table */}
+        {users.map((user) => (
 
-                    <div className="table-section">
+            <div
+                key={user._id}
+                className={`issue-card ${
+                    expandedUser === user._id ? "expanded" : ""
+                }`}
+            >
 
-                        <table className="users-table">
+                {/* Header */}
 
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
+                <div
+                    className="issue-header"
+                    onClick={() => handleView(user._id)}
+                >
 
-                            <tbody>
+                    <div className="issue-header-left">
 
-                                {users.map((user) => (
-                                    <tr
-                                        key={user._id}
-                                        className={
-                                            selectedUser?._id === user._id
-                                                ? "selected-row"
-                                                : ""
-                                        }
-                                    >
-                                        <td>{user.name}</td>
+                        <h3>{user.name}</h3>
 
-                                        <td>{user.email}</td>
+                        <span className="issue-category">
+                            {user.role}
+                        </span>
 
-                                        <td>{user.role}</td>
-
-                                        <td>
-                                            <span className={`status ${user.status.toLowerCase()}`}>
-                                                {user.status}
-                                            </span>
-                                        </td>
-
-                                        <td className="actions">
-
-                                            <button
-                                                onClick={() => handleView(user._id)}
-                                            >
-                                                View
-                                            </button>
-
-                                            <button
-                                                onClick={() =>
-                                                    handleToggleStatus(user._id)
-                                                }
-                                            >
-                                                {user.status === "Active"
-                                                    ? "Block"
-                                                    : "Unblock"}
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
                     </div>
-                    {/* Details Panel */}
-                    {selectedUser && (
-                        <DetailsOverlay
-                            open={true}
-                            title="User Details"
-                            onClose={() => {
-                                setSelectedUser(null);
-                                setUserStats(null);
-                            }}
-                            actions={
-                                <>
-                                    <button
-                                        onClick={() => handleToggleStatus(selectedUser._id)}
-                                    >
-                                        {selectedUser.status === "Active"
-                                            ? "Block User"
-                                            : "Unblock User"}
-                                    </button>
 
-                                    <button
-                                        onClick={() => {
-                                            setSelectedUser(null);
-                                            setUserStats(null);
-                                        }}
-                                    >
-                                        Close
-                                    </button>
-                                </>
-                            }
+                    <div className="issue-header-right">
+
+                        <span
+                            className={`officer-status-badge ${
+                                user.status.toLowerCase()
+                            }`}
                         >
-                            <section className="overlay-section">
-                                <h3>Profile</h3>
+                            {user.status}
+                        </span>
 
-                                <div className="detail-grid">
-                                    <div className="detail-item">
-                                        <label>Name</label>
-                                        <span>{selectedUser.name}</span>
-                                    </div>
+                        <span className="expand-icon">
+                            {expandedUser === user._id ? "−" : "+"}
+                        </span>
 
-                                    <div className="detail-item">
-                                        <label>Email</label>
-                                        <span>{selectedUser.email}</span>
-                                    </div>
+                    </div>
 
-                                    <div className="detail-item">
-                                        <label>Role</label>
-                                        <span>{selectedUser.role}</span>
-                                    </div>
-
-                                    <div className="detail-item">
-                                        <label>Status</label>
-                                        <span>{selectedUser.status}</span>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <hr className="overlay-divider" />
-
-                            <section className="overlay-section">
-                                <h3>Issue Statistics</h3>
-
-                                <div className="detail-grid">
-                                    <div className="detail-item">
-                                        <label>Total Issues</label>
-                                        <span>{userStats?.totalIssues}</span>
-                                    </div>
-
-                                    <div className="detail-item">
-                                        <label>Pending</label>
-                                        <span>{userStats?.pendingIssues}</span>
-                                    </div>
-
-                                    <div className="detail-item">
-                                        <label>Assigned</label>
-                                        <span>{userStats?.assignedIssues}</span>
-                                    </div>
-
-                                    <div className="detail-item">
-                                        <label>In Progress</label>
-                                        <span>{userStats?.inProgressIssues}</span>
-                                    </div>
-
-                                    <div className="detail-item">
-                                        <label>Resolved</label>
-                                        <span>{userStats?.resolvedIssues}</span>
-                                    </div>
-
-                                    <div className="detail-item">
-                                        <label>Rejected</label>
-                                        <span>{userStats?.rejectedIssues}</span>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <hr className="overlay-divider" />
-
-                            <section className="overlay-section">
-                                <h3>Account Information</h3>
-
-                                <div className="detail-grid">
-                                    <div className="detail-item">
-                                        <label>Joined On</label>
-                                        <span>
-                                            {new Date(selectedUser.createdAt).toLocaleDateString()}
-                                        </span>
-                                    </div>
-
-                                    <div className="detail-item">
-                                        <label>User ID</label>
-                                        <span>{selectedUser._id}</span>
-                                    </div>
-                                </div>
-                            </section>
-                        </DetailsOverlay>
-                    )}
                 </div>
+
+                {/* Details */}
+
+                <div
+                    className={`issue-details ${
+                        expandedUser === user._id ? "open" : ""
+                    }`}
+                >
+
+                    {selectedUser?._id === user._id && (
+
+                        <>
+                            <div className="detail-grid">
+
+                                <div className="detail-item">
+                                    <label>Name</label>
+                                    <span>{selectedUser.name}</span>
+                                </div>
+
+                                <div className="detail-item">
+                                    <label>Email</label>
+                                    <span>{selectedUser.email}</span>
+                                </div>
+
+                                <div className="detail-item">
+                                    <label>Role</label>
+                                    <span>{selectedUser.role}</span>
+                                </div>
+
+                                <div className="detail-item">
+                                    <label>Status</label>
+                                    <span>{selectedUser.status}</span>
+                                </div>
+
+                                <div className="detail-item">
+                                    <label>Total Issues</label>
+                                    <span>{userStats?.totalIssues}</span>
+                                </div>
+
+                                <div className="detail-item">
+                                    <label>Pending</label>
+                                    <span>{userStats?.pendingIssues}</span>
+                                </div>
+
+                                <div className="detail-item">
+                                    <label>Assigned</label>
+                                    <span>{userStats?.assignedIssues}</span>
+                                </div>
+
+                                <div className="detail-item">
+                                    <label>In Progress</label>
+                                    <span>{userStats?.inProgressIssues}</span>
+                                </div>
+
+                                <div className="detail-item">
+                                    <label>Resolved</label>
+                                    <span>{userStats?.resolvedIssues}</span>
+                                </div>
+
+                                <div className="detail-item">
+                                    <label>Rejected</label>
+                                    <span>{userStats?.rejectedIssues}</span>
+                                </div>
+
+                                <div className="detail-item">
+                                    <label>Joined</label>
+                                    <span>
+                                        {new Date(
+                                            selectedUser.createdAt
+                                        ).toLocaleDateString()}
+                                    </span>
+                                </div>
+
+                                <div className="detail-item">
+                                    <label>User ID</label>
+                                    <span>{selectedUser._id}</span>
+                                </div>
+
+                            </div>
+
+                            <div className="issue-actions">
+
+                                <button
+                                    className={`officer-btn ${
+                                        selectedUser.status === "Active"
+                                            ? "btn-danger"
+                                            : "btn-primary"
+                                    }`}
+                                    onClick={() =>
+                                        handleToggleStatus(
+                                            selectedUser._id
+                                        )
+                                    }
+                                >
+                                    {selectedUser.status === "Active"
+                                        ? "Block User"
+                                        : "Unblock User"}
+                                </button>
+
+                            </div>
+
+                        </>
+
+                    )}
+
+                </div>
+
             </div>
-        </div>
+
+        ))}
+
+    </div>
+
+</div>
     );
 }
 

@@ -2,32 +2,41 @@ const Report = require("../models/Report");
 const Issue = require("../models/Issue");
 
 const createReport = async (req, res) => {
-    try {
-        const { issueId } = req.params;
-        const { reason, description } = req.body;
+  try {
+    const { issueId } = req.params;
+    const { reason, description } = req.body;
 
-        if (!reason) {
-            return res.status(400).json({
-                message: "Reason is required",
-            });
-        }
-
-        const report = await Report.create({
-            issue: issueId,
-            officer: req.user._id,
-            reason,
-            description,
-        });
-
-        res.status(201).json({
-            message: "Report submitted successfully",
-            report,
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: error.message,
-        });
+    if (!reason) {
+      return res.status(400).json({
+        message: "Reason is required",
+      });
     }
+
+    const issue = await Issue.findById(issueId);
+
+    const report = await Report.create({
+      issue: issue._id,
+      officer: req.user._id,
+      reason,
+      description,
+      issueSnapshot: {
+        title: issue.title,
+        description: issue.description,
+        location: issue.location,
+        category: issue.category,
+        image: issue.image
+      }
+    });
+
+    res.status(201).json({
+      message: "Report submitted successfully",
+      report,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };
 const getPendingReports = async (req, res) => {
   try {
@@ -91,8 +100,8 @@ const rejectReport = async (req, res) => {
 };
 
 module.exports = {
-    createReport,
-    getPendingReports,
-    approveReport,
-    rejectReport
+  createReport,
+  getPendingReports,
+  approveReport,
+  rejectReport
 };
