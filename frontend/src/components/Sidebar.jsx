@@ -36,7 +36,7 @@ function Sidebar({ isOpen, closeSidebar }) {
         { name: "All Issues", path: "/all-issues", icon: <GoIssueTracks /> },
         { name: "Report", path: "/report", icon: <GoReport /> },
         // { name: "My Reports", path: "/myreports", icon: <GoReport/> },
-        { name: "Profile", path: "/profile", icon: <CgProfile /> },
+        // { name: "Profile", path: "/profile", icon: <CgProfile /> },
         { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
     ];
 
@@ -100,18 +100,20 @@ function Sidebar({ isOpen, closeSidebar }) {
                 ))}
                 <div className="sidebar-divider"></div>
                 {/* Profile */}
+                <a href="/profile">
                 <div className="sidebar-user">
-                    <img
-                        src="https://placehold.co/50x50"
-                        alt="Profile"
-                        className="profile-image"
-                    />
+                        <img
+                            src="https://placehold.co/50x50"
+                            alt="Profile"
+                            className="profile-image"
+                        />
 
-                    <div className="user-info">
-                        <h4>{user?.name || "Guest"}</h4>
-                        <p>{user?.role || "Visitor"}</p>
-                    </div>
+                        <div className="user-info">
+                            <h4>{user?.name || "Guest"}</h4>
+                            <p>{user?.role || "Visitor"}</p>
+                        </div>
                 </div>
+                    </a>
             </nav>
 
             {/* Logout (Only when logged in) */}
