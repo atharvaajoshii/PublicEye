@@ -10,7 +10,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import OfficerDashboard from "./pages/OfficerDashboard";
 import Analytics from "./pages/Analytics";
 import ManageIssues from "./pages/ManageIssues";
-// import Map from "./pages/Map";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import IssueManagement from "./pages/admin/IssueManagement";
 import UserManagement from "./pages/admin/UserManagement";
@@ -177,6 +176,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          
         </Route>
       </Routes>
     </BrowserRouter>
