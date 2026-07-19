@@ -48,10 +48,13 @@ function Analytics() {
             <GoChevronLeft />Back
             </button>
             <h1>Analytics</h1>
+            {loading? <p>Loading</p> : (
             <div>
+                <div>
                 <h1>Average Resolution Time</h1>
                 <p>{analytics.avgTime.averageDays} days</p>
             </div>
+            
             <div>
                 <AnalyticsChart
                     type="pie"
@@ -100,6 +103,8 @@ function Analytics() {
                     </div>
                 ))}
             </div>
+            </div>
+            )}
         </div>
     )
 }
