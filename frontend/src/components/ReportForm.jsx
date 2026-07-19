@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { submitReport } from "../services/reportService";
 import toast from 'react-hot-toast';
 
+import "../styles/aakanksha.css"; 
+
 function ReportForm() {
   const { issueId } = useParams();
   const navigate = useNavigate();
@@ -32,38 +34,61 @@ function ReportForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Reason</label>
-        <select
-          name="reason"
-          value={formData.reason}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Reason</option>
-          <option value="Fake Report">Fake Report</option>
-          <option value="Duplicate Issue">Duplicate Issue</option>
-          <option value="Insufficient Evidence">Insufficient Evidence</option>
-          <option value="Already Resolved">Already Resolved</option>
-          <option value="Spam">Spam</option>
-          <option value="Wrong Location">Wrong Location</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
+    <div className="report-form-page-wrapper">
+      <div className="report-form-container">
+        <h2 className="report-form-title">Report Issue Validity</h2>
+        <p className="report-form-subtitle">
+          Flag this issue if you notice incorrect data, spam, duplicates, or other discrepancies.
+        </p>
 
-      <div>
-        <label>Description</label>
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          rows={5}
-        />
-      </div>
+        <form onSubmit={handleSubmit} className="report-form-element">
+          <div className="report-form-group">
+            <label className="report-form-label">Reason for Flagging</label>
+            <select
+              className="report-form-select"
+              name="reason"
+              value={formData.reason}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Reason</option>
+              <option value="Fake Report">Fake Report</option>
+              <option value="Duplicate Issue">Duplicate Issue</option>
+              <option value="Insufficient Evidence">Insufficient Evidence</option>
+              <option value="Already Resolved">Already Resolved</option>
+              <option value="Spam">Spam</option>
+              <option value="Wrong Location">Wrong Location</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
 
-      <button type="submit">Submit Report</button>
-    </form>
+          <div className="report-form-group">
+            <label className="report-form-label">Detailed Description</label>
+            <textarea
+              className="report-form-textarea"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Provide context or details about why you are flagging this issue..."
+              rows={5}
+            />
+          </div>
+
+          <div className="report-form-actions">
+            <button 
+              type="button" 
+              className="report-btn report-btn-cancel"
+              onClick={() => navigate(-1)} // Navigates back to the dashboard/previous page
+            >
+              Cancel
+            </button>
+            <button type="submit" className="report-btn report-btn-submit">
+              Submit Report
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
 
