@@ -21,7 +21,6 @@ import AllIssues from "./pages/AllIssues";
 import OfficerReport from "./pages/OfficerReport";
 import ManageIssues_user from "./pages/ManageIssues_user";
 import MyReports from "./pages/MyReports";
-import Sidebar from "./components/Sidebar";
 import Layout from "./components/Layout"
 
 function App() {
