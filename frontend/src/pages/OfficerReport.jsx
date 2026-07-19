@@ -11,7 +11,6 @@ function OfficerReport() {
       <button onClick={() => navigate(-1)}>
         <GoChevronLeft />Back
       </button>
-      <h1>Report Issue</h1>
       <ReportForm />
     </div>
   );

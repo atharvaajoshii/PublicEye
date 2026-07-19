@@ -337,7 +337,6 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
   color: #8F9D68; 
 }
 
-/* Card container base setup */
 .issue-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
@@ -378,4 +377,122 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
     border: 0;
     border-top: 1px solid #e2e8f0;
     margin: 10px 0;
+}
+
+.report-form-page-wrapper {
+    min-height: calc(100vh - 80px); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF8EB; 
+    padding: 2rem 1rem;
+}
+
+.report-form-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 580px;
+    padding: 2.5rem;
+    border-radius: 16px;
+    border: 1px solid #ece7df;
+    box-shadow: 0 4px 20px rgba(46, 17, 77, 0.05);
+}
+
+.report-form-title {
+    margin: 0 0 8px 0;
+    font-size: 26px;
+    color: #2E114D;
+    font-weight: 700;
+}
+
+.report-form-subtitle {
+    margin: 0 0 24px 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.report-form-element {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.report-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.report-form-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #888;
+    letter-spacing: 0.8px;
+}
+
+.report-form-select, 
+.report-form-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    font-size: 15px;
+    color: #2E114D;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.report-form-textarea {
+    resize: vertical;
+    font-family: inherit;
+}
+
+.report-form-select:focus, 
+.report-form-textarea:focus {
+    border-color: #7B57CE;
+    box-shadow: 0 0 0 3px rgba(123, 87, 206, 0.15);
+}
+
+.report-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.report-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+    border: none;
+    outline: none;
+}
+
+.report-btn:active {
+    transform: scale(0.98);
+}
+
+.report-btn-cancel {
+    background: #f5f0e6;
+    color: #7B57CE;
+}
+
+.report-btn-cancel:hover {
+    background: #ece3d3;
+}
+
+.report-btn-submit {
+    background: #e74c3c; 
+    color: #ffffff;
+}
+
+.report-btn-submit:hover {
+    background: #c0392b;
 }
