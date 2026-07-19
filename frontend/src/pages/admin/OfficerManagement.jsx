@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
 import toast from 'react-hot-toast';
-import DetailsOverlay from "../../components/DetailsOverlay";
 
 function OfficerManagement() {
     const [officers, setOfficers] = useState([]);

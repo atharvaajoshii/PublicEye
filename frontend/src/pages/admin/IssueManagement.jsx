@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
 import toast from 'react-hot-toast';
 import "../../styles/atharva.css"
-import "../../styles/overlay.css"
-import DetailsOverlay from "../../components/DetailsOverlay";
 import IssueImage from "../../components/IssueImage";
 
 function IssueManagement() {

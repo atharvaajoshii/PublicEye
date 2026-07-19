@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
 import toast from 'react-hot-toast';
-import DetailsOverlay from "../../components/DetailsOverlay";
 import "../../styles/atharva.css"
-import "../../styles/overlay.css"
 
 
 function UserManagement() {
