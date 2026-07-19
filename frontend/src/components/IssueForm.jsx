@@ -86,35 +86,41 @@ function IssueForm() {
           required
         />
       </div>
-
+      <div className="map">
+        <Map
+          formData={formData}
+          setFormData={setFormData}
+        />
+      </div>
       <div className="form-group">
         <label className="form-label">Location</label>
-        <input className="form-input"
+        <input
+          className="form-input"
           type="text"
           name="location"
           value={formData.location}
-          onChange={handleChange}
-          required
+          readOnly
+          placeholder="Click on the map to select a location"
         />
       </div>
 
       <div className="form-group">
         <label className="form-label">Latitude</label>
-        <input className="form-input"
+        <input
+          className="form-input"
           type="number"
-          name="latitude" step="any"
           value={formData.latitude}
-          onChange={handleChange}
+          readOnly
         />
       </div>
 
       <div className="form-group">
         <label className="form-label">Longitude</label>
-        <input className="form-input"
+        <input
+          className="form-input"
           type="number"
-          name="longitude" step="any"
           value={formData.longitude}
-          onChange={handleChange}
+          readOnly
         />
       </div>
 
@@ -157,12 +163,7 @@ function IssueForm() {
           Enable Public Voting
         </label>
       </div>
-      <div className="map">
-        <Map
-          formData={formData}
-          setFormData={setFormData}
-        />
-      </div>
+
 
       <button className="primary-btn" type="submit">
         Submit Issue
