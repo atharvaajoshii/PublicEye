@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { createIssue } from "./issueService";
 import toast from 'react-hot-toast';
+import Map from "./Map";
 
 function IssueForm() {
   const [formData, setFormData] = useState({
@@ -33,6 +34,7 @@ function IssueForm() {
       image: e.target.files[0],
     });
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -144,16 +146,22 @@ function IssueForm() {
       </div>
 
       <div className="checkbox-group">
-       
-          <input
-            type="checkbox"
-            name="publicVoting"
-            checked={formData.publicVoting}
-            onChange={handleChange}
-          />
-           <label htmlFor="publicVoting">
+
+        <input
+          type="checkbox"
+          name="publicVoting"
+          checked={formData.publicVoting}
+          onChange={handleChange}
+        />
+        <label htmlFor="publicVoting">
           Enable Public Voting
         </label>
+      </div>
+      <div className="map">
+        <Map
+          formData={formData}
+          setFormData={setFormData}
+        />
       </div>
 
       <button className="primary-btn" type="submit">

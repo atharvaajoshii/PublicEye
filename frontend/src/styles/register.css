@@ -1,0 +1,146 @@
+.auth-page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px;
+    background:var(--background);
+}
+
+.auth-card{
+    width:100%;
+    max-width:460px;
+
+    background:var(--surface);
+
+    padding:42px;
+
+    border-radius:28px;
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 10px 28px rgba(43,26,63,.08),
+        0 22px 48px rgba(43,26,63,.06);
+
+    animation:cardFade .45s ease;
+}
+
+.auth-card h1{
+    margin:0 0 10px;
+    color:var(--heading);
+    font-size:2rem;
+    font-weight:700;
+    text-align:center;
+}
+
+.auth-subtitle{
+    text-align:center;
+    color:var(--body);
+    margin-bottom:32px;
+}
+
+.auth-form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.auth-form input{
+    width:100%;
+    padding:15px 18px;
+
+    border:1px solid var(--border);
+    border-radius:16px;
+
+    background:#fff;
+
+    color:var(--heading);
+
+    font-size:1rem;
+
+    transition:.25s;
+}
+
+.auth-form input::placeholder{
+    color:#9A93A9;
+}
+
+.auth-form input:focus{
+    outline:none;
+    border-color:var(--primary);
+
+    box-shadow:
+        0 0 0 4px rgba(123,87,206,.12);
+}
+
+.auth-link{
+    align-self:flex-end;
+
+    text-decoration:none;
+
+    color:var(--primary);
+
+    font-size:.92rem;
+
+    transition:.2s;
+}
+
+.auth-link:hover{
+    color:var(--primary-dark);
+}
+
+.auth-btn{
+    margin-top:10px;
+
+    width:100%;
+
+    border:none;
+
+    border-radius:16px;
+
+    padding:15px;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary-dark)
+    );
+
+    color:white;
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.auth-btn:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 14px 28px rgba(123,87,206,.28);
+}
+
+.auth-btn:active{
+    transform:translateY(0);
+}
+
+@media(max-width:600px){
+
+    .auth-card{
+
+        padding:30px 24px;
+
+        border-radius:22px;
+    }
+
+    .auth-card h1{
+
+        font-size:1.7rem;
+    }
+
+}

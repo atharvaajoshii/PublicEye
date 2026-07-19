@@ -74,7 +74,7 @@ function IssueManagement() {
 			toast.success("Officer assigned successfully");
 		} catch (err) {
 			console.log(err);
-			toast.error("error assigning officer")
+			toast.error("error assigning officer",err)
 		}
 	};
 
