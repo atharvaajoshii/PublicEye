@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import IssueCard from "../components/IssueCard";
 import "../styles/adithya_css/all_issues.css";
+
 function AllIssues() {
     const [issues, setIssues] = useState([]);
+    const [expandedIssueId, setExpandedIssueId] = useState(null);
 
     useEffect(() => {
         const fetchAllIssues = async () => {
@@ -21,6 +23,11 @@ function AllIssues() {
         fetchAllIssues();
     }, []);
 
+    // Toggle logic: If clicked again, close it. Otherwise, open it.
+    const handleToggleExpand = (id) => {
+        setExpandedIssueId(prevId => (prevId === id ? null : id));
+    };
+
     return (
         <div className="dashboard-layout">
             <main className="dashboard-content">
@@ -30,7 +37,12 @@ function AllIssues() {
                 </div>
                 <div className="issues-container">
                     {issues.map((issue) => (
-                        <IssueCard key={issue._id} issue={issue} />
+                        <IssueCard 
+                            key={issue._id} 
+                            issue={issue} 
+                            isExpanded={expandedIssueId === issue._id}
+                            onToggle={() => handleToggleExpand(issue._id)}
+                        />
                     ))}
                 </div>
             </main>

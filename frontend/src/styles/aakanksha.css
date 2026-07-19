@@ -336,3 +336,46 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
   font-weight: bold;
   color: #8F9D68; 
 }
+
+/* Card container base setup */
+.issue-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    transition: all 0.2s ease;
+}
+
+.issue-card.active {
+    border-color: #3182ce; /* Highlight border when open */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Flex layout inside the expanded area */
+.details-layout {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.details-image-section {
+    flex: 1;
+    max-width: 250px;
+}
+
+.details-image-section img {
+    width: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.details-info-section {
+    flex: 2;
+}
+
+.details-divider {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 10px 0;
+}
