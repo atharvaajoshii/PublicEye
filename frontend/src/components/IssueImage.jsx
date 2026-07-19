@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../styles/atharva.css"
 import axios from "axios";
 
 function IssueImage({ issueId }) {
@@ -52,14 +53,25 @@ function IssueImage({ issueId }) {
     );
   }
 
-  return (
+ return (
+  <a
+    href={`${BASE_URL}/${imageName}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="issue-image-link"
+  >
     <img
       src={`${BASE_URL}/${imageName}`}
       alt="Civic Issue Evidence"
       onError={handleImageError}
-      style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "8px" }}
+      className="issue-image"
     />
-  );
+
+    <div className="image-overlay">
+      View Image
+    </div>
+  </a>
+);
 }
 
 export default IssueImage;
