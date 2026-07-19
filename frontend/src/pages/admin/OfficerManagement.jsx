@@ -6,7 +6,9 @@ import DetailsOverlay from "../../components/DetailsOverlay";
 function OfficerManagement() {
     const [officers, setOfficers] = useState([]);
     const [selectedOfficer, setSelectedOfficer] = useState(null);
+    const [expandedOfficer, setExpandedOfficer] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showCreate, setShowCreate] = useState(false);
     const [showCreateOverlay, setShowCreateOverlay] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -30,7 +32,15 @@ function OfficerManagement() {
     }, []);
     const handleView = async (id) => {
         try {
+            if (expandedOfficer === id) {
+                setExpandedOfficer(null);
+                setSelectedOfficer(null);
+                return;
+            }
+
             const res = await adminService.getOfficerById(id);
+
+            setExpandedOfficer(id);
             setSelectedOfficer(res.data.officer);
 
             setFormData({
@@ -38,10 +48,11 @@ function OfficerManagement() {
                 email: res.data.officer.email,
                 password: "",
             });
+
         } catch (err) {
             console.log(err);
         }
-    }
+    };
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -109,70 +120,45 @@ function OfficerManagement() {
         );
     return (
         <div className="main user-management">
-            {/* <Sidebar /> */}
             <div className="content">
                 <div className="page-header">
                     <h1 className="page-title">Officer Management</h1>
-                    <button onClick={() => { 
-                            setFormData({
-                                name: "",
-                                email: "",
-                                password: "",
-                            });
-                            setShowCreateOverlay(true);
-                        }}> + Create Officer </button>
-                </div>
-                <div className="table-section">
-                    <table className="users-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {officers.map((officer) => (
-                                <tr key={officer._id} className={ selectedOfficer?._id === officer._id ? "selected-row" : "" } >
-                                    <td>{officer.name}</td>
-                                    <td>{officer.email}</td>
-                                    <td>{officer.role}</td>
-                                    <td className="actions">
-                                        <button onClick={() => handleView(officer._id) }>
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
 
-                {showCreateOverlay && (
-                    <DetailsOverlay open={true} title="Create Officer"  onClose={() => {
-                            setShowCreateOverlay(false);
-                            setFormData({
-                                name: "",
-                                email: "",
-                                password: "",
-                            });
-                        }}
-                        actions={
-                            <>
-                                <button onClick={async () => {
-                                        await handleCreate();
-                                        setShowCreateOverlay(false);
-                                    }}>Create Officer </button>
-                                <button onClick={() => {setShowCreateOverlay(false);  setFormData({ name: "", email: "",  password: "", }); }} > Cancel 
-                                </button>
-                            </>
-                        }
+                    <button
+                        className="officer-btn btn-primary"
+                        onClick={() => setShowCreate(!showCreate)}
                     >
-                        <section className="overlay-section">
-                            <h3>Officer Information</h3>
+                        {showCreate ? "Close Form" : "+ Create Officer"}
+                    </button>
+                </div>
+                <div className="issue-list">
+                    <div className={`issue-card ${showCreate ? "expanded" : ""}`}>
+
+                        <div
+                            className="issue-header"
+                            onClick={() => setShowCreate(!showCreate)}
+                        >
+
+                            <div className="issue-header-left">
+                                <h3>Create Officer</h3>
+
+                                <span className="issue-category">
+                                    New Account
+                                </span>
+                            </div>
+
+                            <div className="issue-header-right">
+                                <span className="expand-icon">
+                                    {showCreate ? "−" : "+"}
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div className={`issue-details ${showCreate ? "open" : ""}`}>
 
                             <div className="detail-grid">
+
                                 <div className="detail-item">
                                     <label>Name</label>
                                     <input
@@ -202,109 +188,156 @@ function OfficerManagement() {
                                         onChange={handleChange}
                                     />
                                 </div>
+
                             </div>
-                        </section>
-                    </DetailsOverlay>
-                )}
 
-                {/* VIEW / UPDATE OFFICER */}
-                {selectedOfficer && (
-                    <DetailsOverlay
-                        open={true}
-                        title="Officer Details"
-                        onClose={() => {
-                            setSelectedOfficer(null);
-                            setFormData({
-                                name: "",
-                                email: "",
-                                password: "",
-                            });
-                        }}
-                        actions={
-                            <>
-                                <button onClick={handleUpdate}>
-                                    Update
-                                </button>
-
-                                <button onClick={handleDelete}>
-                                    Delete
-                                </button>
-
+                            <div className="issue-actions">
                                 <button
-                                    onClick={() => {
-                                        setSelectedOfficer(null);
-                                        setFormData({
-                                            name: "",
-                                            email: "",
-                                            password: "",
-                                        });
-                                    }}
+                                    className="officer-btn btn-primary"
+                                    onClick={handleCreate}
                                 >
-                                    Close
+                                    Create Officer
                                 </button>
-                            </>
-                        }
-                    >
-                        <section className="overlay-section">
-                            <h3>Officer Information</h3>
-
-                            <div className="detail-grid">
-                                <div className="detail-item">
-                                    <label>Name</label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-
-                                <div className="detail-item">
-                                    <label>Email</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-
-                                <div className="detail-item">
-                                    <label>Password</label>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        placeholder="Leave blank to keep current password"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                    />
-                                </div>
                             </div>
-                        </section>
 
-                        <hr className="overlay-divider" />
+                        </div>
 
-                        <section className="overlay-section">
-                            <h3>Account Information</h3>
+                    </div>
+                    <hr />
+                    {officers.map((officer) => (
 
-                            <div className="detail-grid">
-                                <div className="detail-item">
-                                    <label>Joined</label>
-                                    <span>
-                                        {new Date(
-                                            selectedOfficer.createdAt
-                                        ).toLocaleDateString()}
+                        <div
+                            key={officer._id}
+                            className={`issue-card ${expandedOfficer === officer._id
+                                ? "expanded"
+                                : ""
+                                }`}
+                        >
+
+                            <div
+                                className="issue-header"
+                                onClick={() => handleView(officer._id)}
+                            >
+
+                                <div className="issue-header-left">
+
+                                    <h3>{officer.name}</h3>
+
+                                    <span className="issue-category">
+                                        {officer.role}
                                     </span>
+
                                 </div>
 
-                                <div className="detail-item">
-                                    <label>Officer ID</label>
-                                    <span>{selectedOfficer._id}</span>
+                                <div className="issue-header-right">
+
+                                    <span className="officer-status-badge assigned">
+                                        Active
+                                    </span>
+
+                                    <span className="expand-icon">
+                                        {expandedOfficer === officer._id ? "−" : "+"}
+                                    </span>
+
                                 </div>
+
                             </div>
-                        </section>
-                    </DetailsOverlay>
-                )}
+
+                            <div
+                                className={`issue-details ${expandedOfficer === officer._id
+                                    ? "open"
+                                    : ""
+                                    }`}
+                            >
+
+                                {selectedOfficer?._id === officer._id && (
+
+                                    <>
+                                        <div className="detail-grid">
+
+                                            <div className="detail-item">
+                                                <label>Name</label>
+
+                                                <input
+                                                    type="text"
+                                                    name="name"
+                                                    value={formData.name}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+
+                                            <div className="detail-item">
+                                                <label>Email</label>
+
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    value={formData.email}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+
+                                            <div className="detail-item">
+                                                <label>Password</label>
+
+                                                <input
+                                                    type="password"
+                                                    name="password"
+                                                    placeholder="Leave blank to keep current password"
+                                                    value={formData.password}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+
+                                            <div className="detail-item">
+                                                <label>Joined</label>
+
+                                                <span>
+                                                    {new Date(
+                                                        selectedOfficer.createdAt
+                                                    ).toLocaleDateString()}
+                                                </span>
+                                            </div>
+
+                                            <div className="detail-item">
+                                                <label>Officer ID</label>
+
+                                                <span>
+                                                    {selectedOfficer._id}
+                                                </span>
+                                            </div>
+
+                                        </div>
+
+                                        <div className="issue-actions">
+
+                                            <button
+                                                className="officer-btn btn-primary"
+                                                onClick={handleUpdate}
+                                            >
+                                                Update
+                                            </button>
+
+                                            <button
+                                                className="officer-btn btn-danger"
+                                                onClick={handleDelete}
+                                            >
+                                                Delete
+                                            </button>
+
+                                        </div>
+
+                                    </>
+
+                                )}
+
+                            </div>
+
+                        </div>
+
+                    ))}
+
+                </div>
 
             </div>
         </div>

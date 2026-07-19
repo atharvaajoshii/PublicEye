@@ -7,6 +7,7 @@ function Reports() {
     const [reports, setReports] = useState([]);
     const [selectedReport, setSelectedReport] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [expandedReport, setExpandedReport] = useState(null);
 
     const fetchReports = async () => {
         try {
@@ -26,7 +27,15 @@ function Reports() {
 
     const handleView = async (id) => {
         try {
+            if (expandedReport === id) {
+                setExpandedReport(null);
+                setSelectedReport(null);
+                return;
+            }
+
             const res = await adminService.getReportById(id);
+
+            setExpandedReport(id);
             setSelectedReport(res.data.report);
         } catch (err) {
             console.log(err);
@@ -76,162 +85,133 @@ function Reports() {
                     Report Management
                 </h1>
 
-                <div className="table-section">
-                    <table className="users-table">
-                        <thead>
-                            <tr>
-                                <th>Issue</th>
-                                <th>Officer</th>
-                                <th>Reason</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+                <div className="issue-list">
 
-                        <tbody>
-                            {reports.map((report) => (
-                                <tr
-                                    key={report._id}
-                                    className={
-                                        selectedReport?._id === report._id
-                                            ? "selected-row"
-                                            : ""
-                                    }
-                                >
-                                    <td>{report.issue?.title}</td>
+                    {reports.map((report) => (
 
-                                    <td>{report.officer?.name}</td>
+                        <div
+                            key={report._id}
+                            className={`issue-card ${expandedReport === report._id ? "expanded" : ""
+                                }`}
+                        >
 
-                                    <td>{report.reason}</td>
+                            {/* Header */}
 
-                                    <td>
-                                        <span
-                                            className={`status ${report.status.toLowerCase()}`}
-                                        >
-                                            {report.status}
-                                        </span>
-                                    </td>
+                            <div
+                                className="issue-header"
+                                onClick={() => handleView(report._id)}
+                            >
 
-                                    <td className="actions">
-                                        <button
-                                            onClick={() =>
-                                                handleView(report._id)
-                                            }
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                                <div className="issue-header-left">
+
+                                    <h3>{report.issue?.title}</h3>
+
+                                    <span className="issue-category">
+                                        {report.reason}
+                                    </span>
+
+                                </div>
+
+                                <div className="issue-header-right">
+
+                                    <span
+                                        className={`officer-status-badge ${report.status.toLowerCase()}`}
+                                    >
+                                        {report.status}
+                                    </span>
+
+                                    <span className="expand-icon">
+                                        {expandedReport === report._id ? "−" : "+"}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div
+                                className={`issue-details ${expandedReport === report._id ? "open" : ""
+                                    }`}
+                            >
+
+                                {selectedReport?._id === report._id && (
+
+                                    <>
+                                        <div className="detail-grid">
+
+                                            <div className="detail-item">
+                                                <label>Issue</label>
+                                                <span>{selectedReport.issue?.title}</span>
+                                            </div>
+
+                                            <div className="detail-item">
+                                                <label>Description</label>
+                                                <span>{selectedReport.issue?.description}</span>
+                                            </div>
+
+                                            <div className="detail-item">
+                                                <label>Officer</label>
+                                                <span>{selectedReport.officer?.name}</span>
+                                            </div>
+
+                                            <div className="detail-item">
+                                                <label>Email</label>
+                                                <span>{selectedReport.officer?.email}</span>
+                                            </div>
+
+                                            <div className="detail-item">
+                                                <label>Reason</label>
+                                                <span>{selectedReport.reason}</span>
+                                            </div>
+
+                                            <div className="detail-item">
+                                                <label>Remarks</label>
+                                                <span>{selectedReport.description || "-"}</span>
+                                            </div>
+
+                                            <div className="detail-item">
+                                                <label>Status</label>
+                                                <span>{selectedReport.status}</span>
+                                            </div>
+
+                                        </div>
+
+                                        <div className="issue-actions">
+
+                                            <button
+                                                className={`officer-btn btn-primary ${selectedReport.status !== "Pending"
+                                                        ? "disabled-btn"
+                                                        : ""
+                                                    }`}
+                                                disabled={selectedReport.status !== "Pending"}
+                                                onClick={handleApprove}
+                                            >
+                                                Approve
+                                            </button>
+
+                                            <button
+                                                className={`officer-btn btn-danger ${selectedReport.status !== "Pending"
+                                                        ? "disabled-btn"
+                                                        : ""
+                                                    }`}
+                                                disabled={selectedReport.status !== "Pending"}
+                                                onClick={handleReject}
+                                            >
+                                                Reject
+                                            </button>
+
+                                        </div>
+
+                                    </>
+
+                                )}
+
+                            </div>
+
+                        </div>
+
+                    ))}
+
                 </div>
-
-                {selectedReport && (
-                    <DetailsOverlay
-                        open={true}
-                        title="Report Details"
-                        onClose={() => setSelectedReport(null)}
-                        actions={
-                            <>
-                                <button
-                                    onClick={handleApprove}
-                                    disabled={selectedReport.status !== "Pending"}
-                                    className={
-                                        selectedReport.status !== "Pending"
-                                            ? "disabled-btn"
-                                            : ""
-                                    }
-                                >
-                                    Approve
-                                </button>
-
-                                <button
-                                    onClick={handleReject}
-                                    disabled={selectedReport.status !== "Pending"}
-                                    className={
-                                        selectedReport.status !== "Pending"
-                                            ? "disabled-btn"
-                                            : ""
-                                    }
-                                >
-                                    Reject
-                                </button>
-
-                                <button
-                                    onClick={() => setSelectedReport(null)}
-                                >
-                                    Close
-                                </button>
-                            </>
-                        }
-                    >
-                        <section className="overlay-section">
-                            <h3>Issue Information</h3>
-
-                            <div className="detail-grid">
-                                <div className="detail-item">
-                                    <label>Issue</label>
-                                    <span>{selectedReport.issue?.title}</span>
-                                </div>
-
-                                <div className="detail-item">
-                                    <label>Description</label>
-                                    <span>
-                                        {selectedReport.issue?.description}
-                                    </span>
-                                </div>
-
-                                <div className="detail-item">
-                                    <label>Status</label>
-                                    <span>{selectedReport.status}</span>
-                                </div>
-                            </div>
-                        </section>
-
-                        <hr className="overlay-divider" />
-
-                        <section className="overlay-section">
-                            <h3>Officer Information</h3>
-
-                            <div className="detail-grid">
-                                <div className="detail-item">
-                                    <label>Name</label>
-                                    <span>
-                                        {selectedReport.officer?.name}
-                                    </span>
-                                </div>
-
-                                <div className="detail-item">
-                                    <label>Email</label>
-                                    <span>
-                                        {selectedReport.officer?.email}
-                                    </span>
-                                </div>
-                            </div>
-                        </section>
-
-                        <hr className="overlay-divider" />
-
-                        <section className="overlay-section">
-                            <h3>Report Information</h3>
-
-                            <div className="detail-grid">
-                                <div className="detail-item">
-                                    <label>Reason</label>
-                                    <span>{selectedReport.reason}</span>
-                                </div>
-
-                                <div className="detail-item">
-                                    <label>Remarks</label>
-                                    <span>
-                                        {selectedReport.description || "-"}
-                                    </span>
-                                </div>
-                            </div>
-                        </section>
-                    </DetailsOverlay>
-                )}
             </div>
         </div>
     );
