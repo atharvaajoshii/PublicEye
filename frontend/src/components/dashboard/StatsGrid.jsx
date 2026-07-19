@@ -1,5 +1,11 @@
 import React from "react";
 import StatCard from "../dashboard/StatCard"
+import {
+    HiOutlineDocumentText,
+    HiOutlineClock,
+    HiOutlineArrowPath,
+    HiOutlineCheckCircle
+} from "react-icons/hi2";
 function StatsGrid(props) {
     const totalReports = props.issues.length;
     const pendingReports = props.issues.filter(
@@ -10,19 +16,24 @@ function StatsGrid(props) {
         issue => issue.status === "Resolved").length;
 
     return (
-        <div>
+        <div className="stats-grid">
             <StatCard
                 title="Total Reports"
-                count={totalReports} />
+                count={totalReports} 
+                icon={<HiOutlineDocumentText />}/>
             <StatCard
                 title="Pending"
-                count={pendingReports} />
+                count={pendingReports} 
+                 icon={<HiOutlineClock />}/>
             <StatCard
                 title="In Progress"
-                count={inProgressReports} />
+                count={inProgressReports}
+                 icon={<HiOutlineArrowPath />} />
             <StatCard
                 title="Resolved"
-                count={resolvedReports} />
+                count={resolvedReports}
+                 icon={<HiOutlineCheckCircle />}
+            /> 
         </div>
     )
 }

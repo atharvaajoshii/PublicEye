@@ -8,8 +8,8 @@ import { GoIssueTracks, GoReport } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 import MyReports from "../pages/MyReports";
 import toast from 'react-hot-toast';
-
-
+import smallLogo from "../assets/small_logo.jpeg"
+import "../styles/adithya_css/adithya.css"
 import "../styles/atmika.css"
 
 function Sidebar({ isOpen, closeSidebar }) {
@@ -74,14 +74,15 @@ function Sidebar({ isOpen, closeSidebar }) {
             {/* Logo */}
             <div className="sidebar-header">
                 <img
-                    src="https://placehold.co/60x60"
-                    alt="Logo"
+                    src={smallLogo}
+                    alt="PublicEye"
                     className="sidebar-logo"
                 />
 
-                <span className="sidebar-title">
-                    PublicEye
-                </span>
+                <div className="sidebar-title">
+                    <h2>PublicEye</h2>
+                    <p>Citizen Portal</p>
+                </div>
             </div>
 
             {/* Navigation */}
@@ -92,10 +93,12 @@ function Sidebar({ isOpen, closeSidebar }) {
                         onClick={closeSidebar}
                     >
                         {link.icon}
-                        <span>{link.name}</span>
+                        <span className="sidebar-text">
+                            {link.name}
+                        </span>
                     </Link>
                 ))}
-
+                <div className="sidebar-divider"></div>
                 {/* Profile */}
                 <div className="sidebar-user">
                     <img
