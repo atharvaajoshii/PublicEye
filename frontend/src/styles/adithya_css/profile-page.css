@@ -1,0 +1,89 @@
+.profile-card{
+    background:var(--surface);
+    border-radius:28px;
+    padding:40px;
+    box-shadow:var(--shadow);
+    text-align:center;
+    margin-bottom:35px;
+}
+.profile-avatar{
+    width:90px;
+    height:90px;
+    margin:auto;
+    border-radius:50%;
+    background:var(--secondary);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+.profile-card h2{
+    color:var(--primary);
+    margin-bottom:10px;
+     max-width:900px;
+    margin:0 auto 40px;
+}
+.role-badge{
+    display:inline-block;
+    padding:8px 18px;
+    border-radius:999px;
+    background:rgba(123,87,206,.12);
+    color:var(--secondary);
+    margin-bottom:30px;
+}
+.profile-info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    margin-bottom:35px;
+}
+
+.info-item{
+    background:#faf8ff;
+    border-radius:18px;
+    padding:20px;
+}
+
+.info-item h4{
+    color:var(--text-light);
+    margin-bottom:6px;
+}
+
+.info-item p{
+    color:var(--primary);
+    font-weight:600;
+}
+.myreports-section{
+    margin-top:35px;
+}
+.profile-actions{
+    margin-top:10px;
+    display:flex;
+    justify-content:center;
+}
+
+.logout-profile-btn{
+    min-width:170px;
+}
+.page-header{
+    margin-bottom:35px;
+}
+.info-item h4{
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.info-item p{
+    font-size:17px;
+}
+.profile-avatar{
+    transition:.3s ease;
+}
+
+.profile-avatar:hover{
+    transform:scale(1.05);
+}

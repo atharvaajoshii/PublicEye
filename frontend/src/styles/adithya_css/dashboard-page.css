@@ -71,7 +71,7 @@
 
 }
 .report-item{
-    padding: 18px 0;
+    padding:22px 0;
     border-bottom: 1px solid var(--border);
 }
 .report-item:last-child{
@@ -84,8 +84,14 @@
     margin-bottom:10px;
 }
 .report-top h3{
-    font-size:18px;
+    font-size:22px;
     color:var(--primary);
+    font-weight:700;
+}
+.report-description{
+    color:var(--text-light);
+    font-size:14px;
+    line-height:1.6;
 }
 .report-meta{
     display:flex;
@@ -93,6 +99,12 @@
     color:var(--text-light);
     font-size:14px;
     margin-bottom:14px;
+}
+.status-badge{
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
 }
 .status-badge.pending{
     background:#FFF4D6;
@@ -113,4 +125,36 @@
 .status-badge.rejected{
     background:#FDECEC;
     color:#D64545;
+}
+.report-location{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+.report-category{
+    color:var(--secondary);
+    font-weight:600;
+    padding:3px 10px;
+    border-radius:999px;
+    background:rgba(123,87,206,.08);
+}
+.progress-bar{
+    width:100%;
+    height:8px;
+    background:#ece7f6;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:16px;
+}
+
+.progress-fill{
+    height:100%;
+    background:var(--secondary);
+    border-radius:20px;
+    transition:.3s;
+}
+.empty-state{
+    padding:50px 0;
+    text-align:center;
+    color:var(--text-light);
 }

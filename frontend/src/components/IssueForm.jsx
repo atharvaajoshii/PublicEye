@@ -34,7 +34,7 @@ function IssueForm() {
     });
   };
 
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = new FormData();
@@ -49,24 +49,24 @@ const handleSubmit = async (e) => {
     data.append("image", formData.image);
 
     try {
-        const result = await createIssue(data);
+      const result = await createIssue(data);
 
-        toast.success("Issue reported successfully!");
+      toast.success("Issue reported successfully!");
 
-        console.log(result);
+      console.log(result);
 
     } catch (error) {
-        console.error(error);
+      console.error(error);
 
-        toast.error("Failed to submit issue.");
+      toast.error("Failed to submit issue.");
     }
-};
+  };
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="issue-form" onSubmit={handleSubmit}>
 
-      <div>
-        <label>Title</label>
-        <input
+      <div className="form-group">
+        <label className="form-label">Title</label>
+        <input className="form-input"
           type="text"
           name="title"
           value={formData.title}
@@ -75,9 +75,9 @@ const handleSubmit = async (e) => {
         />
       </div>
 
-      <div>
-        <label>Description</label>
-        <textarea
+      <div className="form-group">
+        <label className="form-label">Description</label>
+        <textarea className="form-input"
           name="description"
           value={formData.description}
           onChange={handleChange}
@@ -85,9 +85,9 @@ const handleSubmit = async (e) => {
         />
       </div>
 
-      <div>
-        <label>Location</label>
-        <input
+      <div className="form-group">
+        <label className="form-label">Location</label>
+        <input className="form-input"
           type="text"
           name="location"
           value={formData.location}
@@ -96,9 +96,9 @@ const handleSubmit = async (e) => {
         />
       </div>
 
-      <div>
-        <label>Latitude</label>
-        <input
+      <div className="form-group">
+        <label className="form-label">Latitude</label>
+        <input className="form-input"
           type="number"
           name="latitude" step="any"
           value={formData.latitude}
@@ -106,9 +106,9 @@ const handleSubmit = async (e) => {
         />
       </div>
 
-      <div>
-        <label>Longitude</label>
-        <input
+      <div className="form-group">
+        <label className="form-label">Longitude</label>
+        <input className="form-input"
           type="number"
           name="longitude" step="any"
           value={formData.longitude}
@@ -116,9 +116,9 @@ const handleSubmit = async (e) => {
         />
       </div>
 
-      <div>
-        <label>Category</label>
-        <select
+      <div className="form-group">
+        <label className="form-label">Category</label>
+        <select className="form-input"
           name="category"
           value={formData.category}
           onChange={handleChange}
@@ -134,28 +134,29 @@ const handleSubmit = async (e) => {
         </select>
       </div>
 
-      <div>
-        <label>Upload Image</label>
-        <input
+      <div className="form-group">
+        <label className="form-label">Upload Image</label>
+        <input className="form-input"
           type="file"
           accept="image/*"
           onChange={handleImageChange}
         />
       </div>
 
-      <div>
-        <label>
+      <div className="checkbox-group">
+       
           <input
             type="checkbox"
             name="publicVoting"
             checked={formData.publicVoting}
             onChange={handleChange}
           />
+           <label htmlFor="publicVoting">
           Enable Public Voting
         </label>
       </div>
 
-      <button type="submit">
+      <button className="primary-btn" type="submit">
         Submit Issue
       </button>
     </form>

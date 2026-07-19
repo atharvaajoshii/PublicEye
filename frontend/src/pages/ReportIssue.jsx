@@ -3,15 +3,20 @@ import IssueForm from "../components/IssueForm";
 import { useNavigate } from "react-router-dom"
 import { GoChevronLeft } from "react-icons/go";
 import React from "react";
+import "../styles/adithya_css/report-form.css"
 function ReportIssue() {
     const navigate = useNavigate();
     return (
         <div>
-            <button onClick={() => navigate(-1)}>
-                <GoChevronLeft />Back
-            </button>
-            <h1>Report an Issue</h1>
-            <IssueForm />
+            <main className="dashboard-content">
+                <button className="back-btn" onClick={() => navigate(-1)}>
+                    <GoChevronLeft />Back
+                </button>
+                <div className="page-header">
+                    <h1>Report an Issue</h1>
+                </div>
+                <IssueForm />
+            </main>
         </div>
     );
 }
