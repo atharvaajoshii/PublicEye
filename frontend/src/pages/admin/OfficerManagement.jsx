@@ -179,10 +179,8 @@ function OfficerManagement() {
                 <div className="issue-list">
                     <div className={`issue-card ${showCreate ? "expanded" : ""}`}>
 
-                        <div
-                            className="issue-header"
-                            onClick={() => setShowCreate(!showCreate)}
-                        >
+                        <div className="issue-header"
+                            onClick={() => setShowCreate(!showCreate)}>
 
                             <div className="issue-header-left">
                                 <h3>Create Officer</h3>

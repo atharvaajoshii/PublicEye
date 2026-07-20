@@ -439,3 +439,20 @@ input{
     align-items:center;
     gap:10px;
 }
+.map-container-card {
+    margin-top: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    overflow: hidden;
+    background: #1b1b2f;           /* or var(--card-bg) */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.map-container-card .leaflet-container {
+    border-radius: 18px;
+}
+
+.map-container-card:hover {
+    border-color: rgba(126, 87, 194, 0.35); /* subtle purple */
+    transition: 0.2s ease;
+}

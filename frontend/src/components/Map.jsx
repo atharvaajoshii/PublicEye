@@ -29,7 +29,7 @@ function Map({ formData, setFormData }) {
 
                 const { lat, lng } = e.latlng;
 
-                const place = await getAddress(lat, lng);
+                const place = await getAddress(lat, lng);   
 
                 setFormData(prev => ({
                     ...prev,
@@ -54,11 +54,11 @@ function Map({ formData, setFormData }) {
             />
             <ClickHandler setFormData={setFormData} />
 
-{formData.latitude && formData.longitude && (
-    <Marker
-        position={[formData.latitude, formData.longitude]}
-    />
-)}
+            {formData.latitude && formData.longitude && (
+                <Marker
+                    position={[formData.latitude, formData.longitude]}
+                />
+            )}
 
         </MapContainer>
     );

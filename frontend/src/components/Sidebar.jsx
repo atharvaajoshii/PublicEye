@@ -47,7 +47,7 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
     { name: "All Issues", path: "/all-issues", icon: <GoIssueTracks /> },
     { name: "Report", path: "/report", icon: <GoReport /> },
     // { name: "My Reports", path: "/myreports", icon: <GoReport/> },
-    { name: "Map", path: "/officer/map", icon: <GrMap /> },
+    { name: "Map", path: "/issues/map", icon: <GrMap /> },
     { name: "Profile", path: "/profile", icon: <CgProfile /> },
     { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
   ];
@@ -77,7 +77,7 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
     }, // Placeholder
     { name: "Users", path: "/admin/manage-users", icon: <CgProfile /> }, // Placeholder
     { name: "Issues", path: "/admin/manage-issues", icon: <GoIssueTracks /> },
-    { name: "Map", path: "/officer/map", icon: <GrMap /> },
+    { name: "Map", path: "/issues/map", icon: <GrMap /> },
     { name: "Reports", path: "/admin/reports", icon: <GoReport /> },
     { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
   ];
