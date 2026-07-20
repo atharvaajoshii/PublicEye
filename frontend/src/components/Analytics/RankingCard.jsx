@@ -17,6 +17,15 @@ const maxVotes =
     <div className="chart-card ranking-card">
       <h3 className="chart-title">{title}</h3>
 
+      {data.length === 0 ? (
+
+<div className="empty-chart">
+
+    No resolved issues
+
+</div>
+) : (
+
       <div className="ranking-list">
         {rankedIssues.map((issue, index) => {
           const percentage = (issue.votes / maxVotes) * 100;
@@ -57,6 +66,7 @@ const maxVotes =
           );
         })}
       </div>
+)}
     </div>
   );
 }

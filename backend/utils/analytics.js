@@ -111,14 +111,30 @@ const getMonthlyStats = async (filter) => {
 
 const getResolutionTrend = async (filter) => {
 
+    const resolutionFilter = {
+        status: "Resolved"
+    };
+
+    // If a createdAt filter exists, apply it to updatedAt instead
+    if (filter.createdAt) {
+        resolutionFilter.updatedAt = filter.createdAt;
+    }
+
+    // Keep all other filters (admin/citizen/officer)
+    Object.keys(filter).forEach((key) => {
+        if (key !== "createdAt") {
+            resolutionFilter[key] = filter[key];
+        }
+    });
+
     const stats = await Issue.aggregate([
         {
-            $match: { ...filter, status: "Resolved" }
+            $match: resolutionFilter
         },
         {
             $group: {
                 _id: { $month: "$updatedAt" },
-                resolved: { $sum: 1 },
+                resolved: { $sum: 1 }
             }
         },
         {
@@ -144,13 +160,13 @@ const getResolutionTrend = async (filter) => {
         "Dec"
     ];
 
-    const data = stats.map(item => ({
+    console.log(filter);
+
+    return stats.map(item => ({
         month: months[item._id],
         resolved: item.resolved
     }));
-
-    return data;
-}
+};
 
 // const getAreaDistribution = async (filter) => {
 
@@ -292,13 +308,18 @@ const getAverageResolutionTime = async(filter)=>{
 
 // const getTopVotedIssues = async(filter)=>{
 
-//     return await Issue.find(filter).sort({ votes: -1 }).limit(10).select("title votes")
+//     return await Issue.find(filter).sort({ votes: -1 }).limit(5).select("title votes")
 // }
 
 const getTopVotedIssues = async (filter) => {
-    const issues = await Issue.find(filter);
-    return issues;
-}
+    return await Issue.find({
+        ...filter,
+        votes: { $gt: 0 }
+    })
+        .sort({ votes: -1 })
+        .limit(5)
+        .select("title votes");
+};
 
 module.exports = {
     getIssueFilter,

@@ -11,7 +11,8 @@ import {
 } from "react-icons/fi";
 
 import logo from "../assets/logo.png";
-import heroImg from "../assets/hero.png"; // illustration
+import heroImg from "../assets/hero.png";
+import report from "../assets/report_issue.png";
 
 function Landing() {
   return (
@@ -196,7 +197,7 @@ function Landing() {
             </div>
 
             <div className="feature-image">
-              <img src="/images/reporting.png" alt="Report issue" />
+              <img src={report} alt="Report issue" />
             </div>
           </div>
 

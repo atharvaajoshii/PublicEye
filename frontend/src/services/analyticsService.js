@@ -7,7 +7,9 @@ const config = {
 };
 
 const analyticsService = {
-    getAnalytics() { return axios.get(`${API}/analytics`, config); },
+    getAnalytics(from,to){
+        return axios.get(`${API}/analytics?from=${from}&to=${to}`, config);
+    },
 };
 
 export default analyticsService;
