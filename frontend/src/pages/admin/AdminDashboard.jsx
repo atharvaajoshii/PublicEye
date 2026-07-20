@@ -80,10 +80,8 @@ return (
                     {pendingIssues.map((issue) => (
                         <div
                             key={issue._id}
-                            className="officer-clickable-item-card"
-                            onClick={() =>
-                                navigate(`/issue/${issue._id}`)
-                            }
+                            className="officer-static-item-card"
+                            
                         >
                             <h3>{issue.title}</h3>
 
@@ -111,10 +109,7 @@ return (
                     {resolvedIssues.map((issue) => (
                         <div
                             key={issue._id}
-                            className="officer-clickable-item-card"
-                            onClick={() =>
-                                navigate(`/issue/${issue._id}`)
-                            }
+                            className="officer-static-item-card"
                         >
                             <h3>{issue.title}</h3>
 
@@ -138,10 +133,7 @@ return (
                     {reportedToday.map((issue) => (
                         <div
                             key={issue._id}
-                            className="officer-clickable-item-card"
-                            onClick={() =>
-                                navigate(`/issue/${issue._id}`)
-                            }
+                            className="officer-static-item-card"
                         >
                             <h3>{issue.title}</h3>
 
