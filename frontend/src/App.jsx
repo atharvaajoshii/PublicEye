@@ -20,12 +20,9 @@ import OfficerReport from "./pages/OfficerReport";
 import ManageIssues_user from "./pages/ManageIssues_user";
 import MyReports from "./pages/MyReports";
 import Layout from "./components/Layout"
-<<<<<<< HEAD
 import OfficerProfile from "./pages/OfficerProfile";
-=======
 import Maps from "./pages/Map";
 
->>>>>>> c6e41d36bd81b0226929918e9e9c66dd7b280c39
 
 function App() {
   return (
