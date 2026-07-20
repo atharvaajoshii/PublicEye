@@ -176,16 +176,16 @@ function App() {
             }
           />
 
+          <Route
+            path="/issues/map"
+            element={
+              <ProtectedRoute>
+                <Maps />
+              </ProtectedRoute>
+            }
+          />
         </Route>
-        <Route
-          path="/map"
-          element={
-            <ProtectedRoute>
-              <Maps />
-            </ProtectedRoute>
-          }
-        />
-    </Routes>
+      </Routes>
     </BrowserRouter >
   );
 }

@@ -45,7 +45,7 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
     { name: "All Issues", path: "/all-issues", icon: <GoIssueTracks /> },
     { name: "Report", path: "/report", icon: <GoReport /> },
     // { name: "My Reports", path: "/myreports", icon: <GoReport/> },
-    { name: "Map", path: "/map", icon: <GrMap /> },
+    { name: "Map", path: "/issues/map", icon: <GrMap /> },
     { name: "Profile", path: "/profile", icon: <CgProfile /> },
     { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
   ];
@@ -57,7 +57,7 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
       icon: <MdOutlineDashboard />,
     },
     { name: "Issues", path: "/officer/manage-issues", icon: <GoIssueTracks /> },
-    { name: "Map", path: "/map", icon: <GrMap /> }, // Placeholder
+    { name: "Map", path: "/issues/map", icon: <GrMap /> }, // Placeholder
     { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
   ];
 
