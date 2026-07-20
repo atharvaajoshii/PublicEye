@@ -1,0 +1,12 @@
+.leaflet-container {
+    cursor: default !important;
+}
+
+.leaflet-grab {
+    cursor: default !important;
+}
+
+.leaflet-dragging .leaflet-grab,
+.leaflet-grab:active {
+    cursor: default !important;
+}
