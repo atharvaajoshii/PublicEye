@@ -155,7 +155,7 @@ function ManageIssues() {
             value={status}
             onChange={(e) => setStatus(e.target.value)}
           >
-            <option value="">All Statuses</option>
+            <option value="">All Status</option>
             <option value="Pending">Pending</option>
             <option value="Assigned">Assigned</option>
             <option value="In Progress">In Progress</option>

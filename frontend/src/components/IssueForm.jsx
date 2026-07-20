@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { createIssue } from "./issueService";
 import toast from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 import Map from "./Map";
 
 function IssueForm() {
@@ -15,7 +16,7 @@ function IssueForm() {
     category: "",
     image: null,
   });
-
+const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -52,12 +53,10 @@ function IssueForm() {
       const result = await createIssue(data);
 
       toast.success("Issue reported successfully!");
-
+      navigate("/all-issues")
       console.log(result);
-
     } catch (error) {
       console.error(error);
-
       toast.error("Failed to submit issue.");
     }
   };
