@@ -58,7 +58,7 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
       path: "/officer/dashboard",
       icon: <MdOutlineDashboard />,},
     { name: "Issues", path: "/officer/manage-issues", icon: <GoIssueTracks /> },
-    { name: "Map", path: "/officer/map", icon: <GrMap /> }, // Placeholder
+    { name: "Map", path: "/issues/map", icon: <GrMap /> }, // Placeholder
     { name: "Profile", path: "/officer/profile", icon: <CgProfile /> },
     { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
     
