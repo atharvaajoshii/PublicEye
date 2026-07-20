@@ -15,6 +15,7 @@ import heroImg from "../assets/hero.png";
 import report from "../assets/report_issue.png";
 import analytics from "../assets/analytics.png";
 import footer_logo from "../assets/logo_name_tagline.png";
+import track from "../assets/track.png";
 
 function Landing() {
   return (
@@ -207,7 +208,7 @@ function Landing() {
 
           <div className="feature-row reverse">
             <div className="feature-image">
-              <img src="/images/tracking.png" alt="Tracking" />
+              <img src={track} alt="Tracking" />
             </div>
 
             <div className="feature-content">
