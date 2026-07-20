@@ -10,7 +10,6 @@ const createIssue = async (req, res) => {
             latitude,
             longitude,
             category,
-            publicVoting
         } = req.body;
 
         const image = req.file ? req.file.filename : "";
@@ -26,7 +25,6 @@ const createIssue = async (req, res) => {
             latitude: parsedLatitude,
             longitude: parsedLongitude,
             category,
-            publicVoting: publicVoting === 'true' || publicVoting === true, // handle formData string boolean
             image,
             user: req.user.id
         });

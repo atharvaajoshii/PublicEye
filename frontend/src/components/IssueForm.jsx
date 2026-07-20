@@ -13,7 +13,6 @@ function IssueForm() {
     latitude: "",
     longitude: "",
     category: "",
-    publicVoting: false,
     image: null,
   });
 
@@ -47,7 +46,6 @@ function IssueForm() {
     data.append("latitude", formData.latitude);
     data.append("longitude", formData.longitude);
     data.append("category", formData.category);
-    data.append("publicVoting", formData.publicVoting);
     data.append("image", formData.image);
 
     try {
@@ -63,6 +61,8 @@ function IssueForm() {
       toast.error("Failed to submit issue.");
     }
   };
+
+  
   return (
     <form className="issue-form" onSubmit={handleSubmit}>
 
@@ -150,20 +150,6 @@ function IssueForm() {
           onChange={handleImageChange}
         />
       </div>
-
-      <div className="checkbox-group">
-
-        <input
-          type="checkbox"
-          name="publicVoting"
-          checked={formData.publicVoting}
-          onChange={handleChange}
-        />
-        <label htmlFor="publicVoting">
-          Enable Public Voting
-        </label>
-      </div>
-
 
       <button className="primary-btn" type="submit">
         Submit Issue

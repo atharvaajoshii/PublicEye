@@ -14,5 +14,12 @@ const updateProgress = (id, progress) =>
         { progress },
         { withCredentials: true }
     );
+    const updateVoting = (id, publicVoting) => {
+        return axios.patch(
+            `${API}/${id}/voting`,
+            { publicVoting },
+            { withCredentials: true }
+        );
+    };
 
-export default { getDashboard, getAnalytics, getManageIssues, updateStatus, updateProgress };
+export default { getDashboard, getAnalytics, getManageIssues, updateStatus, updateProgress, updateVoting };

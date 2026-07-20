@@ -41,6 +41,7 @@ td{
 
 
 
+
 .officer-status-badge{
     padding:4px 10px;
     border-radius:20px;
@@ -429,4 +430,12 @@ input{
 .officer-progress-controls span{
     font-weight:600;
     color:var(--primary);
+}
+
+
+
+.checkbox-group{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }

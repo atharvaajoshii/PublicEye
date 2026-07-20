@@ -38,11 +38,7 @@ textarea.form-input{
     grid-template-columns:1fr 1fr;
     gap:20px;
 }
-.checkbox-group{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
+
 .primary-btn{
     width:fit-content;
     padding:14px 30px;

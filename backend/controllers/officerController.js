@@ -198,4 +198,34 @@ const updateIssueProgress = async (req, res) => {
     }
 }
 
-module.exports = { dashboard, manageIssues, updateIssueStatus, updateIssueProgress };
+const updateVoting = async (req, res) => {
+    try {
+        const { publicVoting } = req.body;
+
+        const issue = await Issue.findByIdAndUpdate(
+            req.params.id,
+            { publicVoting },
+            { new: true }
+        );
+
+        if (!issue) {
+            return res.status(404).json({
+                success: false,
+                message: "Issue not found"
+            });
+        }
+
+        res.json({
+            success: true,
+            issue
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+module.exports = { dashboard, manageIssues, updateIssueStatus, updateIssueProgress, updateVoting };
