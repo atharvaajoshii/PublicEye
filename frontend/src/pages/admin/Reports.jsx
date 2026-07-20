@@ -7,11 +7,15 @@ function Reports() {
 	const [selectedReport, setSelectedReport] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [expandedReport, setExpandedReport] = useState(null);
+	const [search, setSearch] = useState("");
+	const [status, setStatus] = useState("");
+	const [sort, setSort] = useState("");
+	const [debouncedSearch, setDebouncedSearch] = useState("");
 
 	const fetchReports = async () => {
 		try {
 			setLoading(true);
-			const res = await adminService.getAllReports();
+			const res = await adminService.getAllReports({ search: debouncedSearch, status, sort, });
 			setReports(res.data.reports);
 		} catch (err) {
 			console.log(err);
@@ -21,8 +25,16 @@ function Reports() {
 	};
 
 	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedSearch(search);
+		}, 500);
+
+		return () => clearTimeout(timer);
+	}, [search]);
+
+	useEffect(() => {
 		fetchReports();
-	}, []);
+	}, [debouncedSearch, status, sort]);
 
 	const handleView = async (id) => {
 		try {
@@ -83,21 +95,50 @@ function Reports() {
 				<h1 className="page-title">
 					Report Management
 				</h1>
+				<div className="officer-filters-toolbar">
+					<input
+						type="search"
+						className="officer-input-search"
+						placeholder="Search Reports..."
+						value={search}
+						onChange={(e) => setSearch(e.target.value)}
+					/>
+					<select
+						className="officer-select-filter"
+						value={status}
+						onChange={(e) => setStatus(e.target.value)}
+					>
+						<option value="">All Status</option>
+						<option value="Pending">Pending</option>
+						<option value="Approved">Approved</option>
+						<option value="Rejected">Rejected</option>
+					</select>
+					<select
+						className="officer-select-filter"
+						value={sort}
+						onChange={(e) => setSort(e.target.value)}
+					>
+						<option value="">Sort By</option>
+						<option value="newest">Newest First</option>
+						<option value="oldest">Oldest First</option>
+					</select>
+					<button
+						className="officer-btn btn-secondary"
+						onClick={() => {
+							setSearch("");
+							setStatus("");
+							setSort("");
+						}}
+					>
+						Reset
+					</button>
+				</div>
 
 				<div className="issue-list">
-
 					{reports.map((report) => (
-
-						<div
-							key={report._id}
-							className={`issue-card ${expandedReport === report._id ? "expanded" : ""
-								}`}
-						>
-
+						<div key={report._id} className={`issue-card ${expandedReport === report._id ? "expanded" : ""}`}>
 							{/* Header */}
-
-							<div
-								className="issue-header"
+							<div className="issue-header"
 								onClick={() => handleView(report._id)}
 							>
 

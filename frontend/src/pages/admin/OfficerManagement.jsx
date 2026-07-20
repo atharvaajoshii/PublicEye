@@ -9,6 +9,9 @@ function OfficerManagement() {
     const [loading, setLoading] = useState(true);
     const [showCreate, setShowCreate] = useState(false);
     const [showCreateOverlay, setShowCreateOverlay] = useState(false);
+    const [search, setSearch] = useState("");
+    const [sort, setSort] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
 
     const [formData, setFormData] = useState({
         name: "",
@@ -18,7 +21,7 @@ function OfficerManagement() {
     const fetchOfficers = async () => {
         try {
             setLoading(true);
-            const res = await adminService.getAllOfficers();
+            const res = await adminService.getAllOfficers({ search: debouncedSearch, sort, });
             setOfficers(res.data.officers);
         } catch (err) {
             console.log(err);
@@ -26,9 +29,18 @@ function OfficerManagement() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [search]);
+
     useEffect(() => {
         fetchOfficers();
-    }, []);
+    }, [debouncedSearch, sort]);
+
     const handleView = async (id) => {
         try {
             if (expandedOfficer === id) {
@@ -130,6 +142,40 @@ function OfficerManagement() {
                         {showCreate ? "Close Form" : "+ Create Officer"}
                     </button>
                 </div>
+                <hr />
+                <div className="officer-filters-toolbar">
+
+                    <input
+                        type="search"
+                        className="officer-input-search"
+                        placeholder="Search Officers..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+
+                    <select
+                        className="officer-select-filter"
+                        value={sort}
+                        onChange={(e) => setSort(e.target.value)}
+                    >
+                        <option value="">Sort By</option>
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="name">Name A-Z</option>
+                    </select>
+
+                    <button
+                        className="officer-btn btn-secondary"
+                        onClick={() => {
+                            setSearch("");
+                            setSort("");
+                        }}
+                    >
+                        Reset
+                    </button>
+
+                </div>
+                <hr />
                 <div className="issue-list">
                     <div className={`issue-card ${showCreate ? "expanded" : ""}`}>
 

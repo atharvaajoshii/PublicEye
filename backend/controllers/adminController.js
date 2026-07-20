@@ -81,9 +81,30 @@ const analytics = async (req, res) => {
 
 const getAllOfficers = async (req, res) => {
     try {
-        const officers = await User.find({ role: "officer" });
-
+        const { search, sort } = req.query;
+        const filter = {
+            role: "officer",
+        };
+        if (search) {
+            filter.$or = [
+                { name: { $regex: search, $options: "i" } },
+                { email: { $regex: search, $options: "i" } },
+            ];
+        }
+        let sortOption = { createdAt: -1 };
+        switch (sort) {
+            case "oldest":
+                sortOption = { createdAt: 1 };
+                break;
+            case "name":
+                sortOption = { name: 1 };
+                break;
+            default:
+                sortOption = { createdAt: -1 };
+        }
+        const officers = await User.find(filter).sort(sortOption);
         return res.json({ officers });
+
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" });
@@ -467,7 +488,7 @@ const getAllUsers = async (req, res) => {
         }
         const users = await User.find(filter).sort(sortOption);
         return res.json({ users });
-        
+
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
@@ -557,12 +578,35 @@ const toggleUserStatus = async (req, res) => {
 
 const getAllReports = async (req, res) => {
     try {
-        const reports = await Report.find()
+        const { search, status, sort } = req.query;
+        const filter = {};
+        if (status) {
+            filter.status = status;
+        }
+        let reports = await Report.find(filter)
             .populate("issue")
-            .populate("officer", "name email")
-            .sort({ createdAt: -1 });
-
+            .populate("officer", "name email");
+        if (search) {
+            const keyword = search.toLowerCase();
+            reports = reports.filter((report) => {
+                const title =
+                    report.issue?.title ||
+                    report.issueSnapshot?.title ||
+                    "";
+                const reason = report.reason || "";
+                return (
+                    title.toLowerCase().includes(keyword) ||
+                    reason.toLowerCase().includes(keyword)
+                );
+            });
+        }
+        if (sort === "oldest") {
+            reports.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        } else {
+            reports.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
         return res.json({ reports });
+
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" });

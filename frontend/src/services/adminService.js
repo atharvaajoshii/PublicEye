@@ -29,9 +29,11 @@ const adminService = {
         return axios.patch(`${API}/users/${id}/status`, {}, config);
     },
 
-
-    getAllOfficers() {
-        return axios.get(`${API}/officers`, config);
+    getAllOfficers(params) {
+        return axios.get(`${API}/officers`, {
+            ...config,
+            params,
+        });
     },
     getOfficerById(id) {
         return axios.get(`${API}/officers/${id}`, config);
@@ -76,8 +78,11 @@ const adminService = {
 
 
 
-    getAllReports() {
-        return axios.get(`${API}/reports`, config);
+    getAllReports(params) {
+        return axios.get(`${API}/reports`, {
+            ...config,
+            params,
+        });
     },
     getReportById(id) {
         return axios.get(`${API}/reports/${id}`, config);
