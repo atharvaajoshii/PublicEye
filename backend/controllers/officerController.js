@@ -118,17 +118,31 @@ const updateIssueStatus = async (req, res) => {
             });
         }
 
-        const progressMap = {
-            Pending: 0,
-            Assigned: 15,
-            Resolved: 100,
-            Rejected: 0
-        };
-
-        if (status in progressMap) {
-            assignment.progress = progressMap[status];
-            await assignment.save();
+        switch (status) {
+            case "Pending":
+                assignment.progress = 0;
+                break;
+        
+            case "Assigned":
+                assignment.progress = 15;
+                break;
+        
+            case "Resolved":
+                assignment.progress = 100;
+                break;
+        
+            case "Rejected":
+                assignment.progress = 0;
+                break;
+        
+                case "In Progress":
+                    if (assignment.progress === 0 || assignment.progress === 100) {
+                        assignment.progress = 15;
+                    }
+                    break;
         }
+        
+        await assignment.save();
 
         res.json({ message: "Status updated successfully", issue, assignment });
     } catch (error) {
@@ -168,7 +182,7 @@ const updateIssueProgress = async (req, res) => {
             });
         }
 
-        if (progress < 0 || progress > 100) {
+        if (progress < 15 || progress > 100) {
             return res.status(400).json({
                 message: "Progress must be between 0 and 100."
             });

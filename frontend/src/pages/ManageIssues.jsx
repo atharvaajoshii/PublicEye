@@ -22,6 +22,8 @@ function ManageIssues() {
     const [expandedIssue, setExpandedIssue] = useState(null);
     const [selectedIssueDetails, setSelectedIssueDetails] = useState(null);
 
+    const [progressValues, setProgressValues] = useState({});
+
     const fetchIssues = async () => {
         try {
             const res = await officerService.getManageIssues({
@@ -35,6 +37,18 @@ function ManageIssues() {
             console.log("Error fetching issues:", error);
         }
     };
+
+    useEffect(() => {
+        const values = {};
+    
+        issues.forEach(item => {
+            if (item.issue) {
+                values[item.issue._id] = item.progress || 0;
+            }
+        });
+    
+        setProgressValues(values);
+    }, [issues]);
 
     useEffect(() => {
         if (user) fetchIssues();
@@ -56,6 +70,26 @@ function ManageIssues() {
     const handleStatusChange = async (issueId, newStatus) => {
         try {
             await officerService.updateStatus(issueId, newStatus);
+            await fetchIssues();
+            let progress;
+
+if (newStatus === "Pending") {
+    progress = 0;
+} else if (newStatus === "Assigned") {
+    progress = 15;
+} else if (newStatus === "Resolved") {
+    progress = 100;
+} else if (newStatus === "Rejected") {
+    progress = 0;
+} else {
+    // In Progress -> keep the current value
+    progress = progressValues[issueId] ?? 15;
+}
+
+setProgressValues(prev => ({
+    ...prev,
+    [issueId]: progress
+}));
             fetchIssues();
             if (expandedIssue === issueId) {
                 setSelectedIssueDetails(prev => ({
@@ -70,20 +104,23 @@ function ManageIssues() {
 
     const handleProgressChange = async (issueId, newProgress) => {
         if (newProgress < 0 || newProgress > 100) return;
+    
         try {
             await officerService.updateProgress(issueId, newProgress);
             fetchIssues();
-            if (expandedIssue === issueId) {
-                setSelectedIssueDetails(prev => ({
-                    ...prev,
-                    progress: newProgress
-                }));
-            }
         } catch (error) {
-            console.log("Error updating progress:", error);
+            console.log(error);
         }
     };
 
+    console.log(
+        issues.map(i => ({
+            title: i.issue.title,
+            status: i.issue.status,
+            progress: i.progress
+        }))
+    );
+    
     return (
         <div className="officer-dashboard-container">
             <div>
@@ -145,6 +182,7 @@ function ManageIssues() {
                     ) : (
                         issues.map((item) => {
                             const coreIssue = item?.issue;
+                            const canEditProgress = coreIssue.status === "In Progress";
                             if (!coreIssue) return null;
 
                             const isExpanded = expandedIssue === coreIssue._id;
@@ -205,17 +243,60 @@ function ManageIssues() {
 
                                             <div className="officer-control-group">
                                                 <label className="officer-control-label">PROGRESS METRIC:</label>
-                                                <div className="officer-progress-input-wrapper">
-                                                    <input
-                                                        type="number"
-                                                        className="officer-input-number"
-                                                        min={0}
-                                                        max={100}
-                                                        value={item.progress || 0}
-                                                        onChange={(e) => handleProgressChange(coreIssue._id, Number(e.target.value))}
-                                                    />
-                                                    <span className="officer-percentage-indicator">{item.progress || 0}%</span>
-                                                </div>
+<div className="officer-progress-wrapper">
+<div className="officer-progress-bar">
+    <div
+        className="officer-progress-fill"
+        style={{
+            width: `${progressValues[coreIssue._id] ?? 0}%`
+        }}
+    />
+</div>
+
+<div className="officer-progress-controls">
+<input
+type="range"
+min="0"
+max="100"
+disabled={!canEditProgress}
+value={progressValues[coreIssue._id] ?? 0}
+onChange={(e) =>
+    setProgressValues(prev => ({
+        ...prev,
+        [coreIssue._id]: Number(e.target.value)
+    }))
+}
+onMouseUp={() =>
+    handleProgressChange(
+        coreIssue._id,
+        progressValues[coreIssue._id]
+    )
+}
+/>
+
+<input
+    type="number"
+    min="0"
+    max="100"
+    disabled={!canEditProgress}
+    value={progressValues[coreIssue._id] ?? 0}
+    onChange={(e) =>
+        setProgressValues(prev => ({
+            ...prev,
+            [coreIssue._id]: Number(e.target.value)
+        }))
+    }
+    onBlur={() =>
+        handleProgressChange(
+            coreIssue._id,
+            progressValues[coreIssue._id]
+        )
+    }
+/>
+
+    <span>%</span>
+</div>
+</div>
                                             </div>
                                             
                                             <p className="timestamp-text">

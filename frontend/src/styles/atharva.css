@@ -372,3 +372,61 @@ input{
     padding: 0.5rem;
     border-radius: 0.8rem;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.officer-progress-wrapper{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.officer-progress-bar{
+    width:100%;
+    height:10px;
+    background:#ebe4d8;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.officer-progress-fill{
+    height:100%;
+    background:linear-gradient(90deg,#7B57CE,#5F3FB2);
+    border-radius:999px;
+    transition:width .3s ease;
+}
+
+.officer-progress-controls{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.officer-progress-slider{
+    flex:1;
+    cursor:pointer;
+}
+
+.officer-progress-input{
+    width:70px;
+    padding:8px;
+    text-align:center;
+    border:1px solid var(--border);
+    border-radius:10px;
+}
+
+.officer-progress-controls span{
+    font-weight:600;
+    color:var(--primary);
+}

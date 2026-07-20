@@ -8,5 +8,11 @@ const getDashboard = () => axios.get(`${API}/dashboard`, {withCredentials: true}
 const getAnalytics = () => axios.get(`${API}/analytics`, { withCredentials: true });
 const getManageIssues = (params) => axios.get(`${API}/manage-issues`, { params, withCredentials: true });
 const updateStatus = (id, status) => axios.patch( `${API}/manage-issues/${id}/status`, { status }, { withCredentials: true });
+const updateProgress = (id, progress) =>
+    axios.patch(
+        `${API}/manage-issues/${id}/progress`,
+        { progress },
+        { withCredentials: true }
+    );
 
-export default { getDashboard, getAnalytics, getManageIssues, updateStatus };
+export default { getDashboard, getAnalytics, getManageIssues, updateStatus, updateProgress };

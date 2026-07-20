@@ -17,6 +17,10 @@ import toast from "react-hot-toast";
 
 import "../styles/atmika.css";
 
+import adminAvatar from "../assets/admin.png";
+import officerAvatar from "../assets/officer.png";
+import citizenAvatar from "../assets/citizen.png";
+
 function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -50,8 +54,7 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
     {
       name: "Dashboard",
       path: "/officer/dashboard",
-      icon: <MdOutlineDashboard />
-      ,
+      icon: <MdOutlineDashboard />,
     },
     { name: "Issues", path: "/officer/manage-issues", icon: <GoIssueTracks /> },
     { name: "Map", path: "/officer/map", icon: <GrMap /> }, // Placeholder
@@ -62,10 +65,13 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
     {
       name: "Dashboard",
       path: "/admin/dashboard",
-      icon: <MdOutlineDashboard />
-      ,
+      icon: <MdOutlineDashboard />,
     },
-    { name: "Officers", path: "/admin/manage-officers", icon: <GiPoliceOfficerHead /> }, // Placeholder
+    {
+      name: "Officers",
+      path: "/admin/manage-officers",
+      icon: <GiPoliceOfficerHead />,
+    }, // Placeholder
     { name: "Users", path: "/admin/manage-users", icon: <CgProfile /> }, // Placeholder
     { name: "Issues", path: "/admin/manage-issues", icon: <GoIssueTracks /> },
     { name: "Map", path: "/officer/map", icon: <GrMap /> },
@@ -83,21 +89,26 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
     links = adminLinks;
   }
 
+  const profileImage =
+    user?.role === "admin"
+      ? adminAvatar
+      : user?.role === "officer"
+        ? officerAvatar
+        : user?.role === "citizen"
+          ? citizenAvatar
+          : citizenAvatar;
+
   return (
     <aside className={`sidebar ${isOpen ? "open" : "collapsed"}`}>
       {/* Logo */}
 
-
-<button
-className="sidebar-logo-btn"
-onClick={toggleSidebar}
->
-<img
-    src={isOpen ? logoName : logo}
-    alt="PublicEye"
-    className="sidebar-logo"
-/>
-</button>
+      <button className="sidebar-logo-btn" onClick={toggleSidebar}>
+        <img
+          src={isOpen ? logoName : logo}
+          alt="PublicEye"
+          className="sidebar-logo"
+        />
+      </button>
 
       {/* Navigation */}
       <nav className="sidebar-links">
@@ -118,15 +129,15 @@ onClick={toggleSidebar}
         {/* Profile */}
         <div className="sidebar-user">
           <img
-            src="https://placehold.co/50x50"
-            alt="Profile"
+            src={profileImage}
+            alt={user?.role || "Guest"}
             className="profile-image"
           />
 
-              <div className="user-info">
-                <h4>{user?.name || "Guest"}</h4>
-                <p>{user?.role || "Visitor"}</p>
-              </div>
+          <div className="user-info">
+            <h4>{user?.name || "Guest"}</h4>
+            <p>{user?.role || "Visitor"}</p>
+          </div>
         </div>
       </nav>
 
