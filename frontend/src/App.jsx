@@ -20,6 +20,7 @@ import OfficerReport from "./pages/OfficerReport";
 import ManageIssues_user from "./pages/ManageIssues_user";
 import MyReports from "./pages/MyReports";
 import Layout from "./components/Layout"
+import OfficerProfile from "./pages/OfficerProfile";
 
 function App() {
   return (
@@ -152,6 +153,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ManageIssues_user />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/officer/profile"
+            element={
+              <ProtectedRoute roles={["officer"]}>
+                <OfficerProfile />
               </ProtectedRoute>
             }
           />

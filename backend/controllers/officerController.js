@@ -228,4 +228,42 @@ const updateVoting = async (req, res) => {
     }
 };
 
-module.exports = { dashboard, manageIssues, updateIssueStatus, updateIssueProgress, updateVoting };
+const getProfile = async (req, res) => {
+    try {
+        const officer = await User.findById(req.user.id).select("-password");
+        if (!officer) {
+            return res.status(404).json({ message: "Officer not found" });
+        }
+        res.json({ officer });
+    } catch (error) {
+        console.log("Error in officer Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+const updateProfile = async (req, res) => {
+    try {
+        const { name, phone, department } = req.body;
+
+        const updatedOfficer = await User.findByIdAndUpdate(
+            req.user.id,
+            { name, phone, department },
+            { new: true, runValidators: true }
+        ).select("-password");
+
+        res.json({ message: "Profile updated successfully", officer: updatedOfficer });
+    } catch (error) {
+        console.log("Error in officer Controller :", error.message);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+module.exports = { 
+    dashboard, 
+    manageIssues, 
+    updateIssueStatus, 
+    updateIssueProgress, 
+    updateVoting,
+    getProfile,
+    updateProfile 
+};

@@ -496,7 +496,6 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
 .report-btn-submit:hover {
     background: #c0392b;
 }
-/* Static Cards in Dashboard Panels */
 .officer-static-item-card {
     background: #ffffff;
     border: 1px solid #ece7df;
@@ -507,7 +506,7 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
     display: flex;
     flex-direction: column;
     gap: 6px;
-    cursor: default; /* Explicitly sets the default arrow cursor */
+    cursor: default; 
 }
 
 .officer-static-item-card h3 {
@@ -529,7 +528,6 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
     color: #999;
 }
 
-/* Status pill inside activity cards */
 .status-pill {
     display: inline-block;
     padding: 2px 8px;
@@ -538,4 +536,104 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
     font-weight: 600;
     background: #f6f2ff;
     color: #7B57CE;
+}
+.officer-profile-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #ece7df;
+    padding: 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+}
+
+.officer-profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 24px;
+}
+
+.officer-profile-avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: #7B57CE;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.officer-profile-meta h2 {
+    margin: 0 0 6px 0;
+    font-size: 26px;
+    color: #2E114D;
+}
+
+.officer-role-badge {
+    background: #FFF8EB;
+    color: #7B57CE;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+.officer-profile-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.profile-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.profile-info-item label {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #888;
+    letter-spacing: 0.8px;
+}
+
+.profile-info-item p {
+    margin: 0;
+    font-size: 19px;
+    color: #2E114D;
+    font-weight: 500;
+}
+
+.profile-info-item input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 18px;
+    color: #2E114D;
+    outline: none;
+}
+
+.profile-info-item input:focus {
+    border-color: #7B57CE;
+}
+
+.profile-info-item .input-disabled {
+    background: #f8f8f8;
+    color: #888;
+    cursor: not-allowed;
+}
+
+.officer-profile-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
 }
