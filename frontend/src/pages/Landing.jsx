@@ -13,6 +13,8 @@ import {
 import logo from "../assets/logo.png";
 import heroImg from "../assets/hero.png";
 import report from "../assets/report_issue.png";
+import analytics from "../assets/analytics.png";
+import footer_logo from "../assets/logo_name_tagline.png";
 
 function Landing() {
   return (
@@ -346,7 +348,7 @@ function Landing() {
           </div>
 
           <div className="dashboard-image">
-            <img src="/images/dashboard-preview.png" alt="Dashboard Preview" />
+            <img src={analytics} alt="Dashboard Preview" />
           </div>
         </div>
       </section>
@@ -390,7 +392,7 @@ function Landing() {
       <footer className="landing-footer" id="contact">
         <div className="landing-container footer-grid">
           <div className="footer-brand">
-            <img src={logo} alt="PublicEye" />
+            <img src={footer_logo} alt="PublicEye" />
 
             <p>
               Empowering communities by connecting citizens with local

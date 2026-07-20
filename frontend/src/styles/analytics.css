@@ -277,6 +277,10 @@
 
 .ranking-info {
   flex: 1;
+  display:flex;
+  justify-content: space-between;
+  font-weight: 600;
+
 }
 
 .ranking-info h4 {
@@ -286,7 +290,7 @@
 }
 
 .ranking-info span {
-  color: var(--body);
+  color: var(--primary-dark);
   font-size: 0.9rem;
 }
 

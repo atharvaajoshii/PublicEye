@@ -76,19 +76,18 @@ function Analytics() {
   useEffect(() => {
     if (from && to) fetchAnalytics();
   }, [from, to]);
-  
+
   const totalReports = analytics.monthly.reduce(
     (sum, item) => sum + item.issues,
     0,
   );
 
-  const resolved = analytics.resolution.reduce(
-    (sum, item) => sum + item.resolved,
-    0
+const resolved = analytics.resolution.reduce(
+  (sum, item) => sum + item.resolved,
+  0
 );
 
-
-  const pending = totalReports - resolved;
+const pending = totalReports - resolved;
 
   const changePeriod = (value) => {
     let end = new Date();
