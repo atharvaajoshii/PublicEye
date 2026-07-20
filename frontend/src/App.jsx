@@ -20,6 +20,8 @@ import OfficerReport from "./pages/OfficerReport";
 import ManageIssues_user from "./pages/ManageIssues_user";
 import MyReports from "./pages/MyReports";
 import Layout from "./components/Layout"
+import Maps from "./pages/Map";
+
 
 function App() {
   return (
@@ -173,10 +175,18 @@ function App() {
               </ProtectedRoute>
             }
           />
-          
+
         </Route>
-      </Routes>
-    </BrowserRouter>
+        <Route
+          path="/map"
+          element={
+            <ProtectedRoute>
+              <Maps />
+            </ProtectedRoute>
+          }
+        />
+    </Routes>
+    </BrowserRouter >
   );
 }
 
