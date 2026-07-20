@@ -6,6 +6,11 @@ import IssueImage from "../../components/IssueImage";
 
 function IssueManagement() {
 	const [issues, setIssues] = useState([]);
+	const [search, setSearch] = useState("");
+	const [status, setStatus] = useState("");
+	const [category, setCategory] = useState("");
+	const [sort, setSort] = useState("");
+	const [debouncedSearch, setDebouncedSearch] = useState("");
 	const [officers, setOfficers] = useState([]);
 	const [selectedIssue, setSelectedIssue] = useState(null);
 	const [expandedIssue, setExpandedIssue] = useState(null);
@@ -18,7 +23,7 @@ function IssueManagement() {
 			setLoading(true);
 
 			const [issueRes, officerRes] = await Promise.all([
-				adminService.getAllIssues(),
+				adminService.getAllIssues({ search: debouncedSearch, status, category, sort, }),
 				adminService.getAllOfficers(),
 			]);
 
@@ -30,10 +35,17 @@ function IssueManagement() {
 			setLoading(false);
 		}
 	};
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedSearch(search);
+		}, 500);
+
+		return () => clearTimeout(timer);
+	}, [search]);
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [debouncedSearch, status, category, sort]);
 
 	const handleView = async (id) => {
 		try {
@@ -74,7 +86,7 @@ function IssueManagement() {
 			toast.success("Officer assigned successfully");
 		} catch (err) {
 			console.log(err);
-			toast.error("error assigning officer",err)
+			toast.error("error assigning officer", err)
 		}
 	};
 
@@ -104,6 +116,56 @@ function IssueManagement() {
 			<h1 className="officer-dashboard-main-title">
 				Issue Management
 			</h1>
+
+			{/* fiter here */}
+			<div className="officer-filters-toolbar">
+				<input
+					type="search"
+					className="officer-input-search"
+					placeholder="Search Issues..."
+					value={search}
+					onChange={(e) => setSearch(e.target.value)}
+				/>
+
+				<select
+					className="officer-select-filter"
+					value={status}
+					onChange={(e) => setStatus(e.target.value)}
+				>
+					<option value="">All Status</option>
+					<option value="Pending">Pending</option>
+					<option value="Assigned">Assigned</option>
+					<option value="In Progress">In Progress</option>
+					<option value="Resolved">Resolved</option>
+					<option value="Rejected">Rejected</option>
+				</select>
+
+				<select
+					className="officer-select-filter"
+					value={category}
+					onChange={(e) => setCategory(e.target.value)}
+				>
+					<option value="">All Categories</option>
+					<option value="Road">Road</option>
+					<option value="Garbage">Garbage</option>
+					<option value="Water">Water</option>
+					<option value="Electricity">Electricity</option>
+					<option value="Street Light">Street Light</option>
+					<option value="Other">Other</option>
+				</select>
+
+				<select
+					className="officer-select-filter"
+					value={sort}
+					onChange={(e) => setSort(e.target.value)}
+				>
+					<option value="">Sort By</option>
+					<option value="newest">Newest First</option>
+					<option value="oldest">Oldest First</option>
+					<option value="votes">Most Votes</option>
+				</select>
+			</div>
+
 			<div className="issue-list">
 				{issues.map((issue) => (
 					<div

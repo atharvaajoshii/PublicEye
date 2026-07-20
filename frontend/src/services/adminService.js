@@ -16,8 +16,11 @@ const adminService = {
 
 
 
-    getAllUsers() {
-        return axios.get(`${API}/users`, config);
+    getAllUsers(params) {
+        return axios.get(`${API}/users`, {
+            ...config,
+            params,
+        });
     },
     getUserById(id) {
         return axios.get(`${API}/users/${id}`, config);
@@ -44,8 +47,11 @@ const adminService = {
     },
 
 
-    getAllIssues() {
-        return axios.get(`${API}/issue/all`, config);
+    getAllIssues(params = {}) {
+        return axios.get(`${API}/issue/all`, {
+            ...config,
+            params,
+        });
     },
     getIssueById(id) {
         return axios.get(`${API}/issue/${id}`, config);
@@ -67,12 +73,7 @@ const adminService = {
     deleteIssue(id) {
         return axios.delete(`${API}/issue/${id}/deleteissue`, config);
     },
-    filterIssues(params) {
-        return axios.get(`${API}/issues/filter`, {
-            ...config,
-            params,
-        });
-    },
+
 
 
     getAllReports() {

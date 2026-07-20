@@ -239,17 +239,45 @@ const deleteOfficers = async (req, res) => {
     }
 };
 
-
 const getAllIssues = async (req, res) => {
     try {
-        const issues = await Issue.find();
+        const { search, status, category, sort } = req.query;
+        const filter = {};
+        if (search) {
+            filter.$or = [
+                { title: { $regex: search, $options: "i" } },
+                { description: { $regex: search, $options: "i" } },
+                { location: { $regex: search, $options: "i" } },
+            ];
+        }
 
-        return res.json({ issues })
+        if (status) {
+            filter.status = status;
+        }
+
+        if (category) {
+            filter.category = category;
+        }
+
+        let sortOption = { createdAt: -1 };
+        if (sort === "newest") {
+            sortOption = { createdAt: -1 };
+        } else if (sort === "oldest") {
+            sortOption = { createdAt: 1 };
+        } else if (sort === "votes") {
+            sortOption = { votes: -1 };
+        }
+
+        const issues = await Issue.find(filter).sort(sortOption);
+        return res.json({ issues });
+
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" })
+        return res.status(500).json({
+            error: "Internal server error",
+        });
     }
-}
+};
 
 const getIssueById = async (req, res) => {
     try {
@@ -409,9 +437,37 @@ const filterIssues = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find();
+        const { search, status, role, sort } = req.query;
+        const filter = {};
 
-        return res.json({ users })
+        if (search) {
+            filter.$or = [
+                { name: { $regex: search, $options: "i" } },
+                { email: { $regex: search, $options: "i" } },
+            ];
+        }
+        if (status) {
+            filter.status = status;
+        }
+        if (role) {
+            filter.role = role;
+        }
+        let sortOption = { createdAt: -1 };
+        switch (sort) {
+            case "oldest":
+                sortOption = { createdAt: 1 };
+                break;
+
+            case "name":
+                sortOption = { name: 1 };
+                break;
+
+            default:
+                sortOption = { createdAt: -1 };
+        }
+        const users = await User.find(filter).sort(sortOption);
+        return res.json({ users });
+        
     } catch (error) {
         console.log("Error in admin Controller :", error.message);
         return res.status(500).json({ error: "Internal server error" })
