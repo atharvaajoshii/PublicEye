@@ -62,7 +62,11 @@ a{
     transparent 35%),
 
     var(--background);
-
+    /* background-image: url(../../src/assets/report_issue_bg.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    background-attachment: fixed; */
 }
 
 /* Decorative blobs */
@@ -761,7 +765,6 @@ a{
     gap:90px;
 
     align-items:center;
-
     margin-bottom:140px;
 
 }

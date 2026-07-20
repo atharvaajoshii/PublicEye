@@ -69,22 +69,26 @@ const getCategoryStats = async (filter) => {
 const getMonthlyStats = async (filter) => {
 
     const stats = await Issue.aggregate([
-
         {
-            $match: filter
+          $match: filter
         },
         {
-            $group: {
-                _id: { $month: "$createdAt" },
-                issues: { $sum: 1 },
-            }
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" }
+            },
+            issues: { $sum: 1 }
+          }
         },
         {
-            $sort: {
-                _id: 1
-            }
+          $sort: {
+            "_id.year": 1,
+            "_id.month": 1
+          }
         }
-    ])
+      ]);
+
     const months = [
         "",
         "Jan",
@@ -101,13 +105,48 @@ const getMonthlyStats = async (filter) => {
         "Dec"
     ];
 
-    const data = stats.map(item => ({
-        month: months[item._id],
-        issues: item.issues
-    }));
+    const monthNames = [
+        "Jan","Feb","Mar","Apr","May","Jun",
+        "Jul","Aug","Sep","Oct","Nov","Dec"
+      ];
+      
+      const start = new Date(filter.createdAt.$gte);
+      const end = new Date(filter.createdAt.$lte);
+      
+      const result = [];
+      
+      const current = new Date(start.getFullYear(), start.getMonth(), 1);
+      
+      while (current <= end) {
+      
+        result.push({
+          year: current.getFullYear(),
+          month: current.getMonth() + 1,
+          label: `${monthNames[current.getMonth()]} ${String(current.getFullYear()).slice(-2)}`,
+          issues: 0
+        });
+      
+        current.setMonth(current.getMonth() + 1);
+      }
 
-    return data;
-}
+      stats.forEach(stat => {
+
+        const item = result.find(
+          m =>
+            m.year === stat._id.year &&
+            m.month === stat._id.month
+        );
+      
+        if (item) {
+          item.issues = stat.issues;
+        }
+      });
+
+      return result.map(item => ({
+        month: item.label,
+        issues: item.issues
+      }));
+};
 
 const getResolutionTrend = async (filter) => {
 
@@ -133,37 +172,59 @@ const getResolutionTrend = async (filter) => {
         },
         {
             $group: {
-                _id: { $month: "$updatedAt" },
+                _id: {
+                    year: { $year: "$updatedAt" },
+                    month: { $month: "$updatedAt" }
+                },
                 resolved: { $sum: 1 }
             }
         },
         {
             $sort: {
-                _id: 1
+                "_id.year": 1,
+                "_id.month": 1
             }
         }
     ]);
 
-    const months = [
-        "",
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
+    const monthNames = [
+        "Jan","Feb","Mar","Apr","May","Jun",
+        "Jul","Aug","Sep","Oct","Nov","Dec"
     ];
-
-    console.log(filter);
-
-    return stats.map(item => ({
-        month: months[item._id],
+    
+    const start = new Date(filter.createdAt.$gte);
+    const end = new Date(filter.createdAt.$lte);
+    
+    const monthData = [];
+    
+    const current = new Date(start.getFullYear(), start.getMonth(), 1);
+    
+    while (current <= end) {
+        monthData.push({
+            year: current.getFullYear(),
+            month: current.getMonth() + 1,
+            label: `${monthNames[current.getMonth()]} ${String(current.getFullYear()).slice(-2)}`,
+            resolved: 0
+        });
+    
+        current.setMonth(current.getMonth() + 1);
+    }
+    
+    stats.forEach(stat => {
+    
+        const item = monthData.find(
+            m =>
+                m.year === stat._id.year &&
+                m.month === stat._id.month
+        );
+    
+        if (item) {
+            item.resolved = stat.resolved;
+        }
+    });
+    
+    return monthData.map(item => ({
+        month: item.label,
         resolved: item.resolved
     }));
 };
@@ -312,10 +373,24 @@ const getAverageResolutionTime = async(filter)=>{
 // }
 
 const getTopVotedIssues = async (filter) => {
-    return await Issue.find({
-        ...filter,
+
+    const topVoteFilter = {
         votes: { $gt: 0 }
-    })
+    };
+
+    // Apply the date filter to updatedAt instead of createdAt
+    if (filter.createdAt) {
+        topVoteFilter.updatedAt = filter.createdAt;
+    }
+
+    // Keep other filters (admin/citizen/officer)
+    Object.keys(filter).forEach((key) => {
+        if (key !== "createdAt") {
+            topVoteFilter[key] = filter[key];
+        }
+    });
+
+    return await Issue.find(topVoteFilter)
         .sort({ votes: -1 })
         .limit(5)
         .select("title votes");
