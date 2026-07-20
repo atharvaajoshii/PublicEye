@@ -12,6 +12,7 @@ import { CHART_COLORS } from "../../constants/chartColors";
 
 function DonutChartCard({ title, data, dataKey, nameKey, compact = false }) {
   const total = data.reduce((sum, item) => sum + Number(item[dataKey]), 0);
+  const isMobile = window.innerWidth < 768;
 
   return (
     <div className="chart-card">
@@ -22,7 +23,7 @@ function DonutChartCard({ title, data, dataKey, nameKey, compact = false }) {
           <div
             className={`chart-body ${compact ? "compact" : ""} donut-wrapper`}
           >
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" >
               <PieChart>
                 <Pie
                   data={data}
@@ -30,8 +31,8 @@ function DonutChartCard({ title, data, dataKey, nameKey, compact = false }) {
                   nameKey={nameKey}
                   cx="50%"
                   cy="50%"
-                  innerRadius={72}
-                  outerRadius={108}
+                  innerRadius="50%"
+                  outerRadius="80%"
                   paddingAngle={2}
                   cornerRadius={3}
                 >

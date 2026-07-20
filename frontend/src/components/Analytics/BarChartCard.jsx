@@ -24,7 +24,7 @@ function BarChartCard({
 
       <h3 className="chart-title">{title}</h3>
 
-      <div className={`chart-body ${compact ? "compact" : ""}`}>
+      <div className="chart-body area-chart-body">
 
         <ResponsiveContainer width="100%" height="100%">
 
