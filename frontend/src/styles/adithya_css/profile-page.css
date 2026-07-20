@@ -5,10 +5,13 @@
     box-shadow:var(--shadow);
     text-align:center;
     margin-bottom:35px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 .profile-avatar{
-    width:90px;
-    height:90px;
+    width:80px;
+    height:80px;
     margin:auto;
     border-radius:50%;
     background:var(--secondary);
@@ -16,15 +19,16 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:34px;
+    font-size:30px;
     font-weight:700;
     margin-bottom:20px;
 }
 .profile-card h2{
-    color:var(--primary);
-    margin-bottom:10px;
-     max-width:900px;
-    margin:0 auto 40px;
+    margin:18px 0 8px;
+    text-align:center;
+    font-size:42px;
+    font-weight:700;
+    color:var(--secondary);
 }
 .role-badge{
     display:inline-block;
@@ -59,11 +63,6 @@
 .myreports-section{
     margin-top:35px;
 }
-.profile-actions{
-    margin-top:10px;
-    display:flex;
-    justify-content:center;
-}
 
 .logout-profile-btn{
     min-width:170px;
@@ -86,4 +85,53 @@
 
 .profile-avatar:hover{
     transform:scale(1.05);
+}
+.profile-card input{
+    width:100%;
+    max-width:340px;
+    padding:12px 16px;
+    margin:10px auto;
+    display:block;
+    border:1px solid var(--border);
+    border-radius:12px;
+    font-size:16px;
+}
+
+.profile-card input:focus{
+    outline:none;
+    border-color:var(--secondary);
+}
+.profile-actions{
+    display:flex;
+    gap:14px;
+    margin-top:30px;
+}
+
+.primary-btn,
+.secondary-btn{
+    padding:12px 28px;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:600;
+    transition:.2s;
+    box-shadow:none;
+}
+
+.primary-btn{
+    background:var(--secondary);
+    color:white;
+}
+
+.primary-btn:hover{
+    transform:translateY(-2px);
+}
+
+.secondary-btn{
+    background:white;
+    border:1px solid rgba(123,87,206,.25);
+    color:var(--secondary);
+}
+
+.secondary-btn:hover{
+    background:#f7f3ff;
 }

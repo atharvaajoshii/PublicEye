@@ -1,18 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import MyReports from "./MyReports";
-import "../styles/adithya_css/adithya.css"
+import "../styles/adithya_css/adithya.css";
+import toast from "react-hot-toast";
+import userService from "../services/userService";
 function Profile() {
   const navigate = useNavigate();
 
   const { user, logout } = useAuth();
+  const [isEditing, setIsEditing] = useState(false);
 
+  const [editData, setEditData] = useState({
+    name: user?.name || "",
+    email: user?.email || "",
+  });
+  useEffect(() => {
+    if (user) {
+      setEditData({
+        name: user.name,
+        email: user.email,
+      });
+    }
+  }, [user]);
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
+  const handleChange = (e) => {
+    setEditData({
+      ...editData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSave = async () => {
+    try {
+      await userService.updateProfile(editData);
 
+      toast.success("Profile updated!");
+
+      setIsEditing(false);
+
+      window.location.reload();
+    } catch (err) {
+      toast.error("Failed to update profile");
+    }
+  };
   return (
     <div className="dashboard-layout">
       <main className="dashboard-content">
@@ -26,14 +59,30 @@ function Profile() {
           <div className="profile-avatar">
             {user?.name?.charAt(0).toUpperCase()}
           </div>
-          <h2>{user?.name}</h2>
+          {isEditing ? (<input
+            className="form-input"
+            name="name"
+            value={editData.name}
+            onChange={handleChange}
+          />
+          ) : (
+            <h2>{user?.name}</h2>
+          )}
           <span className="role-badge">
             {user?.role}
           </span>
           <div className="profile-info">
             <div className="info-item">
               <h4>Email</h4>
-              <p>{user?.email}</p>
+              {isEditing ? (<input
+                className="form-input"
+                name="email"
+                value={editData.email}
+                onChange={handleChange}
+              />
+              ) : (
+                <p>{user?.email}</p>
+              )}
             </div>
             <div className="info-item">
               <h4>Role</h4>
@@ -41,12 +90,26 @@ function Profile() {
             </div>
           </div>
           <div className="profile-actions">
-            <button
-              className="primary-btn logout-profile-btn"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
+            {isEditing ? (
+              <>
+                <button className="primary-btn" onClick={handleSave} >
+                  Save Changes
+                </button>
+
+                <button className="secondary-btn" onClick={() => setIsEditing(false)} >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="secondary-btn" onClick={() => setIsEditing(true)}>
+                  Edit Profile
+                </button>
+                <button className="primary-btn" onClick={handleLogout}>
+                  Logout
+                </button>
+              </>
+            )}
           </div>
         </div>
         <div className="myreports-section">

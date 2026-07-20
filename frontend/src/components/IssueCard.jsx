@@ -1,7 +1,7 @@
 import React from "react";
 import IssueImage from "./IssueImage";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-
+import { FaLocationDot } from "react-icons/fa6";
 function IssueCard({ issue, rowExpanded, onToggle }) {
   return (
     <div className="issue-card">
@@ -13,12 +13,18 @@ function IssueCard({ issue, rowExpanded, onToggle }) {
         <div className="issue-summary">
           <h3>{issue.title}</h3>
 
-          <span className={`status-badge ${issue.status.toLowerCase()}`}>
+          <span
+            className={`status-badge ${issue.status
+              .toLowerCase()
+              .replace(" ", "-")}`}
+          >
             {issue.status}
           </span>
 
           <div className="issue-meta-summary">
-            <span>{issue.category}</span>
+            <span className="issue-category">
+              {issue.category}
+            </span>
 
             <span>•</span>
 
@@ -34,14 +40,11 @@ function IssueCard({ issue, rowExpanded, onToggle }) {
       <div className="issue-card-details">
         {rowExpanded && (
           <>
-          <hr></hr>
-
-            <h4>Description</h4>
-
             <p>{issue.description}</p>
 
-            <p>
-              <strong>Location:</strong> {issue.location}
+            <p className="issue-location">
+              <FaLocationDot />
+              {issue.location}
             </p>
           </>
         )}
