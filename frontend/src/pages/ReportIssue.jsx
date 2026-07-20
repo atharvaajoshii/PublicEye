@@ -9,9 +9,6 @@ function ReportIssue() {
     return (
         <div>
             <main className="dashboard-content">
-                <button className="back-btn" onClick={() => navigate(-1)}>
-                    <GoChevronLeft />Back
-                </button>
                 <div className="page-header">
                     <h1>Report an Issue</h1>
                 </div>

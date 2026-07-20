@@ -59,8 +59,6 @@ function Analytics() {
     setTo(today.toISOString().split("T")[0]);
   }, []);
 
-
-
   const fetchAnalytics = async () => {
     setLoading(true);
     try {
@@ -82,17 +80,23 @@ function Analytics() {
     0,
   );
 
-const resolved = analytics.resolution.reduce(
-  (sum, item) => sum + item.resolved,
-  0
-);
+  const resolved = analytics.resolution.reduce(
+    (sum, item) => sum + item.resolved,
+    0,
+  );
 
-const pending = totalReports - resolved;
+  const pending = analytics.status
+    .filter(
+      (item) =>
+        item.status === "Pending" ||
+        item.status === "Assigned" ||
+        item.status === "In Progress",
+    )
+    .reduce((sum, item) => sum + item.issues, 0);
 
   const changePeriod = (value) => {
     let end = new Date();
     let start = new Date(end);
-  
 
     switch (value) {
       case "30":
@@ -248,6 +252,11 @@ const pending = totalReports - resolved;
 
       {loading ? (
         <p>Loading...</p>
+      ) : totalReports === 0 ? (
+        <div className="no-analytics">
+          <h2>No analytics available</h2>
+          <p>There are no issues reported for the selected date range.</p>
+        </div>
       ) : (
         <div ref={dashboardRef}>
           {/* KPI Cards */}
