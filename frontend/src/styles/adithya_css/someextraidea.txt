@@ -1,0 +1,69 @@
+3. Progress bar color
+
+Instead of one purple bar for every status, make it dynamic.
+
+<div
+    className={`progress-fill ${issue.status
+        .toLowerCase()
+        .replace(" ", "-")}`}
+    style={{
+        width: `${getProgress(issue.status)}%`
+    }}
+/>
+
+Then
+
+.progress-fill{
+    height:100%;
+    border-radius:20px;
+    transition:.35s ease;
+}
+
+.progress-fill.pending{
+    background:#d6a520;
+}
+
+.progress-fill.in-progress{
+    background:#7B57CE;
+}
+
+.progress-fill.resolved{
+    background:#8F9D68;
+}
+
+It makes the progress bar instantly communicate the state.
+
+
+Step 3 — Improve the layout
+
+Instead of stacking every field, let's make the latitude and longitude sit side by side.
+
+Replace:
+
+<div className="form-group">
+    Latitude
+</div>
+
+<div className="form-group">
+    Longitude
+</div>
+
+with
+
+<div className="form-row">
+
+    <div className="form-group">
+
+        Latitude
+
+    </div>
+
+    <div className="form-group">
+
+        Longitude
+
+    </div>
+
+</div>
+
+That makes much better use of space on desktop.

@@ -1,0 +1,16 @@
+/* Theme */
+@import "./variables.css";
+
+/* Base */
+@import "./globals.css";
+
+/* Components */
+@import "./sidebar.css";
+
+/* Pages */
+@import "./landing.css";
+@import "./register.css";
+@import "./analytics.css";
+
+/* Responsive (keep this last) */
+@import "./responsive.css";

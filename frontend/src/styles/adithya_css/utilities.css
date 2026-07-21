@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background:
+        radial-gradient(circle at top right,
+            rgba(123, 87, 206, .05),
+            transparent 30%),
+        var(--bg);
+    color: var(--text);
+    font-family: Inter, sans-serif;
+}
