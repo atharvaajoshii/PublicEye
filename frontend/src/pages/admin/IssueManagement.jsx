@@ -25,6 +25,7 @@ function IssueManagement() {
 
 		return () => clearTimeout(timer);
 	}, [search]);
+
 	
 useEffect(() => {
 	fetchData();
