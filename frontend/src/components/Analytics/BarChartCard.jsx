@@ -14,101 +14,88 @@ import { CHART_COLORS } from "../../constants/chartColors";
 
 function BarChartCard({
   title,
-  data,
+  data = [],
   dataKey,
   XKey,
   compact = false,
 }) {
   return (
     <div className="chart-card">
-
       <h3 className="chart-title">{title}</h3>
 
-      <div className="chart-body area-chart-body">
-
-        <ResponsiveContainer width="100%" height="100%">
-
-          <BarChart
-            data={data}
-            layout="vertical"
-            margin={{
-              top: 10,
-              right: 20,
-              left: 20,
-              bottom: 10,
-            }}
-          >
-
-            <CartesianGrid
-              strokeDasharray="4 4"
-              stroke="#EEE6D8"
-              horizontal={false}
-            />
-
-            <XAxis
-              type="number"
-              axisLine={false}
-              tickLine={false}
-              tick={{
-                fill: "#5C5568",
-                fontSize: 12,
+      <div className={`chart-body area-chart-body ${compact ? "compact" : ""}`}>
+        {data.length === 0 ? (
+          <div className="empty-chart">
+            No resolved issues
+          </div>
+        ) : (
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={data}
+              layout="vertical"
+              margin={{
+                top: 10,
+                right: 20,
+                left: 20,
+                bottom: 10,
               }}
-            />
-
-            <YAxis
-              type="category"
-              dataKey={XKey}
-              width={90}
-              axisLine={false}
-              tickLine={false}
-              tick={{
-                fill: "#5C5568",
-                fontSize: 12,
-              }}
-            />
-
-            <Tooltip
-              cursor={{
-                fill: "#F8F2FF",
-              }}
-              contentStyle={{
-                background: "#FFFDF8",
-                border: "1px solid #E8DFC9",
-                borderRadius: "16px",
-                boxShadow:
-                  "0 8px 25px rgba(43,26,63,.12)",
-              }}
-            />
-
-            <Bar
-              dataKey={dataKey}
-              radius={[0,6,6,0]}
-              animationDuration={1400}
-              animationBegin={200}
-              animationEasing="ease-in-out"
             >
+              <CartesianGrid
+                strokeDasharray="4 4"
+                stroke="#EEE6D8"
+                horizontal={false}
+              />
 
-              {data.map((entry, index) => (
+              <XAxis
+                type="number"
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fill: "#5C5568",
+                  fontSize: 12,
+                }}
+              />
 
-                <Cell
-                  key={index}
-                  fill={
-                    CHART_COLORS[
-                      index % CHART_COLORS.length
-                    ]
-                  }
-                />
+              <YAxis
+                type="category"
+                dataKey={XKey}
+                width={90}
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fill: "#5C5568",
+                  fontSize: 12,
+                }}
+              />
 
-              ))}
+              <Tooltip
+                cursor={{ fill: "#F8F2FF" }}
+                contentStyle={{
+                  background: "#FFFDF8",
+                  border: "1px solid #E8DFC9",
+                  borderRadius: "16px",
+                  boxShadow: "0 8px 25px rgba(43,26,63,.12)",
+                }}
+              />
 
-            </Bar>
-
-          </BarChart>
-
-        </ResponsiveContainer>
-
+              <Bar
+                dataKey={dataKey}
+                radius={[0, 6, 6, 0]}
+                animationDuration={1400}
+                animationBegin={200}
+                animationEasing="ease-in-out"
+              >
+                {data.map((entry, index) => (
+                  <Cell
+                    key={index}
+                    fill={CHART_COLORS[index % CHART_COLORS.length]}
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
-
     </div>
   );
 }

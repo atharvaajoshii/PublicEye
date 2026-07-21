@@ -61,18 +61,21 @@ function MetricCard({
             </div>
 
             <div className="metric-content">
+    <p className="metric-title">
+        {title}
+    </p>
 
-                <p className="metric-title">
-                    {title}
-                </p>
-
-                <h2 className="metric-value">
-                    {displayValue}
-                    <span>{unit}</span>
-                </h2>
-
-            </div>
-
+    {Number(value) === 0 ? (
+        <div className="empty-chart">
+            No resolved issues
+        </div>
+    ) : (
+        <h2 className="metric-value">
+            {displayValue}
+            <span>{unit}</span>
+        </h2>
+    )}
+</div>
         </div>
 
     );
