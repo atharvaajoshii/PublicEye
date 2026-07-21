@@ -8,10 +8,14 @@
     margin-right:10px;
     flex-direction:column;
     align-items:center;
+    justify-content: flex-start;
 }
 
 .profile{
     display:flex;
+    align-items: flex-start;
+    justify-content:space-between;
+    width:100%;
 }
 .profile-avatar{
     width:80px;
@@ -135,7 +139,7 @@
 
 .myreports-section{
     margin-left:10px;
-    width:1250px;
+    width:100%;
 }
 
 .secondary-btn:hover{
