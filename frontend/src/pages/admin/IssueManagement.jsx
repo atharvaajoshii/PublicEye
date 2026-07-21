@@ -18,23 +18,6 @@ function IssueManagement() {
 	const [loading, setLoading] = useState(true);
 	const [issueTrack, setIssueTrack] = useState(null);
 
-	const fetchData = async () => {
-		try {
-			setLoading(true);
-
-			const [issueRes, officerRes] = await Promise.all([
-				adminService.getAllIssues({ search: debouncedSearch, status, category, sort, }),
-				adminService.getAllOfficers(),
-			]);
-
-			setIssues(issueRes.data.issues);
-			setOfficers(officerRes.data.officers);
-		} catch (err) {
-			console.log(err);
-		} finally {
-			setLoading(false);
-		}
-	};
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setDebouncedSearch(search);
@@ -43,9 +26,32 @@ function IssueManagement() {
 		return () => clearTimeout(timer);
 	}, [search]);
 
-	useEffect(() => {
-		fetchData();
-	}, [debouncedSearch, status, category, sort]);
+useEffect(() => {
+    const loadData = async () => {
+        try {
+            setLoading(true);
+
+            const [issueRes, officerRes] = await Promise.all([
+                adminService.getAllIssues({
+                    search: debouncedSearch,
+                    status,
+                    category,
+                    sort,
+                }),
+                adminService.getAllOfficers(),
+            ]);
+
+            setIssues(issueRes.data.issues);
+            setOfficers(officerRes.data.officers);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    loadData();
+}, [debouncedSearch, status, category, sort]);
 
 	const handleView = async (id) => {
 		try {
