@@ -28,16 +28,17 @@ function OfficerProfile() {
     const fetchProfile = async () => {
         try {
             setLoading(true);
+    
             const res = await officerService.getProfile();
-            if (res.data?.officer) {
-                setProfile({
-                    name: res.data.officer.name || "",
-                    email: res.data.officer.email || "",
-                    role: res.data.officer.role || "officer",
-                    department: res.data.officer.department || "General Administration",
-                    phone: res.data.officer.phone || "Not Provided"
-                });
-            }
+    
+            setProfile({
+                name: res.data.name || "",
+                email: user?.email || "",          // backend doesn't return email
+                role: res.data.role || "officer",
+                department: res.data.location || "", // you're using location instead
+                phone: res.data.phoneNumber || ""
+            });
+    
         } catch (error) {
             console.log("Error fetching profile:", error);
         } finally {
@@ -54,8 +55,9 @@ function OfficerProfile() {
         try {
             await officerService.updateProfile({
                 name: profile.name,
-                phone: profile.phone,
-                department: profile.department
+                location: profile.department,
+                phoneNumber: profile.phone,
+                email: profile.email
             });
             toast.success("Profile updated successfully");
             setIsEditing(false);
