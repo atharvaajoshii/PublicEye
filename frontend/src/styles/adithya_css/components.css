@@ -37,16 +37,16 @@
     transform: scaleX(1);
 }
 
-.StatCard h2 {
+.StatCard p {
     color: var(--text-light);
-    font-size: 8px;
-    font-weight: 500;
+    font-size: 30px;
+    font-weight: 600;
     margin-top: 10px;
 }
 
 .StatCard h3 {
     margin: 12px 0 6px;
-    font-size: 40px;
+    font-size: 30px;
     color: var(--primary);
     font-weight: 700;
     line-height: 1;

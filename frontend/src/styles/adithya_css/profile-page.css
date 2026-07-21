@@ -4,10 +4,14 @@
     padding:40px;
     box-shadow:var(--shadow);
     text-align:center;
-    margin-bottom:35px;
     display:flex;
+    margin-right:10px;
     flex-direction:column;
     align-items:center;
+}
+
+.profile{
+    display:flex;
 }
 .profile-avatar{
     width:80px;
@@ -59,9 +63,6 @@
 .info-item p{
     color:var(--primary);
     font-weight:600;
-}
-.myreports-section{
-    margin-top:35px;
 }
 
 .logout-profile-btn{
@@ -130,6 +131,11 @@
     background:white;
     border:1px solid rgba(123,87,206,.25);
     color:var(--secondary);
+}
+
+.myreports-section{
+    margin-left:10px;
+    width:fit-content;
 }
 
 .secondary-btn:hover{

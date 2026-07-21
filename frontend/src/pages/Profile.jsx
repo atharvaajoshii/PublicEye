@@ -55,6 +55,7 @@ function Profile() {
             Manage your account and track your activity.
           </p>
         </div>
+        <div className="profile">
         <div className="profile-card">
           <div className="profile-avatar">
             {user?.name?.charAt(0).toUpperCase()}
@@ -114,6 +115,7 @@ function Profile() {
         </div>
         <div className="myreports-section">
           <MyReports />
+        </div>
         </div>
       </main>
     </div>
