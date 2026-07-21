@@ -95,14 +95,16 @@ const loginUser = async (req, res) => {
 };
 const logout = async (req, res) => {
     try {
-        res.cookie("token", token, {
+        const cookieOptions = {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-            maxAge: 60 * 60 * 1000,
-        });
-        res.status(200).json({
-            message: "Logout successful"
+        };
+
+        res.clearCookie("token", cookieOptions);
+
+        return res.status(200).json({
+            message: "Logout successful",
         });
     } catch (error) {
         res.status(500).json({
