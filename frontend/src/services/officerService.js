@@ -22,8 +22,8 @@ const updateVoting = (id, publicVoting) => {
     );
 };
 
-const getProfile = () => axios.get(`${API}/profile`, { withCredentials: true });
-const updateProfile = (data) => axios.put(`${API}/profile`, data, { withCredentials: true });
+const getProfile = () => axios.get("http://localhost:5000/api/users/profile", { withCredentials: true });
+const updateProfile = (data) => axios.put("http://localhost:5000/api/users/profile", data, { withCredentials: true });
 
 export default { 
     getDashboard, 

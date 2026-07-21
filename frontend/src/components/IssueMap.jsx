@@ -42,7 +42,6 @@ export default function IssueMap() {
         async function fetchIssues() {
             try {
                 const res = await issueService.getAllIssues();
-                console.log(res);
                 setIssues(res.issues);
             } catch (err) {
                 console.log(err);
