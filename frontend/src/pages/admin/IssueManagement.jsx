@@ -255,7 +255,7 @@ function IssueManagement() {
 										</select>
 									</div>
 									<div className="issue-image-wrapper">
-										<IssueImage issueId={selectedIssue._id} />
+										<IssueImage imageUrl={selectedIssue.image} />
 									</div>
 									<div className="issue-actions">
 										<button

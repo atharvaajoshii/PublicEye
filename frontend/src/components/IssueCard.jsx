@@ -7,7 +7,7 @@ function IssueCard({ issue, rowExpanded, onToggle }) {
     <div className="issue-card">
       <div className="issue-card-header">
         <div className="issue-thumb">
-          <IssueImage issueId={issue._id} />
+          <IssueImage imageUrl={issue.image} />
         </div>
 
         <div className="issue-summary">

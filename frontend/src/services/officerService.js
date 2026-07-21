@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const API = "http://localhost:5000/api/officer";
+const API = `${process.env.REACT_APP_API_URL}/officer`;
 
 const getDashboard = () => axios.get(`${API}/dashboard`, { withCredentials: true });
 const getAnalytics = () => axios.get(`${API}/analytics`, { withCredentials: true });
