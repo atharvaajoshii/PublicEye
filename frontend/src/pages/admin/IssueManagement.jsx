@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import adminService from "../../services/adminService";
 import toast from 'react-hot-toast';
 import "../../styles/atharva.css"
@@ -25,33 +25,10 @@ function IssueManagement() {
 
 		return () => clearTimeout(timer);
 	}, [search]);
-
+	
 useEffect(() => {
-    const loadData = async () => {
-        try {
-            setLoading(true);
-
-            const [issueRes, officerRes] = await Promise.all([
-                adminService.getAllIssues({
-                    search: debouncedSearch,
-                    status,
-                    category,
-                    sort,
-                }),
-                adminService.getAllOfficers(),
-            ]);
-
-            setIssues(issueRes.data.issues);
-            setOfficers(officerRes.data.officers);
-        } catch (err) {
-            console.log(err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    loadData();
-}, [debouncedSearch, status, category, sort]);
+	fetchData();
+}, [fetchData]);
 
 	const handleView = async (id) => {
 		try {
@@ -110,6 +87,31 @@ useEffect(() => {
 			toast.error("error deleting Issue")
 		}
 	};
+
+	const fetchData = useCallback(async () => {
+	try {
+		setLoading(true);
+
+		const [issueRes, officerRes] = await Promise.all([
+			adminService.getAllIssues({
+				search: debouncedSearch,
+				status,
+				category,
+				sort,
+			}),
+			adminService.getAllOfficers(),
+		]);
+
+		setIssues(issueRes.data.issues);
+		setOfficers(officerRes.data.officers);
+	} catch (err) {
+		console.log(err);
+	} finally {
+		setLoading(false);
+	}
+}, [debouncedSearch, status, category, sort]);
+
+
 	if (loading)
 		return (
 			<div className="loading main">
