@@ -199,7 +199,7 @@ function Landing() {
               </ul>
             </div>
 
-            <div className="feature-image">
+            <div className="feature-image i1">
               <img src={report} alt="Report issue" />
             </div>
           </div>
@@ -207,7 +207,7 @@ function Landing() {
           {/* Feature 2 */}
 
           <div className="feature-row reverse">
-            <div className="feature-image">
+            <div className="feature-image i2">
               <img src={track} alt="Tracking" />
             </div>
 
@@ -228,8 +228,6 @@ function Landing() {
                 <li>✔ Resolution timeline</li>
 
                 <li>✔ Officer progress</li>
-
-                <li>✔ Community notifications</li>
               </ul>
             </div>
           </div>
@@ -286,8 +284,8 @@ function Landing() {
               <h3>Issue Resolved</h3>
 
               <p>
-                Once the issue has been resolved, citizens receive confirmation
-                and can view the completed report in the system.
+                Officers mark the issue as resolved, and the report is updated
+                with its final status for public transparency.
               </p>
             </div>
           </div>
@@ -329,22 +327,13 @@ function Landing() {
               </div>
 
               <div>
-                <h4>Interactive Heatmap</h4>
+                <h4>Status-Based Workflow</h4>
 
                 <p>
-                  Visualize issue hotspots on an interactive map to identify
-                  areas that require immediate attention.
+                Every report progresses through clearly defined stages, making it easy to monitor ongoing and completed civic issues.
                 </p>
               </div>
 
-              <div>
-                <h4>Officer Performance</h4>
-
-                <p>
-                  Evaluate officer assignments, completed reports, and response
-                  times to improve operational efficiency.
-                </p>
-              </div>
             </div>
           </div>
 

@@ -5,7 +5,7 @@ function StatCard(props) {
             <div className="stat-icon">
                 {props.icon}
             </div>
-            <h2>{props.title}</h2>
+            <p>{props.title}</p>
             <h3>{props.count}</h3>
         </div>
     )

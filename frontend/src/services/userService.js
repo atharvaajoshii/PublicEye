@@ -8,7 +8,15 @@ const API_URL = "http://localhost:5000/api/users";
     });
     return user.data ;
  }
-
+const updateProfile = async (data) => {
+   const response = await axios.put(
+      `${API_URL}/profile`,
+      data,
+      {withCredentials:true}
+   );
+   return response.data;
+}
  export default{
-    getProfile
+    getProfile,
+    updateProfile
  };

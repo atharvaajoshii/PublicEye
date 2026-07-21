@@ -16,6 +16,8 @@ import logo from "../assets/logo.png";
 import toast from "react-hot-toast";
 
 import "../styles/atmika.css";
+import "../styles/aakanksha.css";
+
 
 import adminAvatar from "../assets/admin.png";
 import officerAvatar from "../assets/officer.png";
@@ -54,11 +56,12 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
     {
       name: "Dashboard",
       path: "/officer/dashboard",
-      icon: <MdOutlineDashboard />,
-    },
+      icon: <MdOutlineDashboard />,},
     { name: "Issues", path: "/officer/manage-issues", icon: <GoIssueTracks /> },
     { name: "Map", path: "/issues/map", icon: <GrMap /> }, // Placeholder
+    { name: "Profile", path: "/officer/profile", icon: <CgProfile /> },
     { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
+    
   ];
 
   const adminLinks = [

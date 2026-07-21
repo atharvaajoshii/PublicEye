@@ -926,8 +926,6 @@ a{
 
 .feature-image::before{
 
-    content:"Live Updates";
-
     position:absolute;
 
     top:35px;
@@ -947,10 +945,15 @@ a{
 
 }
 
-.feature-image::after{
+.i1::before{
+    content:"Photo Evidence";
+}
 
+.i1::after{
     content:"GPS Enabled";
+}
 
+.feature-image::after{
     position:absolute;
 
     right:-35px;
@@ -968,6 +971,14 @@ a{
 
     box-shadow:var(--shadow-md);
 
+}
+
+.i2::before{
+    content:"Community Reports";
+}
+
+.i2::after{
+    content:"Real-Time Tracking";
 }
 
 /* =========================================================
