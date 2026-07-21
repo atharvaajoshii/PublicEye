@@ -9,14 +9,22 @@ import {
   Tooltip,
 } from "recharts";
 
-function LineChartCard({ title, data, dataKey, XKey, compact = false }) {
+function LineChartCard({
+  title,
+  data = [],
+  dataKey,
+  XKey,
+  compact = false,
+}) {
   return (
     <div className="chart-card">
       <h3 className="chart-title">{title}</h3>
 
       <div className={`chart-body ${compact ? "compact" : ""}`}>
         {data.length === 0 ? (
-          <div className="empty-chart">No resolved issues</div>
+          <div className="empty-chart">
+            No resolved issues
+          </div>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
