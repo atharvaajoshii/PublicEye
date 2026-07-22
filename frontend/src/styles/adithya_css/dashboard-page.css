@@ -63,14 +63,14 @@
 .reports-header{
     margin-bottom: 20px;
 }
-.reports-header h2{
+.reports-header p{
     color: var(--primary);
-    font-size: 22px;
+    font-size: 28px;
     font-weight: 700;
 
 }
 .report-item{
-    padding:15px 0;
+    padding:6px 0;
     border-bottom: 1px solid var(--border);
 }
 .report-item:last-child{

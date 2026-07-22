@@ -201,7 +201,40 @@
     border-radius:18px;
     background:var(--primary-light);
 }
+.sidebar-user.active-profile {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 10px 25px rgba(123, 87, 206, 0.28);
+    border-radius: 18px;
+}
 
+.sidebar-user.active-profile h4,
+.sidebar-user.active-profile p {
+    color: white;
+}
+
+.sidebar.collapsed .sidebar-user.active-profile {
+    width: 52px;
+    height: 52px;
+    margin: 20px auto 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--primary);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(123, 87, 206, 0.28);
+}
+
+.sidebar.collapsed .sidebar-user.active-profile .profile-image {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+}
+
+.sidebar.collapsed .sidebar-user.active-profile .user-info {
+    display: none;
+}
 .profile-image {
   width: 60px;
   height: 60px;

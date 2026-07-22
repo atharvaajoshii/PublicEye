@@ -48,7 +48,7 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
     { name: "Report", path: "/report", icon: <GoReport /> },
     // { name: "My Reports", path: "/myreports", icon: <GoReport/> },
     { name: "Map", path: "/issues/map", icon: <GrMap /> },
-    { name: "Profile", path: "/profile", icon: <CgProfile /> },
+    // { name: "Profile", path: "/profile", icon: <CgProfile /> },
     { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
   ];
 
@@ -56,12 +56,13 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
     {
       name: "Dashboard",
       path: "/officer/dashboard",
-      icon: <MdOutlineDashboard />,},
+      icon: <MdOutlineDashboard />,
+    },
     { name: "Issues", path: "/officer/manage-issues", icon: <GoIssueTracks /> },
     { name: "Map", path: "/issues/map", icon: <GrMap /> }, // Placeholder
     { name: "Profile", path: "/officer/profile", icon: <CgProfile /> },
     { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
-    
+
   ];
 
   const adminLinks = [
@@ -130,7 +131,11 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
         ))}
 
         {/* Profile */}
-        <div className="sidebar-user">
+        <NavLink to="/profile"
+          className={({ isActive }) =>
+            isActive ? "sidebar-user active-profile" : "sidebar-user"
+          }
+        >
           {/* <Link to="/profile"> */}
           <img
             src={profileImage}
@@ -143,19 +148,22 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
             <p>{user?.role || "Visitor"}</p>
           </div>
           {/* </Link> */}
-        </div>
-      </nav>
+        </NavLink>
 
-      {/* Logout (Only when logged in) */}
-      {user && (
-        <div className="sidebar-footer">
-          <button onClick={handleLogout} className="logout-btn">
-            <IoLogOutSharp />
-            <span>Logout</span>
-          </button>
-        </div>
-      )}
-    </aside>
+    </nav>
+
+      {/* Logout (Only when logged in) */ }
+  {
+    user && (
+      <div className="sidebar-footer">
+        <button onClick={handleLogout} className="logout-btn">
+          <IoLogOutSharp />
+          <span>Logout</span>
+        </button>
+      </div>
+    )
+  }
+    </aside >
   );
 }
 
