@@ -48,7 +48,7 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
     { name: "Report", path: "/report", icon: <GoReport /> },
     // { name: "My Reports", path: "/myreports", icon: <GoReport/> },
     { name: "Map", path: "/issues/map", icon: <GrMap /> },
-    { name: "Profile", path: "/profile", icon: <CgProfile /> },
+    // { name: "Profile", path: "/profile", icon: <CgProfile /> },
     { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
   ];
 
@@ -130,7 +130,7 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
         ))}
 
         {/* Profile */}
-        <div className="sidebar-user">
+        <a href="/profile"><div className="sidebar-user">
           {/* <Link to="/profile"> */}
           <img
             src={profileImage}
@@ -144,6 +144,7 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
           </div>
           {/* </Link> */}
         </div>
+        </a>
       </nav>
 
       {/* Logout (Only when logged in) */}
