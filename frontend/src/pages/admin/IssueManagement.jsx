@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import adminService from "../../services/adminService";
 import toast from 'react-hot-toast';
 import "../../styles/atharva.css"
@@ -18,12 +18,18 @@ function IssueManagement() {
 	const [loading, setLoading] = useState(true);
 	const [issueTrack, setIssueTrack] = useState(null);
 
-	const fetchData = async () => {
+
+	const fetchData = useCallback(async () => {
 		try {
 			setLoading(true);
 
 			const [issueRes, officerRes] = await Promise.all([
-				adminService.getAllIssues({ search: debouncedSearch, status, category, sort, }),
+				adminService.getAllIssues({
+					search: debouncedSearch,
+					status,
+					category,
+					sort,
+				}),
 				adminService.getAllOfficers(),
 			]);
 
@@ -34,7 +40,9 @@ function IssueManagement() {
 		} finally {
 			setLoading(false);
 		}
-	};
+	}, [debouncedSearch, status, category, sort]);
+
+
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setDebouncedSearch(search);
@@ -43,9 +51,10 @@ function IssueManagement() {
 		return () => clearTimeout(timer);
 	}, [search]);
 
+
 	useEffect(() => {
 		fetchData();
-	}, [debouncedSearch, status, category, sort]);
+	}, [fetchData]);
 
 	const handleView = async (id) => {
 		try {
@@ -104,6 +113,9 @@ function IssueManagement() {
 			toast.error("error deleting Issue")
 		}
 	};
+
+
+
 	if (loading)
 		return (
 			<div className="loading main">
@@ -255,7 +267,7 @@ function IssueManagement() {
 										</select>
 									</div>
 									<div className="issue-image-wrapper">
-										<IssueImage issueId={selectedIssue._id} />
+										<IssueImage imageUrl={selectedIssue.image} />
 									</div>
 									<div className="issue-actions">
 										<button

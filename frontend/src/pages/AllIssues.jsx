@@ -10,7 +10,7 @@ function AllIssues() {
   useEffect(() => {
     const fetchAllIssues = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/issues/all", {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/issues/all`, {
           withCredentials: true,
         });
         setIssues(res.data.issues || []);

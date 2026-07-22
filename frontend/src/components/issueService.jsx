@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/issues";
+const API_URL = `${process.env.REACT_APP_API_URL}/issues`;
 
 export const createIssue = async (formData) => {
   const response = await axios.post(

@@ -12,7 +12,7 @@ const createIssue = async (req, res) => {
             category,
         } = req.body;
 
-        const image = req.file ? req.file.filename : "";
+        const image = req.file ? req.file.path : "";
 
         // Safely parse numbers or set to undefined/null if they are empty strings
         const parsedLatitude = latitude && latitude.trim() !== "" ? Number(latitude) : undefined;
