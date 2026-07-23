@@ -15,8 +15,18 @@ const getAllIssues = async () => {
 
     return response.data;
 }
-
+const voteIssue = async(issueId) =>{
+    const response = await axios.post(
+        `${API}/${issueId}/vote`,
+        {},
+        {
+            withCredentials:true
+        }
+    );
+    return response.data;
+}
 export default {
     getUserIssues,  
-    getAllIssues
+    getAllIssues,
+    voteIssue
 };

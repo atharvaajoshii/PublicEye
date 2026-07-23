@@ -9,7 +9,8 @@ const {
     createIssue,
     getUserIssue,
     getAllIssues,
-    getIssueById 
+    getIssueById,
+    voteIssue
 } = require("../controllers/issueController");
 
 router.post(
@@ -22,5 +23,6 @@ router.post(
 router.get('/',authMiddleware,getUserIssue) //adithya karkera 
 router.get("/all", authMiddleware, getAllIssues);
 router.get("/:id", authMiddleware, getIssueById); //aak
+router.post("/:id/vote", authMiddleware, voteIssue);
 
 module.exports = router; 

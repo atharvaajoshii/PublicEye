@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import IssueImage from "./IssueImage";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { FaLocationDot } from "react-icons/fa6";
+import toast from "react-hot-toast";
+import issueService from "../services/issueService";
 function IssueCard({ issue, rowExpanded, onToggle }) {
+  const [votes, setVotes] = useState(issue.votes);
+  useEffect(() => {
+    setVotes(issue.votes);
+  }, [issue.votes]);
+  const handleSupport = async () => {
+    try {
+      const response = await issueService.voteIssue(issue._id);
+
+      setVotes(response.votes);
+
+      toast.success(response.message);
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message || "Failed to support issue."
+      );
+    }
+  };
   return (
     <div className="issue-card">
       <div className="issue-card-header">
@@ -46,7 +65,20 @@ function IssueCard({ issue, rowExpanded, onToggle }) {
               <FaLocationDot />
               {issue.location}
             </p>
+            <div className="issue-support">
+              <span> {votes} Supporters    </span>
+              {issue.publicVoting ? (
+                <button className="support-btn" onClick={handleSupport}>
+                   Support
+                </button>
+              ) : (
+                <button className="support-btn" disabled>
+                  Voting Disabled
+                </button>
+              )}
+            </div>
           </>
+
         )}
       </div>
     </div>

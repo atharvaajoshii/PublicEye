@@ -6,42 +6,45 @@ const issueSchema = new mongoose.Schema({
 
     location: String,
 
-    latitude:Number,
-    longitude:Number,
+    latitude: Number,
+    longitude: Number,
 
-    image:String,
+    image: String,
 
-    category:String,
+    category: String,
 
-    status:{
-        type:String,
-        enum:[
+    status: {
+        type: String,
+        enum: [
             "Pending",
             "Assigned",
             "In Progress",
             "Resolved",
             "Rejected"
         ],
-        default:"Pending"
+        default: "Pending"
     },
 
-    publicVoting:{
-        type:Boolean,
-        default:false
+    publicVoting: {
+        type: Boolean,
+        default: false
     },
 
-    votes:{
-        type:Number,
-        default:0
+    votes: {
+        type: Number,
+        default: 0
     },
-
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User"
+    priority: {
+        type: Number,
+        default: 0
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     }
 
-},{
-    timestamps:true
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model("Issue", issueSchema);
