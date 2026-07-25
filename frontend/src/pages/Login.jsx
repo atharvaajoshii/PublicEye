@@ -1,19 +1,19 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom"; 
-import { useAuth } from "../context/AuthContext"; 
-import toast from "react-hot-toast"; 
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
 import "../styles/atmika.css";
-import {
-  FiLogIn,
+import { FiLogIn,
 } from "react-icons/fi";
 
 import logo from "../assets/logo.png";
 import heroImg from "../assets/hero.png";
 import footer_logo from "../assets/logo_name_tagline.png";
-
+import ButtonLoader from "../components/ButtonLoader.jsx"
 
 function Login() {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await login(
         {
           email,
@@ -40,11 +41,14 @@ function Login() {
       } else {
         navigate("/dashboard");
       }
+
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
-    return (
+  return (
     <div className="landing">
       {/* ================= NAVBAR ================= */}
 
@@ -79,36 +83,42 @@ function Login() {
       <section className="hero" id="home">
         <div className="landing-container hero-grid">
 
-        <div className="auth-page">
-        <div className="auth-card">
-          <h1>Welcome Back</h1>
-          <p className="auth-subtitle">Sign in to continue to PublicEye.</p>
+          <div className="auth-page">
+            <div className="auth-card">
+              <h1>Welcome Back</h1>
+              <p className="auth-subtitle">Sign in to continue to PublicEye.</p>
 
-          <form onSubmit={handleLogin} className="auth-form">
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
+              <form onSubmit={handleLogin} className="auth-form">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
 
-            <Link className="auth-link" to="/register">
-              Don't have an account?
-            </Link>
-
-            <button className="auth-btn" type="submit">
-              Login
-            </button>
-          </form>
-        </div>
-      </div>
+                <Link className="auth-link" to="/register">
+                  Don't have an account?
+                </Link>
+                <button className="auth-btn"
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <ButtonLoader text="Logging in..." />
+                  ) : (
+                    "Login"
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
 
 
           <div className="hero-image">
@@ -117,57 +127,57 @@ function Login() {
         </div>
       </section>
 
-            <footer className="landing-footer" id="contact">
-              <div className="landing-container footer-grid">
-                <div className="footer-brand">
-                  <img src={footer_logo} alt="PublicEye" />
-      
-                  <p>
-                    Empowering communities by connecting citizens with local
-                    authorities through transparent, efficient, and collaborative
-                    civic reporting.
-                  </p>
-                </div>
-      
-                <div className="footer-links">
-                  <h4>Platform</h4>
-      
-                  <Link to="/">Home</Link>
-      
-                  <a href="#features">Features</a>
-      
-                  <a href="#how">How it Works</a>
-      
-                  <Link to="/all-issues">Explore Reports</Link>
-                </div>
-      
-                <div className="footer-links">
-                  <h4>Account</h4>
-      
-                  <Link to="/login">Login</Link>
-      
-                  <Link to="/register">Register</Link>
-      
-                  <Link to="/report">Report Issue</Link>
-                </div>
-      
-                <div className="footer-links">
-                  <h4>Contact</h4>
-      
-                  <Link to="https://github.com/atharvaajoshii/PublicEye">GitHub</Link>
-      
-                  <p>India</p>
-                </div>
-              </div>
-      
-              <div className="footer-bottom">
-                <p>© {new Date().getFullYear()} PublicEye. All rights reserved.</p>
-              </div>
-            </footer>
-    
-      </div>
+      <footer className="landing-footer" id="contact">
+        <div className="landing-container footer-grid">
+          <div className="footer-brand">
+            <img src={footer_logo} alt="PublicEye" />
+
+            <p>
+              Empowering communities by connecting citizens with local
+              authorities through transparent, efficient, and collaborative
+              civic reporting.
+            </p>
+          </div>
+
+          <div className="footer-links">
+            <h4>Platform</h4>
+
+            <Link to="/">Home</Link>
+
+            <a href="#features">Features</a>
+
+            <a href="#how">How it Works</a>
+
+            <Link to="/all-issues">Explore Reports</Link>
+          </div>
+
+          <div className="footer-links">
+            <h4>Account</h4>
+
+            <Link to="/login">Login</Link>
+
+            <Link to="/register">Register</Link>
+
+            <Link to="/report">Report Issue</Link>
+          </div>
+
+          <div className="footer-links">
+            <h4>Contact</h4>
+
+            <Link to="https://github.com/atharvaajoshii/PublicEye">GitHub</Link>
+
+            <p>India</p>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <p>© {new Date().getFullYear()} PublicEye. All rights reserved.</p>
+        </div>
+      </footer>
+
+    </div>
   );
 }
 
 
-  export default Login;
+export default Login;
