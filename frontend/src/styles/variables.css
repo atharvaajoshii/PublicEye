@@ -1,113 +1,113 @@
 :root {
     /* =========================================
-       1. CORE BRAND & THEME COLORS
+       1. CORE BRAND & THEME COLORS (From Palette)
     ========================================= */
-    --primary: #7B57CE;
-    --primary-dark: #5F3FB2;
-    --primary-dark-alt: #482D58;
-    --primary-light: #8e67e8;
+    --primary: #7B57CE;          /* Iris */
+    --primary-dark: #6243A8;
+    --primary-dark-alt: #4B3282;
+    --primary-light: #9A7AE4;
     
-    --background: #FFF8EB;
-    --surface: #FFFDF8;
-    --white: #ffffff;
+    --background: #FFF8EB;       /* Old Lace */
+    --surface: #FFFFFF;
+    --white: #FFFFFF;
     
-    --accent: #8F9D68;
-    --accent-dark: #43670d;
+    --accent: #8F9D68;           /* Moss Green */
+    --accent-dark: #6F7B4E;
     
-    --danger: #D54E4E;
-    --danger-alt: #e74c3c;
-    --danger-bg: #ffecec;
+    --danger: #E05252;
+    --danger-alt: #C93B3B;
+    --danger-bg: #FDF2F2;
 
-    --warning: #e67e22;
-    --info: #3498db;
-    --info-bg: #eef6ff;
-    --success-bg: #eef6e9;
+    --warning: #E68A2E;
+    --info: #3B82F6;
+    --info-bg: #EFF6FF;
+    --success-bg: #F0F4EC;
 
     /* =========================================
        2. TYPOGRAPHY & TEXT COLORS
     ========================================= */
-    --heading: #2B1A3F;
-    --heading-dark: #2E114D;
+    --heading: #261738;
+    --heading-dark: #1A0F26;
     
-    --body: #5C5568;
-    --text-main: #2E2435;
-    --text-muted: #6E6475;
+    --body: #4A4056;
+    --text-main: #22182D;
+    --text-muted: #6B5F79;
 
     /* =========================================
        3. BORDERS, SHADOWS, & RADII
     ========================================= */
-    --border: #E8DFC9;
-    --border-alt: #ece7df;
+    --border: #EADBCE;
+    --border-alt: #F3EAE1;
 
-    --shadow-sm: 0 8px 20px rgba(43, 26, 63, 0.05);
-    --shadow-md: 0 15px 35px rgba(43, 26, 63, 0.08);
-    --shadow-lg: 0 10px 30px rgba(43, 26, 63, 0.12);
-    --shadow-xl: 0 35px 90px rgba(43, 26, 63, 0.15);
+    --shadow-sm: 0 4px 12px rgba(123, 87, 206, 0.04);
+    --shadow-md: 0 10px 30px rgba(123, 87, 206, 0.08);
+    --shadow-lg: 0 20px 40px rgba(123, 87, 206, 0.12);
+    --shadow-xl: 0 30px 60px rgba(123, 87, 206, 0.16);
 
-    --radius: 20px;
-    --radius-md: 18px;
-    --radius-lg: 24px;
-    --radius-xl: 38px;
+    --radius: 16px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
 
     transition: 0.25s ease;
 
     /* =========================================
        4. UNIFIED STATUS BADGES
     ========================================= */
-    --status-pending-bg: #FFF4D6;
-    --status-pending-text: #D88C00;
+    --status-pending-bg: #FEF3D6;
+    --status-pending-text: #B7791F;
     
-    --status-assigned-bg: #EFE7FF;
+    --status-assigned-bg: #EDE9FE;
     
-    --status-progress-bg: #E7F0FF;
+    --status-progress-bg: #EFF6FF;
     --status-progress-text: #2563EB;
     
-    --status-resolved-bg: #E8F6EA;
-    --status-resolved-text: #2E8B57;
+    --status-resolved-bg: #F0F4EC;
+    --status-resolved-text: #4F6F3E;
     
-    --status-rejected-bg: #FDECEC;
-    --status-rejected-text: #DC3545;
+    --status-rejected-bg: #FEE2E2;
+    --status-rejected-text: #DC2626;
 
     /* =========================================
-       5. GRAYS PALETTE
+       5. HARMONIZED NEUTRALS (Derived from Old Lace/Iris undertones)
     ========================================= */
-    --gray-333: #333333;
-    --gray-555: #555555;
-    --gray-666: #666666;
-    --gray-888: #888888;
-    --gray-999: #999999;
-    --gray-ccc: #cccccc;
-    --gray-ddd: #dddddd;
-    --gray-eee: #eeeeee;
-    --gray-e2e8f0: #e2e8f0;
-    --gray-eee6d8: #eee6d8;
-    --gray-f3f3f8: #f3f3f8;
+    --gray-333: #2D2838;
+    --gray-555: #575063;
+    --gray-666: #6E667A;
+    --gray-888: #948B9E;
+    --gray-999: #B5ADBF;
+    --gray-ccc: #D6CFDE;
+    --gray-ddd: #E6E1EC;
+    --gray-eee: #F4F1F7;
+    --gray-e2e8f0: #E6E1EC;
+    --gray-eee6d8: #F7F1E5;
+    --gray-f3f3f8: #FAF8FC;
 
     /* =========================================
        6. COMPONENT SPECIFIC
     ========================================= */
-    --sidebarbg: #ffeaea;
-    --sidebar-overlay: rgba(0,0,0,0.35);
+    --sidebarbg: #FFF3E2;
+    --sidebar-overlay: rgba(38, 23, 56, 0.4);
     
-    --hover: #F2ECFF;
-    --hover-light: #faf8ff;
+    --hover: #F3EFFF;
+    --hover-light: #F9F6FF;
     
-    --card-bg-dark: #1b1b2f;
-    --chart-bg-dark: #1c1c1c;
+    --card-bg-dark: #1E182A;
+    --chart-bg-dark: #161220;
     
-    --cancel-bg: #f5f0e6;
-    --cancel-bg-hover: #ece3d3;
+    --cancel-bg: #F4EFE6;
+    --cancel-bg-hover: #E8E1D5;
     
-    --progress-bg: #ebe4d8;
-    --progress-track: #ece7f6;
+    --progress-bg: #EAE3D5;
+    --progress-track: #F3ECF8;
     
-    --category-bg: #F7F2EA;
-    --scrollbar-track: #f7f2e7;
+    --category-bg: #F9F3EA;
+    --scrollbar-track: #F9F3EA;
 
-    --mac-close: #ff605c;
-    --mac-minimize: #ffbd44;
-    --mac-maximize: #00ca4e;
-    --browser-bg: #f5f5f5;
+    --mac-close: #FF5F56;
+    --mac-minimize: #FFBD2E;
+    --mac-maximize: #27C93F;
+    --browser-bg: #FAF6EE;
 
     /* =========================================
        7. UNIFIED ALPHA (OPACITY) COLORS
@@ -126,16 +126,16 @@
     --white-alpha-70: rgba(255, 255, 255, 0.70);
 
     /* Black */
-    --black-alpha-04: rgba(0, 0, 0, 0.04);
-    --black-alpha-10: rgba(0, 0, 0, 0.10);
-    --black-alpha-15: rgba(0, 0, 0, 0.15);
-    --black-alpha-50: rgba(0, 0, 0, 0.50);
+    --black-alpha-04: rgba(38, 23, 56, 0.03);
+    --black-alpha-10: rgba(38, 23, 56, 0.08);
+    --black-alpha-15: rgba(38, 23, 56, 0.12);
+    --black-alpha-50: rgba(38, 23, 56, 0.50);
 
-    /* Heading Shadows (#2B1A3F / #2E114D base) */
-    --heading-alpha-05: rgba(43, 26, 63, 0.05);
-    --heading-alpha-10: rgba(43, 26, 63, 0.10);
+    /* Heading Shadows */
+    --heading-alpha-05: rgba(38, 23, 56, 0.04);
+    --heading-alpha-10: rgba(38, 23, 56, 0.08);
 
     /* Misc */
-    --accent-alpha-10: rgba(143, 157, 104, 0.10);
-    --accent-alpha-20: rgba(143, 157, 104, 0.20);
+    --accent-alpha-10: rgba(143, 157, 104, 0.12);
+    --accent-alpha-20: rgba(143, 157, 104, 0.22);
 }

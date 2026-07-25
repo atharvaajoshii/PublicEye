@@ -14,11 +14,25 @@
     font-size: 16px;
 }
 
+.issues-container {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.issue-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    align-items: start;
+}
+
 .issue-card {
     background: var(--white);
+    border: 1px solid var(--border);
     border-radius: 22px;
-    padding: 18px;
-    box-shadow: 0 8px 30px var(--black-alpha-10);
+    padding: 20px;
+    box-shadow: 0 8px 30px var(--black-alpha-04);
     transition: transform .25s ease, box-shadow .25s ease;
     overflow: hidden;
 }
@@ -26,20 +40,22 @@
 .issue-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 28px var(--primary-alpha-10);
+    border-color: var(--primary-alpha-30);
 }
 
 .issue-card-header {
     display: flex;
-    gap: 18px;
+    gap: 16px;
     align-items: flex-start;
 }
 
 .issue-thumb {
-    width: 130px;
-    height: 110px;
+    width: 100px;
+    height: 90px;
     border-radius: 14px;
     flex-shrink: 0;
     overflow: hidden;
+    background: var(--gray-eee);
 }
 
 .issue-thumb img {
@@ -53,33 +69,31 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     min-width: 0;
 }
 
+/* Fixed: Using solid heading color instead of transparent alpha */
 .issue-summary h3 {
-    margin: 2px 0 10px;
-    font-size: 20px;
+    margin: 0;
+    font-size: 18px;
     font-weight: 700;
-    color: var(--heading-alpha-10);
-    line-height: 1.2;
-}
-
-.issue-meta-summary {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    color: var(--text-muted);
+    color: var(--heading);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .status-badge {
-    display: inline-block;
-    padding: 6px 12px;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
     border-radius: 10px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    margin-bottom: 16px;
+    width: fit-content;
 }
 
 .status-badge.resolved {
@@ -97,17 +111,20 @@
     color: var(--status-rejected-text);
 }
 
+.status-badge.in-progress,
 .status-badge.in\ progress {
     background: var(--status-progress-bg);
     color: var(--status-progress-text);
 }
 
+/* Fixed: Using proper visible text colors */
 .issue-meta-summary {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
-    color: var(--gray-ddd);
+    font-size: 13px;
+    color: var(--text-muted);
 }
 
 .expand-btn {
@@ -116,13 +133,14 @@
     height: 34px;
     border: none;
     border-radius: 50%;
-    background: var(--gray-f3f3f8);
+    background: var(--primary-alpha-10);
     cursor: pointer;
-    transition: .2s;
+    transition: .25s;
     font-size: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--primary-dark);
 }
 
 .expand-btn:hover {
@@ -130,90 +148,50 @@
     color: var(--white);
 }
 
-.issue-card-details {
-    margin-top: 16px;
+.issue-line{
+    margin-top:16px;
+}
+
+.issue-description {
     padding-top: 16px;
-    border-top: 1px solid var(--border);
-}
-
-.issue-card-details p:first-child {
-    color: var(--text-muted);
-    line-height: 1.6;
-}
-
-.issue-card-details h4 {
-    margin-bottom: 8px;
-    color: var(--primary-dark-alt);
-    font-size: 17px;
-}
-
-.issue-card-details strong {
-    color: var(--gray-ddd);
 }
 
 .issue-card-details p {
     margin-bottom: 8px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    font-size: 14px;
 }
 
-.row-open {
-    min-height: 180px;
+.issue-card-details h4 {
+    margin-bottom: 6px;
+    color: var(--primary-dark-alt);
+    font-size: 15px;
 }
 
-.issue-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-    align-items: stretch;
-}
-
-.issues-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.expand-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--primary-alpha-10);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: .25s;
-}
-
-.expand-btn:hover {
-    background: var(--primary-dark-alt);
-    color: var(--white);
-}
-
-.issue-summary h3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+.issue-card-details strong {
+    color: var(--text-main);
 }
 
 .issue-description {
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 .issue-category {
-    padding: 5px 12px;
+    padding: 4px 10px;
     border-radius: 999px;
     background: var(--category-bg);
     color: var(--primary-dark-alt);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
 }
 
 .issue-location {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     color: var(--text-muted);
 }
