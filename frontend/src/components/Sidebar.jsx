@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -9,7 +9,7 @@ import { GoIssueTracks, GoReport } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 import { GrMap } from "react-icons/gr";
 import { GiPoliceOfficerHead } from "react-icons/gi";
-
+import ButtonLoader from "../components/ButtonLoader"
 import logoName from "../assets/logo_name.png";
 import logo from "../assets/logo.png";
 
@@ -25,13 +25,22 @@ import citizenAvatar from "../assets/citizen.png";
 
 function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const { user, logout } = useAuth();
 
   const handleLogout = async () => {
-    closeSidebar();
-    await logout();
-    toast.success("logged out!");
-    navigate("/");
+    try {
+      setLoading(true);
+      closeSidebar();
+      await logout();
+      toast.success("logged out!");
+      navigate("/");
+    } catch (error) {
+      toast.error("Couldnt Logout!")
+    } finally {
+      setLoading(false);
+    }
+
   };
 
   const guestLinks = [
@@ -151,19 +160,27 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
           {/* </Link> */}
         </NavLink>
 
-    </nav>
+      </nav>
 
-      {/* Logout (Only when logged in) */ }
-  {
-    user && (
-      <div className="sidebar-footer">
-        <button onClick={handleLogout} className="logout-btn">
-          <IoLogOutSharp />
-          <span>Logout</span>
-        </button>
-      </div>
-    )
-  }
+      {/* Logout (Only when logged in) */}
+      {
+        user && (
+          <div className="sidebar-footer">
+            <button onClick={handleLogout} className="logout-btn">
+              {/* <IoLogOutSharp />
+              <span>Logout</span> */}
+              <IoLogOutSharp />
+              <span>
+                {loading ? (
+                  <ButtonLoader text="Logging out..." />
+                ) : (
+                  "Logout"
+                )}
+              </span>
+            </button>
+          </div>
+        )
+      }
     </aside >
   );
 }

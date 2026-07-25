@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
 import toast from 'react-hot-toast';
 import "../../styles/atharva.css";
+import ButtonLoader from "../../components/ButtonLoader";
+
 function Reports() {
 	const [reports, setReports] = useState([]);
 	const [selectedReport, setSelectedReport] = useState(null);
@@ -11,6 +13,8 @@ function Reports() {
 	const [status, setStatus] = useState("");
 	const [sort, setSort] = useState("");
 	const [debouncedSearch, setDebouncedSearch] = useState("");
+	const [approving, setApproving] = useState(false);
+	const [rejecting, setRejecting] = useState(false);
 
 	const fetchReports = async () => {
 		try {
@@ -57,6 +61,7 @@ function Reports() {
 		if (!selectedReport) return;
 
 		try {
+			setApproving(true);
 			await adminService.approveReport(selectedReport._id);
 			await fetchReports();
 			setSelectedReport(null);
@@ -64,6 +69,8 @@ function Reports() {
 		} catch (err) {
 			console.log(err);
 			toast.error("failed to approve")
+		} finally {
+			setApproving(false);
 		}
 	};
 
@@ -71,6 +78,7 @@ function Reports() {
 		if (!selectedReport) return;
 
 		try {
+			setRejecting(true);
 			await adminService.rejectReport(selectedReport._id);
 			await fetchReports();
 			setSelectedReport(null);
@@ -78,12 +86,14 @@ function Reports() {
 		} catch (err) {
 			console.log(err);
 			toast.error("failed to reject")
+		} finally {
+			setRejecting(false);
 		}
 	};
 
 	if (loading) {
 		return (
-			<div className="loading">
+			<div className="officer-loading">
 				Loading...
 			</div>
 		);
@@ -225,24 +235,40 @@ function Reports() {
 
 											<button
 												className={`officer-btn btn-primary ${selectedReport.status !== "Pending"
-													? "disabled-btn"
-													: ""
+														? "disabled-btn"
+														: ""
 													}`}
-												disabled={selectedReport.status !== "Pending"}
+												disabled={
+													selectedReport.status !== "Pending" ||
+													approving ||
+													rejecting
+												}
 												onClick={handleApprove}
 											>
-												Approve
+												{approving ? (
+													<ButtonLoader text="Approving..." />
+												) : (
+													"Approve"
+												)}
 											</button>
 
 											<button
 												className={`officer-btn btn-danger ${selectedReport.status !== "Pending"
-													? "disabled-btn"
-													: ""
+														? "disabled-btn"
+														: ""
 													}`}
-												disabled={selectedReport.status !== "Pending"}
+												disabled={
+													selectedReport.status !== "Pending" ||
+													approving ||
+													rejecting
+												}
 												onClick={handleReject}
 											>
-												Reject
+												{rejecting ? (
+													<ButtonLoader text="Rejecting..." />
+												) : (
+													"Reject"
+												)}
 											</button>
 
 										</div>

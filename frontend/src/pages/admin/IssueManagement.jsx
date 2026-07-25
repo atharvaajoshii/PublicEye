@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react";
 import adminService from "../../services/adminService";
 import toast from 'react-hot-toast';
+import "../../styles/aakanksha.css"
 import "../../styles/atharva.css"
 import IssueImage from "../../components/IssueImage";
+import ButtonLoader from "../../components/ButtonLoader";
 
 function IssueManagement() {
 	const [issues, setIssues] = useState([]);
@@ -17,6 +19,8 @@ function IssueManagement() {
 	const [selectedOfficer, setSelectedOfficer] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [issueTrack, setIssueTrack] = useState(null);
+	const [assigning, setAssigning] = useState(false);
+	const [deleting, setDeleting] = useState(false);
 
 
 	const fetchData = useCallback(async () => {
@@ -79,6 +83,7 @@ function IssueManagement() {
 		if (!selectedOfficer || !selectedIssue) return;
 
 		try {
+			setAssigning(true);
 			if (selectedIssue.status === "Assigned") {
 				await adminService.reassignOfficer(
 					selectedIssue._id,
@@ -96,6 +101,8 @@ function IssueManagement() {
 		} catch (err) {
 			console.log(err);
 			toast.error("error assigning officer", err)
+		} finally {
+			setAssigning(false);
 		}
 	};
 
@@ -103,6 +110,7 @@ function IssueManagement() {
 		if (!window.confirm("Delete this issue?")) return;
 
 		try {
+			setDeleting(true);
 			await adminService.deleteIssue(id);
 			toast.success("Issue deleted successfully");
 			setIssueTrack(null);
@@ -111,6 +119,8 @@ function IssueManagement() {
 		} catch (err) {
 			console.log(err);
 			toast.error("error deleting Issue")
+		} finally {
+			setDeleting(false);
 		}
 	};
 
@@ -118,7 +128,7 @@ function IssueManagement() {
 
 	if (loading)
 		return (
-			<div className="loading main">
+			<div className="officer-loading">
 				Loading...
 			</div>
 		);
@@ -274,21 +284,35 @@ function IssueManagement() {
 											className="officer-btn btn-primary"
 											onClick={handleAssign}
 											disabled={
+												assigning ||
 												["Resolved", "Rejected"].includes(selectedIssue.status)
 											}
 										>
-											{selectedIssue.status === "Assigned"
-												? "Reassign Officer"
-												: "Assign Officer"}
+											{assigning ? (
+												<ButtonLoader
+													text={
+														selectedIssue.status === "Assigned"
+															? "Reassigning..."
+															: "Assigning..."
+													}
+												/>
+											) : selectedIssue.status === "Assigned" ? (
+												"Reassign Officer"
+											) : (
+												"Assign Officer"
+											)}
 										</button>
 
 										<button
 											className="officer-btn btn-danger"
-											onClick={() =>
-												handleDelete(selectedIssue._id)
-											}
+											onClick={() => handleDelete(selectedIssue._id)}
+											disabled={deleting}
 										>
-											Delete
+											{deleting ? (
+												<ButtonLoader text="Deleting..." />
+											) : (
+												"Delete"
+											)}
 										</button>
 									</div>
 								</>

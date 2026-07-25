@@ -251,7 +251,7 @@ function Analytics() {
       </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <p className="officer-loading">Loading...</p>
       ) : totalReports === 0 ? (
         <div className="no-analytics">
           <h2>No analytics available</h2>

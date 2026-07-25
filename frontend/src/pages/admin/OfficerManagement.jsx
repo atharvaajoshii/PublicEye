@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
 import toast from 'react-hot-toast';
+import ButtonLoader from "../../components/ButtonLoader";
 
 function OfficerManagement() {
     const [officers, setOfficers] = useState([]);
@@ -12,12 +13,11 @@ function OfficerManagement() {
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
+    const [creating, setCreating] = useState(false);
+    const [updating, setUpdating] = useState(false);
+    const [deleting, setDeleting] = useState(false);
+    const [formData, setFormData] = useState({ name: "", email: "", password: "", });
 
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
-    });
     const fetchOfficers = async () => {
         try {
             setLoading(true);
@@ -48,18 +48,14 @@ function OfficerManagement() {
                 setSelectedOfficer(null);
                 return;
             }
-
             const res = await adminService.getOfficerById(id);
-
             setExpandedOfficer(id);
             setSelectedOfficer(res.data.officer);
-
             setFormData({
                 name: res.data.officer.name,
                 email: res.data.officer.email,
                 password: "",
             });
-
         } catch (err) {
             console.log(err);
         }
@@ -72,6 +68,7 @@ function OfficerManagement() {
     };
     const handleCreate = async () => {
         try {
+            setCreating(true);
             const res = await adminService.createOfficer(formData);
             console.log(res)
             setFormData({
@@ -82,12 +79,18 @@ function OfficerManagement() {
             toast.success(res.data.officer.name + " officer created successfulyy")
             fetchOfficers();
         } catch (err) {
-            console.log(err);
+            console.log(err.response?.data);
+            toast.error(
+                err.response?.data?.message || "Failed to create officer"
+            );
+        } finally {
+            setCreating(false);
         }
     };
     const handleUpdate = async () => {
         if (!selectedOfficer) return;
         try {
+            setUpdating(true);
             await adminService.updateOfficer(
                 selectedOfficer._id,
                 formData
@@ -98,6 +101,8 @@ function OfficerManagement() {
         } catch (err) {
             console.log(err);
             toast.error("error updating officer")
+        } finally {
+            setUpdating(false);
         }
     };
     const handleDelete = async () => {
@@ -105,13 +110,11 @@ function OfficerManagement() {
         const name = selectedOfficer.name
         console.log(name)
         if (!window.confirm("Delete this officer?")) return;
-
         try {
+            setDeleting(true)
             const res = await adminService.deleteOfficer(selectedOfficer._id);
-
             toast.success("Officer " + name + " deleted successfully")
             setSelectedOfficer(null);
-
             setFormData({
                 name: "",
                 email: "",
@@ -121,11 +124,13 @@ function OfficerManagement() {
         } catch (err) {
             console.log(err);
             toast.error("failed to delete officer")
+        } finally {
+            setDeleting(false);
         }
     };
     if (loading)
         return (
-            <div className="main loading">
+            <div className="officer-loading">
                 Loading...
             </div>
         );
@@ -134,254 +139,130 @@ function OfficerManagement() {
             <div className="content">
                 <div className="page-header">
                     <h1 className="page-title">Officer Management</h1>
-
-                    <button
-                        className="officer-btn btn-primary"
-                        onClick={() => setShowCreate(!showCreate)}
-                    >
+                    <button className="officer-btn btn-primary" onClick={() => setShowCreate(!showCreate)}>
                         {showCreate ? "Close Form" : "+ Create Officer"}
                     </button>
                 </div>
                 <hr />
                 <div className="officer-filters-toolbar">
-
-                    <input
-                        type="search"
-                        className="officer-input-search"
-                        placeholder="Search Officers..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-
-                    <select
-                        className="officer-select-filter"
-                        value={sort}
-                        onChange={(e) => setSort(e.target.value)}
-                    >
+                    <input type="search" className="officer-input-search" placeholder="Search Officers..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <select className="officer-select-filter" value={sort} onChange={(e) => setSort(e.target.value)}>
                         <option value="">Sort By</option>
                         <option value="newest">Newest First</option>
                         <option value="oldest">Oldest First</option>
                         <option value="name">Name A-Z</option>
                     </select>
-
-                    <button
-                        className="officer-btn btn-secondary"
-                        onClick={() => {
-                            setSearch("");
-                            setSort("");
-                        }}
-                    >
+                    <button className="officer-btn btn-secondary" onClick={() => { setSearch(""); setSort(""); }}>
                         Reset
                     </button>
-
                 </div>
                 <hr />
                 <div className="issue-list">
                     <div className={`issue-card ${showCreate ? "expanded" : ""}`}>
-
                         <div className="issue-header"
                             onClick={() => setShowCreate(!showCreate)}>
-
                             <div className="issue-header-left">
                                 <h3>Create Officer</h3>
-
                                 <span className="issue-category">
                                     New Account
                                 </span>
                             </div>
-
                             <div className="issue-header-right">
                                 <span className="expand-icon">
                                     {showCreate ? "−" : "+"}
                                 </span>
                             </div>
-
                         </div>
-
                         <div className={`issue-details ${showCreate ? "open" : ""}`}>
-
                             <div className="detail-grid">
-
                                 <div className="detail-item">
                                     <label>Name</label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                    />
+                                    <input type="text" name="name" value={formData.name} onChange={handleChange} />
                                 </div>
-
                                 <div className="detail-item">
                                     <label>Email</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                    />
+                                    <input type="email" name="email" value={formData.email} onChange={handleChange} />
                                 </div>
-
                                 <div className="detail-item">
                                     <label>Password</label>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                    />
+                                    <input type="password" name="password" value={formData.password} onChange={handleChange} />
                                 </div>
-
                             </div>
-
                             <div className="issue-actions">
-                                <button
-                                    className="officer-btn btn-primary"
-                                    onClick={handleCreate}
-                                >
-                                    Create Officer
+                                <button className="officer-btn btn-primary" onClick={handleCreate} disabled={creating}>
+                                    {creating ? (
+                                        <ButtonLoader text="Creating..." />
+                                    ) : (
+                                        "Create Officer"
+                                    )}
                                 </button>
                             </div>
-
                         </div>
-
                     </div>
                     <hr />
                     {officers.map((officer) => (
-
-                        <div
-                            key={officer._id}
-                            className={`issue-card ${expandedOfficer === officer._id
-                                ? "expanded"
-                                : ""
-                                }`}
-                        >
-
-                            <div
-                                className="issue-header"
-                                onClick={() => handleView(officer._id)}
-                            >
-
+                        <div key={officer._id} className={`issue-card ${expandedOfficer === officer._id ? "expanded" : ""}`}>
+                            <div className="issue-header" onClick={() => handleView(officer._id)} >
                                 <div className="issue-header-left">
-
                                     <h3>{officer.name}</h3>
-
                                     <span className="issue-category">
                                         {officer.role}
                                     </span>
-
                                 </div>
-
                                 <div className="issue-header-right">
-
-                                    <span className="officer-status-badge assigned">
-                                        Active
-                                    </span>
-
+                                    <span className="officer-status-badge assigned">Active </span>
                                     <span className="expand-icon">
                                         {expandedOfficer === officer._id ? "−" : "+"}
                                     </span>
-
                                 </div>
-
                             </div>
-
-                            <div
-                                className={`issue-details ${expandedOfficer === officer._id
-                                    ? "open"
-                                    : ""
-                                    }`}
-                            >
-
+                            <div className={`issue-details ${expandedOfficer === officer._id ? "open" : ""}`} >
                                 {selectedOfficer?._id === officer._id && (
-
                                     <>
                                         <div className="detail-grid">
-
                                             <div className="detail-item">
                                                 <label>Name</label>
-
-                                                <input
-                                                    type="text"
-                                                    name="name"
-                                                    value={formData.name}
-                                                    onChange={handleChange}
-                                                />
+                                                <input type="text" name="name" value={formData.name} onChange={handleChange} />
                                             </div>
-
                                             <div className="detail-item">
                                                 <label>Email</label>
-
-                                                <input
-                                                    type="email"
-                                                    name="email"
-                                                    value={formData.email}
-                                                    onChange={handleChange}
-                                                />
+                                                <input type="email" name="email" value={formData.email} onChange={handleChange} />
                                             </div>
-
                                             <div className="detail-item">
                                                 <label>Password</label>
-
-                                                <input
-                                                    type="password"
-                                                    name="password"
-                                                    placeholder="Leave blank to keep current password"
-                                                    value={formData.password}
-                                                    onChange={handleChange}
-                                                />
+                                                <input type="password" name="password" placeholder="Leave blank to keep current password" value={formData.password} onChange={handleChange} />
                                             </div>
-
                                             <div className="detail-item">
                                                 <label>Joined</label>
-
                                                 <span>
-                                                    {new Date(
-                                                        selectedOfficer.createdAt
-                                                    ).toLocaleDateString()}
+                                                    {new Date(selectedOfficer.createdAt).toLocaleDateString()}
                                                 </span>
                                             </div>
-
                                             <div className="detail-item">
                                                 <label>Officer ID</label>
-
                                                 <span>
                                                     {selectedOfficer._id}
                                                 </span>
                                             </div>
-
                                         </div>
-
                                         <div className="issue-actions">
-
-                                            <button
-                                                className="officer-btn btn-primary"
-                                                onClick={handleUpdate}
-                                            >
-                                                Update
+                                            <button className="officer-btn btn-primary" onClick={handleUpdate} disabled={updating} >
+                                                {updating ? (
+                                                    <ButtonLoader text="Updating..." />
+                                                ) : (
+                                                    "Update"
+                                                )}
                                             </button>
-
-                                            <button
-                                                className="officer-btn btn-danger"
-                                                onClick={handleDelete}
-                                            >
-                                                Delete
+                                            <button className="officer-btn btn-danger" onClick={handleDelete} disabled={deleting} >
+                                                {deleting ? (<ButtonLoader text="Deleting..." />) : ("Delete")}
                                             </button>
-
                                         </div>
-
                                     </>
-
                                 )}
-
                             </div>
-
                         </div>
-
                     ))}
-
                 </div>
-
             </div>
         </div>
     );
