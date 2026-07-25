@@ -638,3 +638,276 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
   gap: 16px;
   justify-content: flex-end;
 }
+/* ==========================================
+   OFFICER & ADMIN DASHBOARD (Clean, Non-AI)
+   ========================================== */
+
+:root {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --shadow-flat: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Page Container */
+.officer-dashboard-container {
+  padding: 24px 32px;
+  background-color: rgb(255, 250, 246);
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text-primary);
+}
+.officer-dashboard-container {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Soft elevated shadow matching the sidebar */
+  
+  min-height: calc(100vh - 32px);
+}
+
+/* Title */
+.officer-dashboard-main-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+/* ------------------------------------------
+   1. STATS GRID (Compact Metrics Header)
+   ------------------------------------------ */
+.officer-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.officer-stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  box-shadow: var(--shadow-flat);
+}
+
+.officer-stat-card h1 {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin: 0 0 6px 0;
+}
+
+.officer-stat-card p {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.officer-content-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* 2 wide main panels on left, 1 sidebar panel on right */
+  grid-template-rows: auto auto;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Position Panel 1 (Priority Issues) top left */
+.officer-section-panel:nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* Position Panel 2 (Recently Assigned) bottom left */
+.officer-section-panel:nth-child(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+/* Position Panel 3 (Recent Activity) spanning full height on right sidebar */
+.officer-section-panel:nth-child(3) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  height: 100%;
+}
+
+
+/* ------------------------------------------
+   3. PANEL & CARD STYLING
+   ------------------------------------------ */
+.officer-section-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-flat);
+}
+
+.officer-panel-heading {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 12px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.officer-panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Static Cards inside panels */
+.officer-static-item-card {
+  background: #dcebd9;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: default;
+}
+
+.officer-static-item-card h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.officer-static-item-card .meta-text {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.officer-static-item-card .timestamp-text {
+  margin: 2px 0 0 0;
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+/* Specific formatting for Recent Activity Cards in sidebar */
+.activity-card {
+  border-left: 2px solid var(--border-color);
+  border-radius: 15px;
+  background: #dcebd9;
+}
+
+/* Status Pill */
+.status-pill {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 600;
+  background: #dee6f1;
+  color: var(--text-secondary);
+}
+
+/* Loading state */
+.officer-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  font-size: 17px;
+  color: var(--text-secondary);
+}
+
+/* Responsive breakpoint for smaller screens */
+@media (max-width: 900px) {
+  .officer-content-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .officer-section-panel:nth-child(1),
+  .officer-section-panel:nth-child(2),
+  .officer-section-panel:nth-child(3) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+/* ------------------------------------------
+   ALTERNATING LIGHT TINTS (Purple & Moss Green)
+   ------------------------------------------ */
+
+/* Odd Items: Very Soft Moss Green Tint */
+.officer-static-item-card:nth-child(odd) {
+  background-color: #f1f8f3;
+  border: 1px solid #d8eadd;
+}
+
+/* Even Items: Very Soft Lavender Purple Tint */
+.officer-static-item-card:nth-child(even) {
+  background-color: #f6f3fc;
+  border: 1px solid #e7def7;
+}
+
+/* Subtle Hover Shift to match the tints */
+.officer-static-item-card:nth-child(odd):hover {
+  background-color: #e8f4eb;
+}
+
+.officer-static-item-card:nth-child(even):hover {
+  background-color: #f0ebfa;
+}
+/* ------------------------------------------
+   STAT CARDS (Compact & Clean)
+   ------------------------------------------ */
+
+.officer-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.officer-stat-card {
+  background: #ffffff;
+  border: 1px solid #e8e3d9;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.officer-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.officer-stat-card h1 {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #6b7280;
+  margin: 0 0 6px 0;
+}
+
+.officer-stat-card p {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+  color: #1f2937;
+  margin: 0;
+}
