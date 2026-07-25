@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2d5c7474.css",
+    "main.js": "/static/js/main.cc7d048d.js",
+    "static/js/977.0296d865.chunk.js": "/static/js/977.0296d865.chunk.js",
+    "static/js/455.d6505a62.chunk.js": "/static/js/455.d6505a62.chunk.js",
+    "static/media/hero.png": "/static/media/hero.677c1f316e538d52af8d.png",
+    "static/media/track.png": "/static/media/track.c1ba75fb3e19ab3be396.png",
+    "static/media/report_issue.png": "/static/media/report_issue.e922a60c3280afe1a3e1.png",
+    "static/media/analytics.png": "/static/media/analytics.9a00086c7a805797aa88.png",
+    "static/media/citizen.png": "/static/media/citizen.2dbbd9e341757a2b1a25.png",
+    "static/media/logo_name_tagline.png": "/static/media/logo_name_tagline.859421de16f89bf67572.png",
+    "static/media/logo_name.png": "/static/media/logo_name.460940a382ef334b8494.png",
+    "static/media/officer.png": "/static/media/officer.779193bd99f8db1db1f4.png",
+    "static/media/logo.png": "/static/media/logo.0c8f9e6baef7b380403f.png",
+    "static/media/admin.png": "/static/media/admin.5f383b96b78fe745db21.png",
+    "index.html": "/index.html",
+    "main.2d5c7474.css.map": "/static/css/main.2d5c7474.css.map",
+    "main.cc7d048d.js.map": "/static/js/main.cc7d048d.js.map",
+    "977.0296d865.chunk.js.map": "/static/js/977.0296d865.chunk.js.map",
+    "455.d6505a62.chunk.js.map": "/static/js/455.d6505a62.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2d5c7474.css",
+    "static/js/main.cc7d048d.js"
+  ]
+}
