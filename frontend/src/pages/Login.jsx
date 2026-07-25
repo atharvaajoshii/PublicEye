@@ -10,7 +10,7 @@ import { FiLogIn,
 import logo from "../assets/logo.png";
 import heroImg from "../assets/hero.png";
 import footer_logo from "../assets/logo_name_tagline.png";
-import ButtonLoader from "../components/ButtonLoader.jsx"
+import ButtonLoader from "../components/ButtonLoader"
 
 function Login() {
   const [loading, setLoading] = useState(false);
