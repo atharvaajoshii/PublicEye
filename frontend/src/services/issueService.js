@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:5000/api/issues";
+const API = `${process.env.REACT_APP_API_URL}/issues`;
 
 
 const getUserIssues = async (params) => {
@@ -15,8 +15,18 @@ const getAllIssues = async () => {
 
     return response.data;
 }
-
+const voteIssue = async(issueId) =>{
+    const response = await axios.post(
+        `${API}/${issueId}/vote`,
+        {},
+        {
+            withCredentials:true
+        }
+    );
+    return response.data;
+}
 export default {
     getUserIssues,  
-    getAllIssues
+    getAllIssues,
+    voteIssue
 };

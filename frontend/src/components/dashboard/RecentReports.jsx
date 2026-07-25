@@ -32,7 +32,7 @@ function RecentReports(props) {
     return (
         <div className="card recent-reports">
             <div className="reports-header">
-                <h2>Recent Reports</h2>
+                <p>Recent Reports</p>
             </div>
             {props.issues.slice(0,3).map((issue) => (
                 <div key={issue._id} className="report-item">

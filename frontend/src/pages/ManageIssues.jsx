@@ -24,16 +24,16 @@ function ManageIssues() {
 
   const [progressValues, setProgressValues] = useState({});
 
-    const [formData, setFormData] = useState({
-      title: "",
-      description: "",
-      location: "",
-      latitude: "",
-      longitude: "",
-      category: "",
-      publicVoting: false,
-      image: null,
-    });
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    location: "",
+    latitude: "",
+    longitude: "",
+    category: "",
+    publicVoting: false,
+    image: null,
+  });
 
   const fetchIssues = async () => {
     try {
@@ -244,17 +244,17 @@ function ManageIssues() {
                       </div>
                       <div className="checkbox-group">
 
-<input
-type="checkbox"
-checked={coreIssue.publicVoting}
-onChange={(e) =>
-  handleVotingChange(coreIssue._id, e.target.checked)
-}
-/>
-<label htmlFor="publicVoting">
-  Enable Public Voting
-</label>
-</div>
+                        <input
+                          type="checkbox"
+                          checked={coreIssue.publicVoting}
+                          onChange={(e) =>
+                            handleVotingChange(coreIssue._id, e.target.checked)
+                          }
+                        />
+                        <label htmlFor="publicVoting">
+                          Enable Public Voting
+                        </label>
+                      </div>
                     </div>
 
                     {/* Status / Inline Modifications side */}
@@ -377,7 +377,7 @@ onChange={(e) =>
                         </div>
 
                         <div className="issue-image-wrapper">
-                          <IssueImage issueId={coreIssue._id} />
+                          <IssueImage imageUrl={coreIssue.image} />
                         </div>
                       </>
                     )}

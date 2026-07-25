@@ -13,22 +13,23 @@ function ManageIssues_user() {
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState("");
 
-    useEffect(() => {
-         fetchIssues();
-    }, [search, sort]);
-
+useEffect(() => {
     const fetchIssues = async () => {
         try {
             const res = await issueService.getUserIssues({
                 search,
-                sort
+                sort,
             });
-            setIssues(res.userIssues);
 
+            setIssues(res.userIssues);
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+
+    fetchIssues();
+}, [search, sort]);
+
     return (
         <div>
             <div>

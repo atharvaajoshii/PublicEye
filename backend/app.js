@@ -14,20 +14,30 @@ const geocodeRoutes = require("./routes/geocodeRoutes");
 const app = express();
 const authRoutes = require("./routes/authRoutes");
 const cors = require("cors");
-const path = require("path");
 
-app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "http://localhost:5173"
-  ],
-  credentials: true
-}));
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:5173",
+  process.env.FRONTEND_URL,
+];
 
-app.use((req, res, next) => {
-    console.log("Incoming:", req.method, req.url);
-    next();
-});
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
+// app.use((req, res, next) => {
+//   console.log("Incoming:", req.method, req.url);
+//   next();
+// });
 
 app.use(express.json());
 
@@ -43,11 +53,19 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/issues", issueRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/analytics", analyticsRoutes);
-app.use("/issue-images", express.static(path.join(__dirname, "issue-images")));
 app.use("/api/geocode", geocodeRoutes);
 
-app.listen(5000, () => {
-    console.log("Server Running");
+//HEALTH ROUTE
+app.get("/", (req, res) => {
+    res.json({
+        status: "ok",
+        message: "PublicEye API running",
+    });
 });
 
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 module.exports = app;

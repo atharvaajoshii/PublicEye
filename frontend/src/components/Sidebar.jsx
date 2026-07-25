@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 import { AiOutlineDashboard } from "react-icons/ai";
@@ -48,7 +48,7 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
     { name: "Report", path: "/report", icon: <GoReport /> },
     // { name: "My Reports", path: "/myreports", icon: <GoReport/> },
     { name: "Map", path: "/issues/map", icon: <GrMap /> },
-    { name: "Profile", path: "/profile", icon: <CgProfile /> },
+    // { name: "Profile", path: "/profile", icon: <CgProfile /> },
     { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
   ];
 
@@ -130,7 +130,8 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
         ))}
 
         {/* Profile */}
-        <div className="sidebar-user">
+        <a href="/profile"><div className="sidebar-user">
+          {/* <Link to="/profile"> */}
           <img
             src={profileImage}
             alt={user?.role || "Guest"}
@@ -141,7 +142,9 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
             <h4>{user?.name || "Guest"}</h4>
             <p>{user?.role || "Visitor"}</p>
           </div>
+          {/* </Link> */}
         </div>
+        </a>
       </nav>
 
       {/* Logout (Only when logged in) */}
