@@ -10,9 +10,12 @@ function AllIssues() {
   useEffect(() => {
     const fetchAllIssues = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/issues/all`, {
-          withCredentials: true,
-        });
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/issues/all`,
+          {
+            withCredentials: true,
+          },
+        );
         setIssues(res.data.issues || []);
       } catch (error) {
         console.log(error);
@@ -23,47 +26,39 @@ function AllIssues() {
 
   // Toggle logic: If clicked again, close it. Otherwise, open it.
   const handleToggleExpand = (rowIndex) => {
-    setExpandedRow(prev => prev === rowIndex ? null : rowIndex);
-};
+    setExpandedRow((prev) => (prev === rowIndex ? null : rowIndex));
+  };
 
   const rows = [];
 
-for (let i = 0; i < issues.length; i += 3) {
+  for (let i = 0; i < issues.length; i += 3) {
     rows.push(issues.slice(i, i + 3));
-}
-
+  }
 
   return (
     <div className="dashboard-layout">
-  <main className="dashboard-content">
-    <div className="page-header">
-      <h1>All Issues</h1>
-      <p>Browse and track reported civic issues.</p>
-    </div>
-
-    <div className="issues-container">
-
-    {rows.map((row, rowIndex) => (
-
-        <div className="issue-row" key={rowIndex}>
-
-            {row.map(issue => (
-
-<IssueCard
-key={issue._id}
-issue={issue}
-rowExpanded={expandedRow === rowIndex}
-onToggle={() => handleToggleExpand(rowIndex)}
-/>
-            ))}
-
+      <main className="dashboard-content">
+        <div className="page-header">
+          <h1>All Issues</h1>
+          <p>Browse and track reported civic issues.</p>
         </div>
 
-    ))}
-
-</div>
-  </main>
-</div>
+        <div className="issues-container">
+          {rows.map((row, rowIndex) => (
+            <div className="issue-row" key={rowIndex}>
+              {row.map((issue) => (
+                <IssueCard
+                  key={issue._id}
+                  issue={issue}
+                  rowExpanded={expandedRow === rowIndex}
+                  onToggle={() => handleToggleExpand(rowIndex)}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
   );
 }
 
