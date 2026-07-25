@@ -1,3 +1,4 @@
+@import "./variables.css";
 .disabled-btn {
     opacity: 0.5;
     cursor: not-allowed;
@@ -7,7 +8,7 @@
     min-height: 100vh;
     width: 100%;
     display: flex;
-    background-color: #FFF8EB;
+    background-color: var(--background);
     justify-content: center;
     align-items: center;
     padding: 2rem;
@@ -25,10 +26,10 @@
 table{
     width: 100%;
     text-align: left;
-    border: 0.1px solid#ccc;
+    border: 0.1px solid var(--gray-ccc);
 }
 td{
-    border: 0.1px solid#ccc;
+    border: 0.1px solid var(--gray-ccc);
     padding: 10px;
 }
 .actions{
@@ -36,11 +37,6 @@ td{
     gap: 20px;
     justify-content:space-evenly;
 }
-
-
-
-
-
 
 .officer-status-badge{
     padding:4px 10px;
@@ -50,27 +46,27 @@ td{
 }
 
 .officer-status-badge.assigned{
-    background:#FFF8EB;
-    color:#e67e22;
+    background:var(--background);
+    color:var(--warning);
 }
 
 .officer-status-badge.in\ progress{
-    background:#eef6ff;
-    color:#3498db;
+    background:var(--info-bg);
+    color:var(--info);
 }
 
 .officer-status-badge.resolved{
-    background:#eef6e9;
-    color:#8F9D68;
+    background:var(--success-bg);
+    color:var(--accent);
 }
 
 .officer-status-badge.rejected{
-    background:#ffecec;
-    color:#e74c3c;
+    background:var(--danger-bg);
+    color:var(--danger-alt);
 }
 .btn-danger{
-    background:#e74c3c;
-    color:white;
+    background:var(--danger-alt);
+    color:var(--white);
 }
 
 .issue-list{
@@ -81,21 +77,21 @@ td{
 }
 
 .issue-card{
-    background:#fff;
-    border:1px solid #ece7df;
+    background:var(--white);
+    border:1px solid var(--border-alt);
     border-radius:14px;
     overflow:hidden;
-    transition:.25s ease;
-    box-shadow:0 4px 12px rgba(0,0,0,.04);
+    transition: 0.25s ease;
+    box-shadow:0 4px 12px var(--black-alpha-04);
 }
 
 .issue-card:hover{
     transform:translateY(-2px);
-    box-shadow:0 10px 24px rgba(0,0,0,.08);
+    box-shadow:0 10px 24px var(--black-alpha-10);
 }
 
 .issue-card.expanded{
-    border-color:#7B57CE;
+    border-color:var(--primary-dark-alt);
 }
 
 .issue-header{
@@ -115,7 +111,7 @@ td{
 .issue-header-left h3{
     margin:0;
     font-size:22px;
-    color:#2E114D;
+    color:var(--heading-dark);
     font-weight:600;
 }
 
@@ -124,8 +120,8 @@ td{
     width:fit-content;
     padding:5px 12px;
     border-radius:30px;
-    background:#FFF8EB;
-    color:#7B57CE;
+    background:var(--background);
+    color:var(--primary-dark-alt);
     font-size:12px;
     font-weight:600;
 }
@@ -140,8 +136,8 @@ td{
     width:36px;
     height:36px;
     border-radius:50%;
-    background:#f6f2ff;
-    color:#7B57CE;
+    background:var(--primary-bg);
+    color:var(--primary-dark-alt);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -150,11 +146,10 @@ td{
     transition:.25s;
 }
 
-
 .issue-details{
-    border-top:1px solid #eee;
+    border-top:1px solid var(--gray-eee);
     padding:24px;
-    background:#fcfbf8;
+    background:var(--surface-alt);
 }
 
 .detail-grid{
@@ -174,20 +169,20 @@ td{
     font-size:12px;
     text-transform:uppercase;
     font-weight:700;
-    color:#888;
+    color:var(--gray-888);
     letter-spacing:.8px;
 }
 
 .detail-item span{
-    color:#2E114D;
+    color:var(--heading-dark);
     line-height:1.6;
 }
 
 .detail-item select{
     padding:12px;
     border-radius:8px;
-    border:1px solid #ddd;
-    background:white;
+    border:1px solid var(--gray-ddd);
+    background:var(--white);
 }
 
 .issue-image-wrapper{
@@ -221,9 +216,9 @@ td{
     justify-content:center;
     align-items:center;
 
-    background:rgba(0,0,0,.55);
+    background:var(--black-alpha-50);
 
-    color:white;
+    color:var(--white);
     font-weight:600;
     font-size:18px;
 
@@ -243,7 +238,6 @@ td{
     transform:scale(1.05);
 }
 
-
 .issue-details{
     max-height:0;
     overflow:hidden;
@@ -259,42 +253,41 @@ td{
 }
 
 .issue-details.open{
-
     max-height:1200px;
-
     opacity:1;
-
     padding:24px;
 }
+
 .expand-icon{
     transition:.3s;
 }
 
-
 .issue-card{
     transition:
-        transform .25s,
-        box-shadow .25s,
-        border-color .25s;
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
 }
 
 .issue-card.expanded{
-    border-color:#7B57CE;
-    box-shadow:0 10px 30px rgba(123,87,206,.12);
+    border-color:var(--primary-dark-alt);
+    box-shadow:0 10px 30px var(--primary-alpha-10);
 }
+
 .officer-btn:disabled{
-    background:#d8d8d8;
-    color:#777;
+    background:var(--gray-ddd);
+    color:var(--gray-777);
     cursor:not-allowed;
     opacity:.7;
 }
+
 .issue-header{
     cursor:pointer;
     transition:.25s;
 }
 
 .issue-header:hover{
-    background:#faf7ff;
+    background:var(--hover);
 }
 
 .issue-image-link{
@@ -326,9 +319,9 @@ td{
     justify-content:center;
     align-items:center;
 
-    background:rgba(0,0,0,.45);
+    background:var(--black-alpha-50);
 
-    color:white;
+    color:var(--white);
     font-size:18px;
     font-weight:600;
 
@@ -339,11 +332,13 @@ td{
 .issue-image-link:hover .image-overlay{
     opacity:1;
 }
+
 .content{
     width:95%;
     max-width:1400px;
     margin:0 auto;
 }
+
 .issue-list{
     width:100%;
     display:flex;
@@ -353,8 +348,9 @@ td{
 
 .issue-card{
     width:100%;
-    border-radius:16px;
+    border-radius:20px;
 }
+
 .page-header{
     width:100%;
     display:flex;
@@ -365,27 +361,15 @@ td{
 
 .page-title{
     font-size:34px;
-    color:#7B57CE;
+    color:var(--primary-dark-alt);
     font-weight:700;
 }
+
 input{
-    border: 0.1px solid #ccc;
+    border: 0.1px solid var(--gray-ccc);
     padding: 0.5rem;
     border-radius: 0.8rem;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .officer-progress-wrapper{
     display:flex;
@@ -396,14 +380,14 @@ input{
 .officer-progress-bar{
     width:100%;
     height:10px;
-    background:#ebe4d8;
+    background:var(--progress-bg);
     border-radius:999px;
     overflow:hidden;
 }
 
 .officer-progress-fill{
     height:100%;
-    background:linear-gradient(90deg,#7B57CE,#5F3FB2);
+    background:linear-gradient(90deg, var(--primary-dark-alt), var(--primary-dark));
     border-radius:999px;
     transition:width .3s ease;
 }
@@ -429,30 +413,29 @@ input{
 
 .officer-progress-controls span{
     font-weight:600;
-    color:var(--primary);
+    color:var(--primary-dark-alt);
 }
-
-
 
 .checkbox-group{
     display:flex;
     align-items:center;
     gap:10px;
 }
+
 .map-container-card {
     margin-top: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
+    border: 1px solid var(--white-alpha-10);
+    border-radius: 20px;
     overflow: hidden;
-    background: #1b1b2f;           /* or var(--card-bg) */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    background: var(--card-bg-dark); 
+    box-shadow: 0 8px 24px var(--black-alpha-15);
 }
 
 .map-container-card .leaflet-container {
-    border-radius: 18px;
+    border-radius: 20px;
 }
 
 .map-container-card:hover {
-    border-color: rgba(126, 87, 194, 0.35); /* subtle purple */
+    border-color: var(--purple-alpha-35);
     transition: 0.2s ease;
 }

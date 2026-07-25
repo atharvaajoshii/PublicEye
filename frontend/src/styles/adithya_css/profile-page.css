@@ -1,8 +1,8 @@
 .profile-card{
-    background:var(--surface);
+    background:var(--white);
     border-radius:28px;
     padding:40px;
-    box-shadow:var(--shadow);
+    box-shadow:var(--shadow-sm);
     text-align:center;
     display:flex;
     margin-right:10px;
@@ -22,8 +22,8 @@
     height:80px;
     margin:auto;
     border-radius:50%;
-    background:var(--secondary);
-    color:white;
+    background:var(--primary-dark-alt);
+    color:var(--white);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -36,14 +36,14 @@
     text-align:center;
     font-size:42px;
     font-weight:700;
-    color:var(--secondary);
+    color:var(--primary-dark-alt);
 }
 .role-badge{
     display:inline-block;
     padding:8px 18px;
     border-radius:999px;
-    background:rgba(123,87,206,.12);
-    color:var(--secondary);
+    background:var(--primary-alpha-10);
+    color:var(--primary-dark-alt);
     margin-bottom:30px;
 }
 .profile-info{
@@ -54,18 +54,18 @@
 }
 
 .info-item{
-    background:#faf8ff;
+    background:var(--hover-light);
     border-radius:18px;
     padding:20px;
 }
 
 .info-item h4{
-    color:var(--text-light);
+    color:var(--text-muted);
     margin-bottom:6px;
 }
 
 .info-item p{
-    color:var(--primary);
+    color:var(--primary-dark-alt);
     font-weight:600;
 }
 
@@ -104,7 +104,7 @@
 
 .profile-card input:focus{
     outline:none;
-    border-color:var(--secondary);
+    border-color:var(--primary-dark-alt);
 }
 .profile-actions{
     display:flex;
@@ -123,8 +123,8 @@
 }
 
 .primary-btn{
-    background:var(--secondary);
-    color:white;
+    background:var(--primary-dark-alt);
+    color:var(--white);
 }
 
 .primary-btn:hover{
@@ -132,9 +132,9 @@
 }
 
 .secondary-btn{
-    background:white;
-    border:1px solid rgba(123,87,206,.25);
-    color:var(--secondary);
+    background:var(--white);
+    border:1px solid var(--primary-alpha-30);
+    color:var(--primary-dark-alt);
 }
 
 .myreports-section{
@@ -143,5 +143,5 @@
 }
 
 .secondary-btn:hover{
-    background:#f7f3ff;
+    background:var(--hover);
 }

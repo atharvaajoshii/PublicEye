@@ -1,7 +1,7 @@
 /* =========================================
    PUBLICEYE DESIGN SYSTEM
 ========================================= */
-@import "./variables.css";
+@import "../variables.css";
 @import "./animations.css";
 @import "./components.css";
 @import "./dashboard-page.css";

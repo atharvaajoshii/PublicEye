@@ -7,7 +7,7 @@ function MetricCard({
     value,
     unit = "",
     icon,
-    color = "var(--primary)"
+    color = "var(--primary-dark-alt)"
 }) {
 
     const [displayValue, setDisplayValue] = useState(0);

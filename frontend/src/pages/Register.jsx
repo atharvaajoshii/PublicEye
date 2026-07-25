@@ -44,10 +44,10 @@ function Register() {
           </Link>
 
           <nav className="landing-nav">
-            <a href="#home">Home</a>
-            <a href="#features">Features</a>
-            <a href="#how">How it Works</a>
-            <a href="#contact">Contact</a>
+            <a href="/#home">Home</a>
+            <a href="/#features">Features</a>
+            <a href="/#how">How it Works</a>
+            <a href="/#contact">Contact</a>
           </nav>
 
           <div className="landing-actions">

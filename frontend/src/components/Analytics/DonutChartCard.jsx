@@ -4,7 +4,6 @@ import {
   PieChart,
   Pie,
   Tooltip,
-  Legend,
   Cell,
 } from "recharts";
 
@@ -27,66 +26,65 @@ function DonutChartCard({
       <h3 className="chart-title">{title}</h3>
 
       <div className="donut-layout">
-        <div className="donut-chart">
-          <div
-            className={`chart-body ${compact ? "compact" : ""} donut-wrapper`}
-          >
-            {data.length === 0 ? (
-              <div className="empty-chart">
-                No resolved issues
-              </div>
-            ) : (
-              <>
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={data}
-                      dataKey={dataKey}
-                      nameKey={nameKey}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius="50%"
-                      outerRadius="80%"
-                      paddingAngle={2}
-                      cornerRadius={3}
-                    >
-                      {data.map((entry, index) => (
-                        <Cell
-                          key={index}
-                          fill={CHART_COLORS[index % CHART_COLORS.length]}
-                        />
-                      ))}
-                    </Pie>
-
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-
-                <div className="donut-center">
-                  <span>Total</span>
-                  <h2>{total}</h2>
-                </div>
-
-                <div className="custom-legend">
-                  {data.map((item, index) => (
-                    <div key={index} className="legend-item">
-                      <span
-                        className="legend-color"
-                        style={{
-                          background:
-                            CHART_COLORS[index % CHART_COLORS.length],
-                        }}
+        <div
+          className={`chart-body ${compact ? "compact" : ""} donut-wrapper`}
+        >
+          {data.length === 0 ? (
+            <div className="empty-chart">
+              No resolved issues
+            </div>
+          ) : (
+            <>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={data}
+                    dataKey={dataKey}
+                    nameKey={nameKey}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius="55%"
+                    outerRadius="85%"
+                    paddingAngle={2}
+                    cornerRadius={3}
+                  >
+                    {data.map((entry, index) => (
+                      <Cell
+                        key={index}
+                        fill={CHART_COLORS[index % CHART_COLORS.length]}
                       />
-                      {item[nameKey]}
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
+                    ))}
+                  </Pie>
+
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+
+              <div className="donut-center">
+                <span>Total</span>
+                <h2>{total}</h2>
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className="custom-legend">
+          {data.map((item, index) => (
+            <div key={index} className="legend-item">
+              <span
+                className="legend-color"
+                style={{
+                  background:
+                    CHART_COLORS[index % CHART_COLORS.length],
+                }}
+              />
+              <span className="legend-text">{item[nameKey]}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 }
+
 export default DonutChartCard;
