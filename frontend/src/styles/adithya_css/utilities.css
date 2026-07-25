@@ -7,9 +7,9 @@
 body {
     background:
         radial-gradient(circle at top right,
-            rgba(123, 87, 206, .05),
+            var(--primary-alpha-05),
             transparent 30%),
-        var(--bg);
-    color: var(--text);
+        var(--background);
+    color: var(--text-main);
     font-family: Inter, sans-serif;
 }

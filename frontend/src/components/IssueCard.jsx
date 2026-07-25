@@ -17,9 +17,7 @@ function IssueCard({ issue, rowExpanded, onToggle }) {
 
       toast.success(response.message);
     } catch (err) {
-      toast.error(
-        err.response?.data?.message || "Failed to support issue."
-      );
+      toast.error(err.response?.data?.message || "Failed to support issue.");
     }
   };
   return (
@@ -41,9 +39,7 @@ function IssueCard({ issue, rowExpanded, onToggle }) {
           </span>
 
           <div className="issue-meta-summary">
-            <span className="issue-category">
-              {issue.category}
-            </span>
+            <span className="issue-category">{issue.category}</span>
 
             <span>•</span>
 
@@ -58,18 +54,19 @@ function IssueCard({ issue, rowExpanded, onToggle }) {
 
       <div className="issue-card-details">
         {rowExpanded && (
-          <>
-            <p>{issue.description}</p>
+          <div className="issue-card-details">
+            <hr className="issue-line"></hr>
+            <p className="issue-description">{issue.description}</p>
 
             <p className="issue-location">
               <FaLocationDot />
               {issue.location}
             </p>
             <div className="issue-support">
-              <span> {votes} Supporters    </span>
+              <span> {votes} Supporters </span>
               {issue.publicVoting ? (
                 <button className="support-btn" onClick={handleSupport}>
-                   Support
+                  Support
                 </button>
               ) : (
                 <button className="support-btn" disabled>
@@ -77,8 +74,7 @@ function IssueCard({ issue, rowExpanded, onToggle }) {
                 </button>
               )}
             </div>
-          </>
-
+          </div>
         )}
       </div>
     </div>

@@ -49,77 +49,82 @@ function Profile() {
   return (
     <div className="dashboard-layout">
       <main className="dashboard-content">
-        <div className="page-header">
-          <h1>Profile</h1>
-          <p>Manage your account and track your activity.</p>
-        </div>
-        <div className="profile">
-          <div className="profile-card">
-            <div className="profile-avatar">
-              {user?.name?.charAt(0).toUpperCase()}
-            </div>
-            {isEditing ? (
-              <input
-                className="form-input"
-                name="name"
-                value={editData.name}
-                onChange={handleChange}
-              />
-            ) : (
-              <h2>{user?.name}</h2>
-            )}
-            <span className="role-badge">{user?.role}</span>
-            <div className="profile-info">
-              <div className="info-item">
-                <h4>Email</h4>
+        <div className="profile-page-wrapper">
+          
+          <div className="page-header">
+            <h1>Profile</h1>
+            <p>Manage your account and track your activity.</p>
+          </div>
+
+          <div className="profile-static-sidebar">
+            <div className="profile-card">
+              <div className="profile-avatar">
+                {user?.name?.charAt(0).toUpperCase()}
+              </div>
+              {isEditing ? (
+                <input
+                  className="form-input"
+                  name="name"
+                  value={editData.name}
+                  onChange={handleChange}
+                />
+              ) : (
+                <h2>{user?.name}</h2>
+              )}
+              <span className="role-badge">{user?.role}</span>
+              <div className="profile-info">
+                <div className="info-item">
+                  <h4>Email</h4>
+                  {isEditing ? (
+                    <input
+                      className="form-input"
+                      name="email"
+                      value={editData.email}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    <p>{user?.email}</p>
+                  )}
+                </div>
+                <div className="info-item">
+                  <h4>Role</h4>
+                  <p>{user?.role}</p>
+                </div>
+              </div>
+              <div className="profile-actions">
                 {isEditing ? (
-                  <input
-                    className="form-input"
-                    name="email"
-                    value={editData.email}
-                    onChange={handleChange}
-                  />
+                  <>
+                    <button className="primary-btn" onClick={handleSave}>
+                      Save Changes
+                    </button>
+                    <button
+                      className="secondary-btn"
+                      onClick={() => setIsEditing(false)}
+                    >
+                      Cancel
+                    </button>
+                  </>
                 ) : (
-                  <p>{user?.email}</p>
+                  <>
+                    <button
+                      className="secondary-btn"
+                      onClick={() => setIsEditing(true)}
+                    >
+                      Edit Profile
+                    </button>
+                    <button className="primary-btn" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </>
                 )}
               </div>
-              <div className="info-item">
-                <h4>Role</h4>
-                <p>{user?.role}</p>
-              </div>
-            </div>
-            <div className="profile-actions">
-              {isEditing ? (
-                <>
-                  <button className="primary-btn" onClick={handleSave}>
-                    Save Changes
-                  </button>
-
-                  <button
-                    className="secondary-btn"
-                    onClick={() => setIsEditing(false)}
-                  >
-                    Cancel
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    className="secondary-btn"
-                    onClick={() => setIsEditing(true)}
-                  >
-                    Edit Profile
-                  </button>
-                  <button className="primary-btn" onClick={handleLogout}>
-                    Logout
-                  </button>
-                </>
-              )}
             </div>
           </div>
-          <div className="myreports-section">
+
+          <div className="myreports-scroll-container">
             <MyReports />
           </div>
+
         </div>
       </main>
     </div>
