@@ -16,6 +16,57 @@ import report from "../assets/report_issue.png";
 import analytics from "../assets/analytics.png";
 import footer_logo from "../assets/logo_name_tagline.png";
 import track from "../assets/track.png";
+import { motion } from "framer-motion";
+const fadeLeft = {
+  hidden: {
+    opacity: 0,
+    x: -80,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+    },
+  },
+};
+
+const fadeRight = {
+  hidden: {
+    opacity: 0,
+    x: 80,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+    },
+  },
+};
+
+const fadeUp = {
+  hidden: {
+    opacity: 0,
+    y: 60,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+    },
+  },
+};
+
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
 
 function Landing() {
   return (
@@ -54,16 +105,21 @@ function Landing() {
         <div className="landing-container hero-grid">
           {/* LEFT */}
 
-          <div className="hero-content">
+          <motion.div
+            className="hero-content"
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+          >
             <span className="hero-tag">Community Powered Civic Reporting</span>
 
-            <h1>
+            <motion.h1 variants={fadeLeft}>
               See it.
               <br />
               Report it.
               <br />
               <span>Improve your city.</span>
-            </h1>
+            </motion.h1>
 
             <p>
               PublicEye empowers citizens to report civic issues, track their
@@ -98,13 +154,18 @@ function Landing() {
                 Join <strong>15,000+</strong> citizens making a difference.
               </p>
             </div> */}
-          </div>
+          </motion.div>
 
           {/* RIGHT */}
 
-          <div className="hero-image">
+          <motion.div
+            className="hero-image"
+            variants={fadeRight}
+            initial="hidden"
+            animate="visible"
+            >
             <img src={heroImg} alt="PublicEye" />
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -160,7 +221,13 @@ function Landing() {
 
       <section className="features-section" id="features">
         <div className="landing-container">
-          <div className="section-heading">
+          <motion.div
+            className="section-heading"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUp}
+            >
             <span>Why PublicEye?</span>
 
             <h2>
@@ -172,12 +239,18 @@ function Landing() {
               PublicEye creates a transparent bridge between citizens and local
               authorities.
             </p>
-          </div>
+          </motion.div>
 
           {/* Feature 1 */}
 
           <div className="feature-row">
-            <div className="feature-content">
+            <motion.div
+              className="feature-content"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeLeft}
+              >
               <span className="feature-tag">Smart Reporting</span>
 
               <h3>Report issues in under a minute.</h3>
@@ -197,21 +270,39 @@ function Landing() {
 
                 <li>Officer assignment</li>
               </ul>
-            </div>
+            </motion.div>
 
-            <div className="feature-image i1">
+            <motion.div
+              className="feature-image i1"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeRight}
+              >
               <img src={report} alt="Report issue" />
-            </div>
+            </motion.div>
           </div>
 
           {/* Feature 2 */}
 
           <div className="feature-row reverse">
-            <div className="feature-image i2">
+            <motion.div
+              className="feature-image i2"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeLeft}
+              >
               <img src={track} alt="Tracking" />
-            </div>
+            </motion.div>
 
-            <div className="feature-content">
+            <motion.div
+              className="feature-content"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeRight}
+              >
               <span className="feature-tag green">Transparency</span>
 
               <h3>Follow every report from start to finish.</h3>
@@ -229,7 +320,7 @@ function Landing() {
 
                 <li>✔ Officer progress</li>
               </ul>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -245,7 +336,17 @@ function Landing() {
           </div>
 
           <div className="workflow-grid">
-            <div className="workflow-card">
+            <motion.div
+              className="workflow-card"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{
+                y: -10,
+                scale: 1.02,
+              }}
+              >
               <div className="workflow-number">01</div>
 
               <h3>Submit a Report</h3>
@@ -254,9 +355,19 @@ function Landing() {
                 Report a civic issue by adding a description, uploading
                 supporting images, and marking its exact location on the map.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="workflow-card">
+            <motion.div
+              className="workflow-card"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{
+                y: -10,
+                scale: 1.02,
+              }}
+              >
               <div className="workflow-number green">02</div>
 
               <h3>Officer Assignment</h3>
@@ -265,9 +376,19 @@ function Landing() {
                 Administrators review incoming reports and assign them to the
                 appropriate officer for investigation and action.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="workflow-card">
+            <motion.div
+              className="workflow-card"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{
+                y: -10,
+                scale: 1.02,
+              }}
+              >
               <div className="workflow-number">03</div>
 
               <h3>Progress Tracking</h3>
@@ -276,9 +397,19 @@ function Landing() {
                 Follow the report as officers provide updates and move the issue
                 through its resolution stages in real time.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="workflow-card">
+            <motion.div
+              className="workflow-card"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{
+                y: -10,
+                scale: 1.02,
+              }}
+              >
               <div className="workflow-number green">04</div>
 
               <h3>Issue Resolved</h3>
@@ -287,7 +418,7 @@ function Landing() {
                 Officers mark the issue as resolved, and the report is updated
                 with its final status for public transparency.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -296,7 +427,13 @@ function Landing() {
 
       <section className="dashboard-preview">
         <div className="landing-container dashboard-grid">
-          <div className="dashboard-content">
+          <motion.div
+            className="dashboard-content"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeLeft}
+            >
             <span className="feature-tag">Powerful Analytics</span>
 
             <h2>Everything you need to monitor your city.</h2>
@@ -335,18 +472,50 @@ function Landing() {
               </div>
 
             </div>
-          </div>
+          </motion.div>
 
-          <div className="dashboard-image">
+          <motion.div
+            className="dashboard-image"
+            initial={{
+            opacity:0,
+            scale:.9
+            }}
+            whileInView={{
+            opacity:1,
+            scale:1
+            }}
+            viewport={{
+            once:true
+            }}
+            transition={{
+            duration:.8
+            }}
+            >
             <img src={analytics} alt="Dashboard Preview" />
-          </div>
+          </motion.div>
         </div>
       </section>
       {/* ================= CALL TO ACTION ================= */}
 
       <section className="cta-section">
         <div className="landing-container">
-          <div className="cta-card">
+          <motion.div
+            className="cta-card"
+            initial={{
+            opacity:0,
+            y:80
+            }}
+            whileInView={{
+            opacity:1,
+            y:0
+            }}
+            viewport={{
+            once:true
+            }}
+            transition={{
+            duration:.8
+            }}
+            >
             <div className="cta-content">
               <span>Join the movement</span>
 
@@ -373,13 +542,25 @@ function Landing() {
               <div className="circle green"></div>
               <div className="circle light"></div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ================= FOOTER ================= */}
 
-      <footer className="landing-footer" id="contact">
+      <motion.footer
+        initial={{
+        opacity:0
+        }}
+        whileInView={{
+        opacity:1
+        }}
+        viewport={{
+        once:true
+        }}
+        transition={{
+        duration:1
+        }} className="landing-footer" id="contact">
         <div className="landing-container footer-grid">
           <div className="footer-brand">
             <img src={footer_logo} alt="PublicEye" />
@@ -425,7 +606,7 @@ function Landing() {
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} PublicEye. All rights reserved.</p>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   );
 }
