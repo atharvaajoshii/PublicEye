@@ -1,0 +1,114 @@
+/* =========================================================
+   LANDING PAGE — SCOPED DESIGN TOKENS
+   Used ONLY by landing.css / Landing.jsx.
+   Does not redefine brand color or typography —
+   those still come from the global variables.css.
+   These are purely motion / layout / effect tokens.
+========================================================= */
+
+:root {
+  /* ---------------------------------------------------
+     Easing — premium, no linear/ease-default anywhere
+  --------------------------------------------------- */
+  --land-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --land-ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --land-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --land-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ---------------------------------------------------
+     Durations
+  --------------------------------------------------- */
+  --land-duration-fast: 0.28s;
+  --land-duration-base: 0.55s;
+  --land-duration-slow: 0.9s;
+  --land-duration-slower: 1.4s;
+
+  /* ---------------------------------------------------
+     Section rhythm — tightened. Sections should feel
+     filled, not like isolated islands of whitespace.
+  --------------------------------------------------- */
+  --land-section-pad-desktop: 7vw 0;
+  --land-section-pad-tablet: 72px 0;
+  --land-section-pad-mobile: 56px 0;
+  --land-section-radius: 42px;
+
+  /* ---------------------------------------------------
+     Glass surfaces (built from existing alpha tokens)
+  --------------------------------------------------- */
+  --land-glass-bg: var(--white-alpha-70);
+  --land-glass-border: var(--white-alpha-35);
+  --land-glass-blur: 22px;
+  --land-glass-blur-soft: 0px;
+
+  /* ---------------------------------------------------
+     Cursor / ambient light field
+  --------------------------------------------------- */
+  --land-glow-size: 620px;
+  --land-glow-size-sm: 460px;
+  --land-glow-blur: 90px;
+  --land-glow-opacity: 0.45;
+
+  /* ---------------------------------------------------
+     Depth / elevation
+  --------------------------------------------------- */
+  --land-z-bg: 0;
+  --land-z-content: 2;
+  --land-z-sticky: 5;
+  --land-z-nav: 999;
+  --land-z-glow: 1;
+
+  /* ---------------------------------------------------
+     Card lift + glow on hover
+  --------------------------------------------------- */
+  --land-lift-sm: -6px;
+  --land-lift-md: -12px;
+  --land-lift-lg: -18px;
+
+  /* ---------------------------------------------------
+     Hero entry — assembling-from-directions sequence
+  --------------------------------------------------- */
+  --hero-enter-distance: 64px;
+  --hero-enter-duration: 0.9s;
+
+  /* ---------------------------------------------------
+     Sticky "How it works" scroll track — tightened so the
+     object and the active step read as one composition
+  --------------------------------------------------- */
+  --land-sticky-track-height: 200vh;
+  --land-sticky-top-offset: 80px;
+
+  /* ---------------------------------------------------
+     Features — vertical Ferris wheel
+  --------------------------------------------------- */
+  --wheel-radius-x:170px;
+  --wheel-radius-y:280px;
+  --wheel-track-height: 250vh;
+  --wheel-top-offset: 90px;
+  --wheel-auto-speed: 4deg;
+  /* degrees / second of continuous ambient rotation */
+
+  /* ---------------------------------------------------
+     CTA card deck
+  --------------------------------------------------- */
+  --deck-track-height: 240vh;
+  --deck-top-offset: 130px;
+}
+
+@media (max-width: 1100px) {
+  :root {
+    --land-sticky-track-height: 200vh;
+    --wheel-radius-x: 110px;
+    --wheel-radius-y: 210px;
+    --wheel-track-height: 240vh;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --land-glow-size: 380px;
+    --land-glow-size-sm: 280px;
+    --land-glass-blur: 14px;
+    --wheel-radius-x: 80px;
+    --wheel-radius-y: 150px;
+  }
+}
