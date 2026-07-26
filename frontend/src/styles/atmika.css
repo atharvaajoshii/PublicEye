@@ -8,7 +8,7 @@
 @import "./sidebar.css";
 
 /* Pages */
-@import "./landing/landing.css";
+@import "./landing.css";
 @import "./register.css";
 @import "./analytics.css";
 
