@@ -228,42 +228,57 @@ const updateVoting = async (req, res) => {
     }
 };
 
+const OfficerProfile = require("../models/OfficerProfile");
+
 const getProfile = async (req, res) => {
-    try {
-        const officer = await User.findById(req.user.id).select("-password");
-        if (!officer) {
-            return res.status(404).json({ message: "Officer not found" });
-        }
-        res.json({ officer });
-    } catch (error) {
-        console.log("Error in officer Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" });
+  try {
+    const officer = await User.findById(req.user.id).select("-password");
+    if (!officer) {
+      return res.status(404).json({ message: "Officer not found" });
     }
+
+    const officerProfile = await OfficerProfile.findOne({ user: req.user.id });
+
+    res.json({
+      officer: {
+        ...officer.toObject(),
+        department: officerProfile?.department || "",
+        location: officerProfile?.location || "",
+      },
+    });
+  } catch (error) {
+    console.log("Error in officer Controller :", error.message);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 const updateProfile = async (req, res) => {
-    try {
-        const { name, phone, department } = req.body;
+  try {
+    const { name, phone } = req.body;
 
-        const updatedOfficer = await User.findByIdAndUpdate(
-            req.user.id,
-            { name, phone, department },
-            { new: true, runValidators: true }
-        ).select("-password");
+    const updateData = {};
+    if (name !== undefined) updateData.name = name;
+    if (phone !== undefined) updateData.phone = phone;
 
-        res.json({ message: "Profile updated successfully", officer: updatedOfficer });
-    } catch (error) {
-        console.log("Error in officer Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" });
-    }
+    const updatedOfficer = await User.findByIdAndUpdate(
+      req.user.id,
+      updateData,
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    res.json({ message: "Profile updated successfully", officer: updatedOfficer });
+  } catch (error) {
+    console.log("Error in officer Controller :", error.message);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
-module.exports = { 
-    dashboard, 
-    manageIssues, 
-    updateIssueStatus, 
-    updateIssueProgress, 
-    updateVoting,
-    getProfile,
-    updateProfile 
+module.exports = {
+  dashboard,
+  manageIssues,
+  updateIssueStatus,
+  updateIssueProgress,
+  updateVoting,
+  getProfile,
+  updateProfile,
 };

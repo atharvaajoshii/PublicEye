@@ -195,3 +195,221 @@
         padding-right: 0;
     }
 }
+
+/* ============ Identity Card (left) ============ */
+.identity-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  transition: box-shadow 0.25s ease;
+}
+
+.identity-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.identity-card h2 {
+  margin: 14px 0 6px;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.01em;
+}
+
+.identity-name-input {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 14px 0 6px;
+}
+
+.identity-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.identity-info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--hover-light);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 14px;
+  color: var(--body);
+  text-align: left;
+}
+
+.identity-info-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.identity-info-icon {
+  color: var(--primary);
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+/* ============ Buttons ============ */
+.primary-btn,
+.secondary-btn,
+.danger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.primary-btn {
+  background: var(--primary);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.secondary-btn {
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--primary-dark-alt);
+}
+
+.secondary-btn:hover {
+  background: var(--hover);
+  border-color: var(--primary-alpha-20);
+}
+
+.danger-btn {
+  background: var(--danger-bg);
+  color: var(--danger-alt);
+}
+
+.danger-btn:hover {
+  background: var(--danger);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* ============ Dynamic Context Panel (right) ============ */
+.context-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.context-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 28px 30px;
+  box-shadow: var(--shadow-sm);
+}
+
+.context-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: var(--primary-dark-alt);
+}
+
+.context-card-head svg {
+  font-size: 18px;
+  color: var(--primary);
+}
+
+.context-card-head h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.context-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.context-item {
+  background: var(--hover-light);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  min-width: 0;
+}
+
+.context-item label {
+  display: block;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.context-item p {
+  color: var(--heading);
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0;
+  text-transform: capitalize;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quick-links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.quick-link-tile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.quick-link-tile:hover {
+  background: var(--hover);
+  border-color: var(--primary-alpha-20);
+  color: var(--primary-dark-alt);
+  transform: translateX(3px);
+}
+
+.quick-link-icon {
+  display: flex;
+  color: var(--primary);
+  font-size: 16px;
+  flex-shrink: 0;
+}

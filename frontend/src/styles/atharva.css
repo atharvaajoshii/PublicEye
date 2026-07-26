@@ -1,9 +1,11 @@
 @import "./variables.css";
+
 .disabled-btn {
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
 }
+
 .main{
     min-height: 100vh;
     width: 100%;
@@ -13,6 +15,7 @@
     align-items: center;
     padding: 2rem;
 }
+
 .content{
     display: flex;
     align-items: center;
@@ -20,34 +23,39 @@
     width: 90%;
     justify-content: center;
 }
+
 .management-container,.table-section{
     width: 100%;
 }
+
 table{
     width: 100%;
     text-align: left;
     border: 0.1px solid var(--gray-ccc);
 }
+
 td{
     border: 0.1px solid var(--gray-ccc);
     padding: 10px;
 }
+
 .actions{
     display: flex;
     gap: 20px;
     justify-content:space-evenly;
 }
 
+/* ============ Status badge ============ */
 .officer-status-badge{
-    padding:4px 10px;
-    border-radius:20px;
+    padding:5px 12px;
+    border-radius:999px;
     font-size:12px;
     font-weight:600;
 }
 
 .officer-status-badge.assigned{
-    background:var(--background);
-    color:var(--warning);
+    background:var(--success-bg);
+    color:var(--accent-dark);
 }
 
 .officer-status-badge.in\ progress{
@@ -64,11 +72,95 @@ td{
     background:var(--danger-bg);
     color:var(--danger-alt);
 }
-.btn-danger{
-    background:var(--danger-alt);
-    color:var(--white);
+
+/* ============ Buttons ============ */
+.officer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
+.btn-primary {
+    background: var(--primary);
+    color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--primary-dark-alt);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: var(--hover);
+    border-color: var(--primary-alpha-20);
+}
+
+.btn-danger{
+    background:var(--danger-bg);
+    color:var(--danger-alt);
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: var(--danger);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.officer-btn:disabled{
+    background:var(--gray-ddd);
+    color:var(--gray-888);
+    cursor:not-allowed;
+    opacity:.7;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ============ Toolbar ============ */
+.officer-filters-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 20px 0 28px;
+}
+
+.officer-input-search,
+.officer-select-filter {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 11px 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    color: var(--body);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.officer-input-search {
+    flex: 1;
+    min-width: 220px;
+}
+
+.officer-input-search:focus,
+.officer-select-filter:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-alpha-10);
+}
+
+/* ============ Cards ============ */
 .issue-list{
     display:flex;
     flex-direction:column;
@@ -77,21 +169,36 @@ td{
 }
 
 .issue-card{
-    background:var(--white);
-    border:1px solid var(--border-alt);
-    border-radius:14px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
     overflow:hidden;
-    transition: 0.25s ease;
-    box-shadow:0 4px 12px var(--black-alpha-04);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    box-shadow:var(--shadow-sm);
 }
 
 .issue-card:hover{
     transform:translateY(-2px);
-    box-shadow:0 10px 24px var(--black-alpha-10);
+    box-shadow:var(--shadow-md);
 }
 
 .issue-card.expanded{
-    border-color:var(--primary-dark-alt);
+    border-color:var(--primary-alpha-20);
+    box-shadow:var(--shadow-md);
+}
+
+.issue-card.create-card {
+    border-style: dashed;
+    border-color: var(--border);
+    background: var(--hover-light);
+}
+
+.issue-card.create-card.expanded {
+    border-style: solid;
+    background: var(--surface);
 }
 
 .issue-header{
@@ -100,27 +207,32 @@ td{
     align-items:center;
     padding:20px 24px;
     cursor:pointer;
+    transition:.25s;
+}
+
+.issue-header:hover{
+    background:var(--hover-light);
 }
 
 .issue-header-left{
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:8px;
 }
 
 .issue-header-left h3{
     margin:0;
-    font-size:22px;
-    color:var(--heading-dark);
-    font-weight:600;
+    font-size:19px;
+    color:var(--heading);
+    font-weight:650;
 }
 
 .issue-category{
     display:inline-block;
     width:fit-content;
-    padding:5px 12px;
-    border-radius:30px;
-    background:var(--background);
+    padding:4px 12px;
+    border-radius:999px;
+    background:var(--primary-alpha-10);
     color:var(--primary-dark-alt);
     font-size:12px;
     font-weight:600;
@@ -129,33 +241,53 @@ td{
 .issue-header-right{
     display:flex;
     align-items:center;
-    gap:18px;
+    gap:16px;
 }
 
 .expand-icon{
-    width:36px;
-    height:36px;
+    width:32px;
+    height:32px;
     border-radius:50%;
-    background:var(--primary-bg);
+    background:var(--hover);
     color:var(--primary-dark-alt);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:24px;
-    font-weight:bold;
+    font-size:20px;
+    font-weight:600;
     transition:.25s;
 }
 
-.issue-details{
-    border-top:1px solid var(--gray-eee);
-    padding:24px;
-    background:var(--surface-alt);
+.issue-card.expanded .expand-icon {
+    background: var(--primary);
+    color: var(--white);
 }
 
+/* ============ Expand animation ============ */
+.issue-details{
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    padding:0 24px;
+    border-top:1px solid transparent;
+    transition:
+        max-height .4s ease,
+        opacity .3s ease,
+        padding .3s ease;
+}
+
+.issue-details.open{
+    max-height:1400px;
+    opacity:1;
+    padding:24px;
+    border-top:1px solid var(--border-alt);
+}
+
+/* ============ Detail grid & inputs ============ */
 .detail-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:22px;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
     margin-bottom:24px;
 }
 
@@ -163,30 +295,82 @@ td{
     display:flex;
     flex-direction:column;
     gap:8px;
+    min-width:0;
 }
 
 .detail-item label{
+    display:flex;
+    align-items:center;
+    gap:6px;
     font-size:12px;
     text-transform:uppercase;
     font-weight:700;
-    color:var(--gray-888);
-    letter-spacing:.8px;
+    color:var(--text-muted);
+    letter-spacing:.06em;
+}
+
+.detail-item label svg {
+    color: var(--primary);
+    font-size: 13px;
 }
 
 .detail-item span{
-    color:var(--heading-dark);
-    line-height:1.6;
+    color:var(--heading);
+    font-weight:500;
+    line-height:1.5;
+}
+
+.detail-item span.mono {
+    font-family: ui-monospace, monospace;
+    font-size: 13px;
+    color: var(--text-muted);
 }
 
 .detail-item select{
-    padding:12px;
-    border-radius:8px;
-    border:1px solid var(--gray-ddd);
-    background:var(--white);
+    padding:11px 14px;
+    border-radius:var(--radius-md);
+    border:1px solid var(--border);
+    background:var(--surface);
+}
+
+.detail-item input,
+.detail-item select{
+    padding: 11px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 14px;
+    color: var(--heading);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.detail-item input:focus,
+.detail-item select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-alpha-10);
+}
+
+.detail-item input.input-error {
+    border-color: var(--danger-alt);
+}
+
+.detail-item input.input-error:focus {
+    box-shadow: 0 0 0 4px var(--danger-bg);
+}
+
+.field-error {
+    font-size: 12px;
+    color: var(--danger-alt);
+    font-weight: 500;
 }
 
 .issue-image-wrapper{
     margin:24px 0;
+    position:relative;
+    display:inline-block;
+    overflow:hidden;
+    border-radius:12px;
 }
 
 .issue-actions{
@@ -196,16 +380,13 @@ td{
     margin-top:24px;
 }
 
-.issue-image-wrapper{
-    position:relative;
-    display:inline-block;
-    overflow:hidden;
-    border-radius:12px;
-}
-
 .issue-image-link{
     position:relative;
     display:block;
+    width:100%;
+    max-width:500px;
+    border-radius:12px;
+    overflow:hidden;
 }
 
 .image-overlay{
@@ -223,7 +404,7 @@ td{
     font-size:18px;
 
     opacity:0;
-    transition:.25s;
+    transition:.3s ease;
 }
 
 .issue-image-link:hover .image-overlay{
@@ -238,67 +419,6 @@ td{
     transform:scale(1.05);
 }
 
-.issue-details{
-    max-height:0;
-    overflow:hidden;
-
-    opacity:0;
-
-    padding:0 24px;
-
-    transition:
-        max-height .45s ease,
-        opacity .35s ease,
-        padding .35s ease;
-}
-
-.issue-details.open{
-    max-height:1200px;
-    opacity:1;
-    padding:24px;
-}
-
-.expand-icon{
-    transition:.3s;
-}
-
-.issue-card{
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
-}
-
-.issue-card.expanded{
-    border-color:var(--primary-dark-alt);
-    box-shadow:0 10px 30px var(--primary-alpha-10);
-}
-
-.officer-btn:disabled{
-    background:var(--gray-ddd);
-    color:var(--gray-777);
-    cursor:not-allowed;
-    opacity:.7;
-}
-
-.issue-header{
-    cursor:pointer;
-    transition:.25s;
-}
-
-.issue-header:hover{
-    background:var(--hover);
-}
-
-.issue-image-link{
-    position:relative;
-    display:block;
-    width:100%;
-    max-width:500px;
-    border-radius:12px;
-    overflow:hidden;
-}
-
 .issue-image{
     width:100%;
     height:260px;
@@ -311,28 +431,6 @@ td{
     transform:scale(1.05);
 }
 
-.image-overlay{
-    position:absolute;
-    inset:0;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    background:var(--black-alpha-50);
-
-    color:var(--white);
-    font-size:18px;
-    font-weight:600;
-
-    opacity:0;
-    transition:.3s ease;
-}
-
-.issue-image-link:hover .image-overlay{
-    opacity:1;
-}
-
 .content{
     width:95%;
     max-width:1400px;
@@ -343,12 +441,11 @@ td{
     width:100%;
     display:flex;
     flex-direction:column;
-    gap:22px;
+    gap:18px;
 }
 
 .issue-card{
     width:100%;
-    border-radius:20px;
 }
 
 .page-header{
@@ -356,13 +453,14 @@ td{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:30px;
+    margin-bottom:24px;
 }
 
 .page-title{
-    font-size:34px;
-    color:var(--primary-dark-alt);
+    font-size:32px;
+    color:var(--heading);
     font-weight:700;
+    letter-spacing:-0.02em;
 }
 
 input{
@@ -379,7 +477,7 @@ input{
 
 .officer-progress-bar{
     width:100%;
-    height:10px;
+    height:8px;
     background:var(--progress-bg);
     border-radius:999px;
     overflow:hidden;
@@ -387,7 +485,7 @@ input{
 
 .officer-progress-fill{
     height:100%;
-    background:linear-gradient(90deg, var(--primary-dark-alt), var(--primary-dark));
+    background:linear-gradient(90deg, var(--primary-dark-alt), var(--primary));
     border-radius:999px;
     transition:width .3s ease;
 }
@@ -408,7 +506,7 @@ input{
     padding:8px;
     text-align:center;
     border:1px solid var(--border);
-    border-radius:10px;
+    border-radius:var(--radius-md);
 }
 
 .officer-progress-controls span{
@@ -438,4 +536,33 @@ input{
 .map-container-card:hover {
     border-color: var(--purple-alpha-35);
     transition: 0.2s ease;
+}
+
+/* ============ Locked profile rows (OfficerProfile.jsx) ============ */
+.identity-info-row.is-locked {
+    position: relative;
+    color: var(--text-muted);
+}
+
+.identity-info-row .lock-icon {
+    margin-left: auto;
+    color: var(--gray-999);
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.edit-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 12px 0 0;
+    text-align: center;
+}
+
+.officer-loading {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 15px;
 }

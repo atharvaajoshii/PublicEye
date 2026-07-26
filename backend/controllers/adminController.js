@@ -81,183 +81,237 @@ const analytics = async (req, res) => {
 
 const getAllOfficers = async (req, res) => {
     try {
-        const { search, sort } = req.query;
-        const filter = {
-            role: "officer",
-        };
-        if (search) {
-            filter.$or = [
-                { name: { $regex: search, $options: "i" } },
-                { email: { $regex: search, $options: "i" } },
-            ];
-        }
-        let sortOption = { createdAt: -1 };
-        switch (sort) {
-            case "oldest":
-                sortOption = { createdAt: 1 };
-                break;
-            case "name":
-                sortOption = { name: 1 };
-                break;
-            default:
-                sortOption = { createdAt: -1 };
-        }
-        const officers = await User.find(filter).sort(sortOption);
-        return res.json({ officers });
-
+      const { search, sort } = req.query;
+      const match = { role: "officer" };
+  
+      if (search) {
+        match.$or = [
+          { name: { $regex: search, $options: "i" } },
+          { email: { $regex: search, $options: "i" } },
+        ];
+      }
+  
+      let sortStage = { createdAt: -1 };
+      switch (sort) {
+        case "oldest":
+          sortStage = { createdAt: 1 };
+          break;
+        case "name":
+          sortStage = { name: 1 };
+          break;
+        default:
+          sortStage = { createdAt: -1 };
+      }
+  
+      const officers = await User.aggregate([
+        { $match: match },
+        {
+          $lookup: {
+            from: "officerprofiles",
+            localField: "_id",
+            foreignField: "user",
+            as: "profile",
+          },
+        },
+        {
+          $addFields: {
+            department: { $arrayElemAt: ["$profile.department", 0] },
+            location: { $arrayElemAt: ["$profile.location", 0] },
+          },
+        },
+        { $project: { password: 0, profile: 0 } },
+        { $sort: sortStage },
+      ]);
+  
+      return res.json({ officers });
     } catch (error) {
-        console.log("Error in admin Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" });
+      console.log("Error in admin Controller :", error.message);
+      return res.status(500).json({ error: "Internal server error" });
     }
-};
-
-const getOfficerById = async (req, res) => {
+  };
+  
+  const getOfficerById = async (req, res) => {
     try {
-        const { id } = req.params;
-
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ error: "Invalid Officer ID" });
-        }
-
-        const officer = await User.findOne({
-            _id: id,
-            role: "officer",
-        });
-
-        if (!officer) {
-            return res.status(404).json({ error: "Officer not found" });
-        }
-
-        return res.json({ officer });
+      const { id } = req.params;
+  
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "Invalid Officer ID" });
+      }
+  
+      const officer = await User.findOne({
+        _id: id,
+        role: "officer",
+      }).select("-password");
+  
+      if (!officer) {
+        return res.status(404).json({ error: "Officer not found" });
+      }
+  
+      const officerProfile = await OfficerProfile.findOne({ user: id });
+  
+      return res.json({
+        officer: {
+          ...officer.toObject(),
+          department: officerProfile?.department || "",
+          location: officerProfile?.location || "",
+        },
+      });
     } catch (error) {
-        console.log("Error in admin Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" });
+      console.log("Error in admin Controller :", error.message);
+      return res.status(500).json({ error: "Internal server error" });
     }
-};
+  };
+  
+const OfficerProfile = require("../models/OfficerProfile");
 
 const createOfficers = async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
-        if (!name || !email || !password) {
-            throw new Error("All fields are required");
-        }
-
-        const existingOfficer = await User.findOne({ email });
-        if (existingOfficer) {
-            return res.status(400).json({
-                message: "Officer already exists",
-            });
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const officer = await User.create({
-            name,
-            email,
-            password: hashedPassword,
-            role: "officer",
-        });
-        return res.status(201).json({
-            message: "Officer created successfully",
-            officer: {
-                id: officer._id,
-                name: officer.name,
-                email: officer.email,
-                role: officer.role,
-            },
-        });
-    } catch (error) {
-        console.log("Error in Admin Controller:", error.message);
-        return res.status(400).json({
-            message: error.message,
-        });
+  try {
+    const { name, email, password, department, location, phone } = req.body;
+    if (!name || !email || !password) {
+      throw new Error("All fields are required");
     }
+
+    const existingOfficer = await User.findOne({ email });
+    if (existingOfficer) {
+      return res.status(400).json({
+        message: "Officer already exists",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const officer = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: "officer",
+      phone: phone || "",
+    });
+
+    const officerProfile = await OfficerProfile.create({
+      user: officer._id,
+      department: department || "",
+      location: location || "",
+    });
+
+    return res.status(201).json({
+      message: "Officer created successfully",
+      officer: {
+        id: officer._id,
+        name: officer.name,
+        email: officer.email,
+        role: officer.role,
+        phone: officer.phone,
+        department: officerProfile.department,
+        location: officerProfile.location,
+      },
+    });
+  } catch (error) {
+    console.log("Error in Admin Controller:", error.message);
+    return res.status(400).json({
+      message: error.message,
+    });
+  }
 };
 
 const updateOfficers = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { name, email, password } = req.body;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({
-                message: "Invalid Officer ID",
-            });
-        }
-        const updateData = {};
-        if (name) updateData.name = name;
-        if (email) updateData.email = email;
-        if (password) {
-            updateData.password = await bcrypt.hash(password, 10);
-        }
-        const officer = await User.findOneAndUpdate(
-            {
-                _id: id,
-                role: "officer",
-            },
-            updateData,
-            { new: true }
-        );
-        if (!officer) {
-            return res.status(404).json({
-                message: "Officer not found",
-            });
-        }
-        return res.status(200).json({
-            message: "Officer updated successfully",
-            officer: {
-                id: officer._id,
-                name: officer.name,
-                email: officer.email,
-                role: officer.role,
-            },
-        });
-    } catch (error) {
-        console.log("Error in Admin Controller:", error.message);
-        return res.status(500).json({
-            message: "Internal server error",
-        });
+  try {
+    const { id } = req.params;
+    const { name, email, password, department, location, phone } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        message: "Invalid Officer ID",
+      });
     }
+
+    const userUpdate = {};
+    if (name !== undefined) userUpdate.name = name;
+    if (email !== undefined) userUpdate.email = email;
+    if (phone !== undefined) userUpdate.phone = phone;
+    if (password) {
+      userUpdate.password = await bcrypt.hash(password, 10);
+    }
+
+    const officer = await User.findOneAndUpdate(
+      { _id: id, role: "officer" },
+      userUpdate,
+      { new: true, runValidators: true }
+    );
+
+    if (!officer) {
+      return res.status(404).json({
+        message: "Officer not found",
+      });
+    }
+
+    const profileUpdate = {};
+    if (department !== undefined) profileUpdate.department = department;
+    if (location !== undefined) profileUpdate.location = location;
+
+    const officerProfile = await OfficerProfile.findOneAndUpdate(
+      { user: officer._id },
+      profileUpdate,
+      { new: true, upsert: true, setDefaultsOnInsert: true }
+    );
+
+    return res.status(200).json({
+      message: "Officer updated successfully",
+      officer: {
+        id: officer._id,
+        name: officer.name,
+        email: officer.email,
+        role: officer.role,
+        phone: officer.phone,
+        department: officerProfile.department,
+        location: officerProfile.location,
+      },
+    });
+  } catch (error) {
+    console.log("Error in Admin Controller:", error.message);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
 };
 
 const deleteOfficers = async (req, res) => {
-    try {
-        const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ error: "Invalid Officer ID" });
-        }
-
-        const officer = await User.findOne({
-            _id: id,
-            role: "officer",
-        });
-
-        if (!officer) {
-            return res.status(404).json({ error: "Officer not found" });
-        }
-        const assignedIssues = await IssueTrack.find({ officer: id });
-        await IssueTrack.updateMany(
-            { officer: id },
-            { $unset: { officer: "" } }   // or { officer: null }
-        );
-
-        // Mark issues as Pending
-        const issueIds = assignedIssues.map(track => track.issue);
-
-        await Issue.updateMany(
-            { _id: { $in: issueIds } },
-            { status: "Pending" }
-        );
-
-        // Delete officer
-        await User.findByIdAndDelete(id);
-
-        return res.json({
-            message: "Officer deleted successfully",
-        });
-
-    } catch (error) {
-        console.log("Error in admin Controller :", error.message);
-        return res.status(500).json({ error: "Internal server error" });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid Officer ID" });
     }
+
+    const officer = await User.findOne({
+      _id: id,
+      role: "officer",
+    });
+
+    if (!officer) {
+      return res.status(404).json({ error: "Officer not found" });
+    }
+
+    const assignedIssues = await IssueTrack.find({ officer: id });
+    await IssueTrack.updateMany(
+      { officer: id },
+      { $unset: { officer: "" } }
+    );
+
+    const issueIds = assignedIssues.map((track) => track.issue);
+    await Issue.updateMany(
+      { _id: { $in: issueIds } },
+      { status: "Pending" }
+    );
+
+    await OfficerProfile.findOneAndDelete({ user: id });
+    await User.findByIdAndDelete(id);
+
+    return res.json({
+      message: "Officer deleted successfully",
+    });
+  } catch (error) {
+    console.log("Error in admin Controller :", error.message);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 const getAllIssues = async (req, res) => {

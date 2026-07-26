@@ -8,35 +8,30 @@ console.log("secret key: ", secretkey);
 
 const registerUser = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, phone } = req.body;
         if (!name || !email || !password) { throw new Error("all feilds are requiredd") }
         const exist = await User.findOne({ email: email })
         if (exist) {
-            return res.status(400).json({
-                message: "User already exists"
-            });
+            return res.status(400).json({ message: "User already exists" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create(
-            {
-                name: name,
-                email: email,
-                password: hashedPassword,
-            }
-        )
+        const user = await User.create({
+            name: name,
+            email: email,
+            password: hashedPassword,
+            phone: phone || "",
+        })
         res.status(201).json({
             message: "User created successfully",
             user: {
                 id: user._id,
                 email: user.email,
                 name: user.name,
+                phone: user.phone,
             }
         });
-        console.log("user created yayyy!! ", name, email)
     } catch (error) {
-        res.status(400).json({
-            message: error.message
-        });
+        res.status(400).json({ message: error.message });
     }
 };
 

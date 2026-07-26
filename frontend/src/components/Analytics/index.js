@@ -4,3 +4,4 @@ export { default as DonutChartCard } from "./DonutChartCard";
 export { default as BarChartCard } from "./BarChartCard";
 export { default as MetricCard } from "./MetricCard";
 export { default as RankingCard } from "./RankingCard";
+export { default as CustomSelect } from "./CustomSelect";

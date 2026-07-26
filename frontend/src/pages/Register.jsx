@@ -4,14 +4,12 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import "../styles/atmika.css";
-import {
-  FiLogIn,
-} from "react-icons/fi";
+import { FiLogIn } from "react-icons/fi";
 
 import logo from "../assets/logo.png";
 import heroImg from "../assets/hero.png";
 import footer_logo from "../assets/logo_name_tagline.png";
-import ButtonLoader from "../components/ButtonLoader"
+import ButtonLoader from "../components/ButtonLoader";
 
 function Register() {
   const [loading, setLoading] = useState(false);
@@ -19,17 +17,14 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
   const { register } = useAuth();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      await register({
-        name,
-        email,
-        password,
-      });
+      await register({ name, email, password, phone });
       toast.success("user registered successfully");
       navigate("/login");
     } catch (error) {
@@ -72,7 +67,6 @@ function Register() {
 
       <section className="hero" id="home">
         <div className="landing-container hero-grid">
-
           <div className="auth-layout">
             <div className="landing-container">
               <div className="auth-page">
@@ -98,6 +92,12 @@ function Register() {
                       required
                     />
                     <input
+                      type="tel"
+                      name="phone"
+                      placeholder="Phone number"
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                    <input
                       type="password"
                       name="password"
                       placeholder="Password"
@@ -109,7 +109,8 @@ function Register() {
                       already have an account!
                     </Link>
 
-                    <button className="auth-btn"
+                    <button
+                      className="auth-btn"
                       type="submit"
                       disabled={loading}
                     >
@@ -178,10 +179,8 @@ function Register() {
           <p>© {new Date().getFullYear()} PublicEye. All rights reserved.</p>
         </div>
       </footer>
-
     </div>
   );
 }
-
 
 export default Register;

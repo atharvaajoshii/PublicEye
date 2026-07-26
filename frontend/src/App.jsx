@@ -22,6 +22,7 @@ import MyReports from "./pages/MyReports";
 import Layout from "./components/Layout"
 import OfficerProfile from "./pages/OfficerProfile";
 import Maps from "./pages/Map";
+import ProfilePage from "./pages/ProfilePage";
 
 
 function App() {
@@ -51,14 +52,14 @@ function App() {
             }
           />
 
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
+<Route
+  path="/profile"
+  element={
+    <ProtectedRoute roles={["citizen", "officer", "admin"]}>
+      <ProfilePage />
+    </ProtectedRoute>
+  }
+/>
 
           <Route
             path="/report"

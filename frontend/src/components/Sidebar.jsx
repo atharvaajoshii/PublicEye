@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate, Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 import { AiOutlineDashboard } from "react-icons/ai";
@@ -9,7 +9,7 @@ import { GoIssueTracks, GoReport } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 import { GrMap } from "react-icons/gr";
 import { GiPoliceOfficerHead } from "react-icons/gi";
-import ButtonLoader from "../components/ButtonLoader"
+import ButtonLoader from "../components/ButtonLoader";
 import logoName from "../assets/logo_name.png";
 import logo from "../assets/logo.png";
 
@@ -17,7 +17,6 @@ import toast from "react-hot-toast";
 
 import "../styles/atmika.css";
 import "../styles/aakanksha.css";
-
 
 import adminAvatar from "../assets/admin.png";
 import officerAvatar from "../assets/officer.png";
@@ -36,11 +35,10 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
       toast.success("logged out!");
       navigate("/");
     } catch (error) {
-      toast.error("Couldnt Logout!")
+      toast.error("Couldnt Logout!");
     } finally {
       setLoading(false);
     }
-
   };
 
   const guestLinks = [
@@ -52,70 +50,48 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
 
   const citizenLinks = [
     { name: "Home", path: "/dashboard", icon: <IoHomeSharp /> },
-    // { name: "Dashboard", path: "/dashboard", icon: <AiOutlineDashboard /> },
     { name: "All Issues", path: "/all-issues", icon: <GoIssueTracks /> },
     { name: "Report", path: "/report", icon: <GoReport /> },
-    // { name: "My Reports", path: "/myreports", icon: <GoReport/> },
     { name: "Map", path: "/issues/map", icon: <GrMap /> },
-    // { name: "Profile", path: "/profile", icon: <CgProfile /> },
-    // { name: "Profile", path: "/profile", icon: <CgProfile /> },
-    { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
+    { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> },
   ];
 
   const officerLinks = [
-    {
-      name: "Dashboard",
-      path: "/officer/dashboard",
-      icon: <MdOutlineDashboard />,
-    },
+    { name: "Dashboard", path: "/officer/dashboard", icon: <MdOutlineDashboard /> },
     { name: "Issues", path: "/officer/manage-issues", icon: <GoIssueTracks /> },
-    { name: "Map", path: "/issues/map", icon: <GrMap /> }, // Placeholder
-    { name: "Profile", path: "/officer/profile", icon: <CgProfile /> },
-    { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
-
+    { name: "Map", path: "/issues/map", icon: <GrMap /> },
+    { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> },
   ];
 
   const adminLinks = [
-    {
-      name: "Dashboard",
-      path: "/admin/dashboard",
-      icon: <MdOutlineDashboard />,
-    },
-    {
-      name: "Officers",
-      path: "/admin/manage-officers",
-      icon: <GiPoliceOfficerHead />,
-    }, // Placeholder
-    { name: "Users", path: "/admin/manage-users", icon: <CgProfile /> }, // Placeholder
+    { name: "Dashboard", path: "/admin/dashboard", icon: <MdOutlineDashboard /> },
+    { name: "Officers", path: "/admin/manage-officers", icon: <GiPoliceOfficerHead /> },
+    { name: "Users", path: "/admin/manage-users", icon: <CgProfile /> },
     { name: "Issues", path: "/admin/manage-issues", icon: <GoIssueTracks /> },
     { name: "Map", path: "/issues/map", icon: <GrMap /> },
     { name: "Reports", path: "/admin/reports", icon: <GoReport /> },
-    { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> }, // Placeholder
+    { name: "Analytics", path: "/analytics", icon: <AiOutlineDashboard /> },
   ];
 
   let links = guestLinks;
-
-  if (user?.role === "citizen") {
-    links = citizenLinks;
-  } else if (user?.role === "officer") {
-    links = officerLinks;
-  } else if (user?.role === "admin") {
-    links = adminLinks;
-  }
+  if (user?.role === "citizen") links = citizenLinks;
+  else if (user?.role === "officer") links = officerLinks;
+  else if (user?.role === "admin") links = adminLinks;
 
   const profileImage =
     user?.role === "admin"
       ? adminAvatar
       : user?.role === "officer"
-        ? officerAvatar
-        : user?.role === "citizen"
-          ? citizenAvatar
-          : citizenAvatar;
+      ? officerAvatar
+      : citizenAvatar;
+
+      const profilePath =
+  user?.role === "officer"
+    ? "/officer/profile"
+    : "/profile";
 
   return (
     <aside className={`sidebar ${isOpen ? "open" : "collapsed"}`}>
-      {/* Logo */}
-
       <button className="sidebar-logo-btn" onClick={toggleSidebar}>
         <img
           src={isOpen ? logoName : logo}
@@ -124,13 +100,13 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
         />
       </button>
 
-      {/* Navigation */}
       <nav className="sidebar-links">
         {links.map((link) => (
           <NavLink
             key={link.path}
             to={link.path}
             onClick={closeSidebar}
+            title={!isOpen ? link.name : undefined}
             className={({ isActive }) =>
               isActive ? "sidebarLinkChild active" : "sidebarLinkChild"
             }
@@ -140,48 +116,38 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
           </NavLink>
         ))}
 
-        {/* Profile */}
-        <NavLink to="/profile"
+        <NavLink
+          to={profilePath}
+          title={!isOpen ? user?.name || "Guest" : undefined}
           className={({ isActive }) =>
             isActive ? "sidebar-user active-profile" : "sidebar-user"
           }
         >
-          {/* <Link to="/profile"> */}
-          <img
-            src={profileImage}
-            alt={user?.role || "Guest"}
-            className="profile-image"
-          />
+          <div className="profile-image-wrap">
+            <img
+              src={profileImage}
+              alt={user?.role || "Guest"}
+              className="profile-image"
+            />
+            <span className={`status-dot ${user ? "online" : "offline"}`} />
+          </div>
 
           <div className="user-info">
             <h4>{user?.name || "Guest"}</h4>
             <p>{user?.role || "Visitor"}</p>
           </div>
-          {/* </Link> */}
         </NavLink>
-
       </nav>
 
-      {/* Logout (Only when logged in) */}
-      {
-        user && (
-          <div className="sidebar-footer">
-            <button onClick={handleLogout} className="logout-btn">
-              {/* <IoLogOutSharp />
-              <span>Logout</span> */}
-              <IoLogOutSharp />
-              <span>
-                {loading ? (
-                  <ButtonLoader text="Logging out..." />
-                ) : (
-                  "Logout"
-                )}
-              </span>
-            </button>
-          </div>
-        )
-      }
-    </aside >
+      {user && (
+        <div className="sidebar-footer">
+          <button onClick={handleLogout} className="logout-btn">
+            <IoLogOutSharp />
+            <span>{loading ? <ButtonLoader text="Logging out..." /> : "Logout"}</span>
+          </button>
+        </div>
+      )}
+    </aside>
   );
 }
 

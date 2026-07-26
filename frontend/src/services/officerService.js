@@ -1,5 +1,4 @@
 // Atmika
-
 import axios from "axios";
 
 const API = `${process.env.REACT_APP_API_URL}/officer`;
@@ -22,16 +21,16 @@ const updateVoting = (id, publicVoting) => {
     );
 };
 
-const getProfile = () => axios.get(`${process.env.REACT_APP_API_URL}/users/profile`, { withCredentials: true });
-const updateProfile = (data) => axios.put(`${process.env.REACT_APP_API_URL}/users/profile`, data, { withCredentials: true });
+const getProfile = () => axios.get(`${API}/profile`, { withCredentials: true });
+const updateProfile = (data) => axios.put(`${API}/profile`, data, { withCredentials: true });
 
-export default { 
-    getDashboard, 
-    getAnalytics, 
-    getManageIssues, 
-    updateStatus, 
-    updateProgress, 
+export default {
+    getDashboard,
+    getAnalytics,
+    getManageIssues,
+    updateStatus,
+    updateProgress,
     updateVoting,
     getProfile,
-    updateProfile 
+    updateProfile
 };

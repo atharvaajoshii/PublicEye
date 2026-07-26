@@ -258,20 +258,54 @@ const getResolutionTrend = async (filter) => {
 //     return stats;
 // }
 
-const getAreaDistribution = async (filter) => {
+// const getAreaDistribution = async (filter) => {
 
+//     const issues = await Issue.find(filter)
+//         .select("latitude longitude");
+
+//     const cityCount = {};
+
+//     for (const issue of issues) {
+
+//         if (!issue.latitude || !issue.longitude) continue;
+
+//         try {
+//             const url = `https://api.geoapify.com/v1/geocode/reverse?lat=${issue.latitude}&lon=${issue.longitude}&apiKey=${process.env.GEOAPIFY_API_KEY}`;
+
+//             const { data } = await axios.get(url);
+
+//             const city =
+//                 data.features?.[0]?.properties?.city ||
+//                 data.features?.[0]?.properties?.town ||
+//                 data.features?.[0]?.properties?.village ||
+//                 data.features?.[0]?.properties?.county ||
+//                 "Unknown";
+
+//             cityCount[city] = (cityCount[city] || 0) + 1;
+
+//         } catch (err) {
+//             console.log("Reverse geocoding failed:", err.message);
+//         }
+//     }
+
+//     return Object.entries(cityCount).map(([area, issues]) => ({
+//         area,
+//         issues
+//     }));
+// }
+
+const getAreaDistribution = async (filter) => {
     const issues = await Issue.find(filter)
         .select("latitude longitude");
 
     const cityCount = {};
 
-    for (const issue of issues) {
-
-        if (!issue.latitude || !issue.longitude) continue;
+    // Map all issues into an array of concurrent fetch promises
+    const promises = issues.map(async (issue) => {
+        if (!issue.latitude || !issue.longitude) return;
 
         try {
             const url = `https://api.geoapify.com/v1/geocode/reverse?lat=${issue.latitude}&lon=${issue.longitude}&apiKey=${process.env.GEOAPIFY_API_KEY}`;
-
             const { data } = await axios.get(url);
 
             const city =
@@ -281,10 +315,20 @@ const getAreaDistribution = async (filter) => {
                 data.features?.[0]?.properties?.county ||
                 "Unknown";
 
-            cityCount[city] = (cityCount[city] || 0) + 1;
-
+            return city;
         } catch (err) {
             console.log("Reverse geocoding failed:", err.message);
+            return null;
+        }
+    });
+
+    // Execute all Geoapify requests in parallel instead of sequentially
+    const cities = await Promise.all(promises);
+
+    // Aggregate counts
+    for (const city of cities) {
+        if (city) {
+            cityCount[city] = (cityCount[city] || 0) + 1;
         }
     }
 
@@ -292,7 +336,7 @@ const getAreaDistribution = async (filter) => {
         area,
         issues
     }));
-}
+};
 
 const getStatusDistribution = async(filter)=>{
 

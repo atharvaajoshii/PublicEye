@@ -1,12 +1,491 @@
+@import "./variables.css";
+
+/* =========================================================
+   SHARED LEAFLET BASE
+========================================================= */
+
 .leaflet-container {
-    cursor: default !important;
+  cursor: default !important;
+  font-family: inherit;
 }
 
 .leaflet-grab {
-    cursor: default !important;
+  cursor: default !important;
 }
 
 .leaflet-dragging .leaflet-grab,
 .leaflet-grab:active {
-    cursor: default !important;
+  cursor: default !important;
+}
+
+.leaflet-control-attribution {
+  background: var(--white-alpha-70) !important;
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius-md) 0 0 0 !important;
+  color: var(--text-muted) !important;
+  font-size: 10px !important;
+}
+
+/* =========================================================
+   CUSTOM MARKER — Iris pulse pin, replaces the default Leaflet icon
+========================================================= */
+
+.custom-map-pin {
+  position: relative;
+  width: 34px;
+  height: 34px;
+}
+
+.map-pin-dot {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  transform: translateX(-50%);
+
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+
+  background: var(--primary);
+  border: 3px solid var(--surface);
+  box-shadow: 0 4px 10px var(--primary-alpha-30);
+}
+
+.map-pin-ring {
+  position: absolute;
+  left: 50%;
+  top: 16px;
+  transform: translateX(-50%);
+
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--primary-alpha-20);
+  animation: pinPulse 1.8s ease-out infinite;
+}
+
+@keyframes pinPulse {
+  0% {
+    transform: translateX(-50%) scale(0.4);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   LOCATION-PICKER MAP (used inside the report form)
+========================================================= */
+
+.map-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+}
+
+.map-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.map-hint-dock {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 500;
+  display: flex;
+  justify-content: center;
+}
+
+.map-hint-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px 18px;
+  border-radius: 999px;
+
+  background: var(--white-alpha-70);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.map-hint-pill svg {
+  color: var(--primary);
+}
+
+.map-hint-spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-alpha-20);
+  border-top-color: var(--primary);
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.map-location-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  max-width: 460px;
+  padding: 12px 14px;
+
+  background: var(--white-alpha-70);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.map-location-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: var(--radius-md);
+  background: var(--primary-alpha-10);
+  color: var(--primary);
+}
+
+.map-location-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.map-location-text p {
+  margin: 0;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--heading);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.map-location-text span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.map-location-check {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: var(--success-bg);
+  color: var(--status-resolved-text);
+  font-size: 0.8rem;
+}
+
+/* =========================================================
+   ALL-ISSUES MAP PAGE — immersive full-bleed canvas
+========================================================= */
+
+.issues-map-page {
+  position: relative;
+  height: calc(100vh - 32px);
+  padding: 20px;
+
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.issues-map-header {
+  position: absolute;
+  top: 36px;
+  left: 36px;
+  z-index: 500;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 22px;
+
+  background: var(--white-alpha-70);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.issues-map-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+}
+
+.issues-map-header h1 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.issues-map-canvas-wrap {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.issues-map-canvas-wrap .leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .issues-map-page {
+    height: calc(100vh - 16px);
+    padding: 12px;
+  }
+
+  .issues-map-header {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    align-items: flex-start;
+  }
+
+  .map-shell {
+    min-height: 320px;
+  }
+}
+
+/* =========================================================
+   ALL-ISSUES MAP — status markers, floating search/filter dock
+========================================================= */
+
+.issue-map-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.issue-map-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.issue-map-toolbar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  left: 260px;
+  z-index: 500;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.issue-map-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  width: 240px;
+  padding: 10px 16px;
+  border-radius: 999px;
+
+  background: var(--white-alpha-70);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+.issue-map-search svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.issue-map-search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 0.85rem;
+  color: var(--heading);
+}
+
+.issue-map-search input::placeholder {
+  color: var(--gray-999);
+}
+
+.issue-map-status-filters {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+
+  padding: 6px;
+  border-radius: 999px;
+
+  background: var(--white-alpha-70);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+.issue-map-status-pill {
+  padding: 7px 14px;
+  border: none;
+  border-radius: 999px;
+  background: none;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--body);
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.issue-map-status-pill:hover {
+  background: var(--hover-light);
+}
+
+.issue-map-status-pill.is-active {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.issue-map-count-badge {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 500;
+
+  padding: 8px 16px;
+  border-radius: 999px;
+
+  background: var(--white-alpha-70);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Restyle Leaflet's popup chrome to match the glass/surface theme */
+
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-xl) !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+}
+
+.leaflet-popup-tip {
+  box-shadow: var(--shadow-md) !important;
+}
+
+.issue-popup-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  min-width: 180px;
+}
+
+.issue-popup-status {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.issue-popup-card h3 {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.issue-popup-card p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.issue-popup-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.issue-popup-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .issue-map-toolbar {
+    left: 20px;
+    top: 90px;
+    justify-content: flex-start;
+  }
+
+  .issue-map-search {
+    width: 100%;
+  }
+
+  .issue-map-count-badge {
+    bottom: 12px;
+    right: 12px;
+  }
 }
