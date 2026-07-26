@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from "../context/AuthContext";
 import officerService from "../services/officerService";
-import "../styles/aakanksha.css"; 
+import "../styles/aakanksha.css";
+import { useNavigate } from "react-router-dom"
 
 function OfficerDashboard() {
-
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
 
@@ -76,15 +77,16 @@ function OfficerDashboard() {
 
       {/* Dashboard Panels */}
       <div className="officer-content-layout">
-        
+
         {/* Priority Issues */}
         <div className="officer-section-panel">
           <h1 className="officer-panel-heading">Priority Issues</h1>
           <div className="officer-panel-list">
             {priorityIssues.map((issue) => (
-              <div 
+              <div
                 key={issue._id}
                 className="officer-static-item-card"
+                onClick={() => navigate("/officer/manage-issues")}
               >
                 <h3>{issue.issue?.title || "Untitled Issue"}</h3>
                 <p className="meta-text">Votes: <strong>{issue.issue?.votes}</strong></p>
@@ -99,9 +101,10 @@ function OfficerDashboard() {
           <h1 className="officer-panel-heading">Recently Assigned</h1>
           <div className="officer-panel-list">
             {recentAssigned.map((issue) => (
-              <div 
+              <div
                 key={issue._id}
                 className="officer-static-item-card"
+                onClick={() => navigate("/officer/manage-issues")}
               >
                 <h3>{issue.issue?.title || "Untitled Issue"}</h3>
                 <p className="meta-text">
@@ -115,13 +118,14 @@ function OfficerDashboard() {
         </div>
 
         {/* Recent Activity */}
-        <div className="officer-section-panel">
+        {/* <div className="officer-section-panel">
           <h1 className="officer-panel-heading">Recent Activity</h1>
           <div className="officer-panel-list">
             {recentActivity.map((activity) => (
-              <div 
+              <div
                 key={activity._id}
                 className="officer-static-item-card activity-card"
+                onClick={() => navigate("/officer/manage-issues")}
               >
                 <h3>{activity.issue?.title || "Untitled Issue"}</h3>
                 <p className="meta-text">Status: <span className="status-pill">{activity.issue?.status}</span></p>
@@ -134,7 +138,7 @@ function OfficerDashboard() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
       </div>
     </div>
