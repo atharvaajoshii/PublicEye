@@ -9,13 +9,15 @@
     width:100%;
     max-width:480px;
 
-    backdrop-filter:blur(12px);
-    border-radius:26px;
+    background: rgba(255,255,255,.75);
+    backdrop-filter: blur(12px);
 
+    border:1px solid rgba(255,255,255,.3);
+
+    border-radius:26px;
     padding:45px;
 
-    box-shadow:
-        0 10px 35px var(--cardshadow);
+    box-shadow:0 10px 35px rgba(0,0,0,.15);
 }
 
 .auth-card h1{
@@ -84,11 +86,3 @@
     box-shadow:0 12px 30px var(--btn-hover-shadow);
 }
 
-.auth-page {
-    display:flex;
-    justify-content:flex-end;
-}
-
-.auth-card {
-    margin-left:40px;
-}
