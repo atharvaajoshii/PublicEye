@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import ButtonLoader from "../components/ButtonLoader";
 import { useAuth } from "../context/AuthContext";
 import officerService from "../services/officerService";
 import IssueImage from "../components/IssueImage";
@@ -18,7 +18,7 @@ function ManageIssues() {
   const [status, setStatus] = useState("");
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
-
+  const [votingLoading, setVotingLoading] = useState({});
   const [expandedIssue, setExpandedIssue] = useState(null);
   const [selectedIssueDetails, setSelectedIssueDetails] = useState(null);
 
@@ -126,10 +126,20 @@ function ManageIssues() {
 
   const handleVotingChange = async (issueId, value) => {
     try {
+      setVotingLoading((prev) => ({
+        ...prev,
+        [issueId]: true,
+      }));
+
       await officerService.updateVoting(issueId, value);
-      fetchIssues();   // refresh the list
+      await fetchIssues();
     } catch (error) {
       console.log(error);
+    } finally {
+      setVotingLoading((prev) => ({
+        ...prev,
+        [issueId]: false,
+      }));
     }
   };
 
@@ -243,17 +253,20 @@ function ManageIssues() {
                         </button>
                       </div>
                       <div className="checkbox-group">
-
-                        <input
-                          type="checkbox"
-                          checked={coreIssue.publicVoting}
-                          onChange={(e) =>
-                            handleVotingChange(coreIssue._id, e.target.checked)
-                          }
-                        />
-                        <label htmlFor="publicVoting">
-                          Enable Public Voting
-                        </label>
+                        {votingLoading[coreIssue._id] ? (
+                          <ButtonLoader text="Updating..." />
+                        ) : (
+                          <>
+                            <input
+                              type="checkbox"
+                              checked={coreIssue.publicVoting}
+                              onChange={(e) =>
+                                handleVotingChange(coreIssue._id, e.target.checked)
+                              }
+                            />
+                            <label>Enable Public Voting</label>
+                          </>
+                        )}
                       </div>
                     </div>
 

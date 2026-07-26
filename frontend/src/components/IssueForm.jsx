@@ -5,7 +5,7 @@ import { createIssue } from "./issueService";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { FiType, FiAlignLeft, FiTag, FiImage, FiArrowRight } from "react-icons/fi";
-
+import ButtonLoader from "./ButtonLoader";
 import Map from "./Map";
 import ImageDropzone from "./ImageDropzone";
 
@@ -141,9 +141,13 @@ function IssueForm() {
               />
             </div>
 
-            <button className="submit-btn" type="submit" disabled={submitting}>
+            <button
+              className="submit-btn"
+              type="submit"
+              disabled={submitting}
+            >
               {submitting ? (
-                <span className="submit-btn-spinner" />
+                <ButtonLoader text="Submitting..." />
               ) : (
                 <>
                   Submit Issue <FiArrowRight />

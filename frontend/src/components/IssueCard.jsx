@@ -3,24 +3,34 @@ import IssueImage from "./IssueImage";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { FaLocationDot } from "react-icons/fa6";
 import toast from "react-hot-toast";
-import "../styles/IssueCard.css"
+import "../styles/IssueCard.css";
 import issueService from "../services/issueService";
+
 function IssueCard({ issue, rowExpanded, onToggle }) {
   const [votes, setVotes] = useState(issue.votes);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setVotes(issue.votes);
   }, [issue.votes]);
+
   const handleSupport = async () => {
+    if (loading) return;
+
     try {
+      setLoading(true);
+
       const response = await issueService.voteIssue(issue._id);
 
       setVotes(response.votes);
-
       toast.success(response.message);
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to support issue.");
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div className="issue-card">
       <div className="issue-card-header">
@@ -55,27 +65,32 @@ function IssueCard({ issue, rowExpanded, onToggle }) {
 
       <div className="issue-card-details">
         {rowExpanded && (
-          <div className="issue-card-details">
-            <hr className="issue-line"></hr>
+          <>
+            <hr className="issue-line" />
+
             <p className="issue-description">{issue.description}</p>
 
             <p className="issue-location">
               <FaLocationDot />
               {issue.location}
             </p>
+
             <div className="issue-support">
-              <span> {votes} Supporters </span>
-              {issue.publicVoting ? (
-                <button className="support-btn" onClick={handleSupport}>
-                  Support
-                </button>
-              ) : (
-                <button className="support-btn" disabled>
-                  Voting Disabled
-                </button>
-              )}
+              <span>{votes} Supporters</span>
+
+              <button
+                className="support-btn"
+                onClick={handleSupport}
+                disabled={!issue.publicVoting || loading}
+              >
+                {!issue.publicVoting
+                  ? "Voting Disabled"
+                  : loading
+                  ? "Supporting..."
+                  : "Support"}
+              </button>
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>

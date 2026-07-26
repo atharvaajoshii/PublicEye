@@ -6,11 +6,13 @@ import "../styles/adithya_css/adithya.css";
 import toast from "react-hot-toast";
 import userService from "../services/userService";
 import { FiEdit2, FiLogOut, FiSave, FiX, FiMail } from "react-icons/fi";
+import ButtonLoader from "../components/ButtonLoader";
 
 function Profile() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [editData, setEditData] = useState({
     name: user?.name || "",
     email: user?.email || "",
@@ -27,12 +29,15 @@ function Profile() {
 
   const handleSave = async () => {
     try {
+      setSaving(true);
       await userService.updateProfile(editData);
       toast.success("Profile updated!");
       setIsEditing(false);
       window.location.reload();
     } catch (err) {
       toast.error("Failed to update profile");
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -83,8 +88,18 @@ function Profile() {
               <div className="profile-actions">
                 {isEditing ? (
                   <>
-                    <button className="primary-btn" onClick={handleSave}>
-                      <FiSave /> Save
+                    <button
+                      className="primary-btn"
+                      onClick={handleSave}
+                      disabled={saving}
+                    >
+                      {saving ? (
+                        <ButtonLoader text="Saving..." />
+                      ) : (
+                        <>
+                          <FiSave /> Save
+                        </>
+                      )}
                     </button>
                     <button
                       className="secondary-btn"
