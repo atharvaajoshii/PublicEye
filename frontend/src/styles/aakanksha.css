@@ -784,20 +784,20 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
 
 .officer-static-item-card h3 {
   margin: 0;
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .officer-static-item-card .meta-text {
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
   color: var(--text-secondary);
 }
 
 .officer-static-item-card .timestamp-text {
   margin: 2px 0 0 0;
-  font-size: 15px;
+  font-size: 18px;
   color: var(--text-muted);
 }
 
@@ -813,7 +813,7 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
   display: inline-block;
   padding: 2px 6px;
   border-radius: 3px;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   background: #dee6f1;
   color: var(--text-secondary);
@@ -825,7 +825,7 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
   align-items: center;
   justify-content: center;
   min-height: 300px;
-  font-size: 17px;
+  font-size: 20px;
   color: var(--text-secondary);
 }
 
@@ -896,7 +896,7 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
 }
 
 .officer-stat-card h1 {
-  font-size: 11px;
+  font-size: 20px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
@@ -905,9 +905,112 @@ if u havent listened to ' Save My Heart' by Jason Reeves then its about time u d
 }
 
 .officer-stat-card p {
-  font-size: 26px;
+  font-size: 33px;
   font-weight: 800;
   line-height: 1;
   color: #1f2937;
   margin: 0;
+}
+/**/
+
+
+.officer-content-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+  gap: 20px;
+  align-items: start;
+  width: 100%;
+}
+
+/* Reset nth-child positioning from the old 3-panel CSS */
+.officer-section-panel:nth-child(1),
+.officer-section-panel:nth-child(2),
+.officer-section-panel:nth-child(3) {
+  grid-column: auto;
+  grid-row: auto;
+  height: auto;
+}
+
+/* On smaller screens, stack them vertically */
+@media (max-width: 900px) {
+  .officer-content-layout {
+    grid-template-columns: 1fr;
+  }
+}
+/* Outer Page Wrapper */
+.officer-page-wrapper {
+  padding: 24px 32px;
+  background-color: var(--bg-main, #f8fafc);
+  min-height: 100vh;
+}
+
+/* Heading Styling Outside the Box */
+.officer-dashboard-main-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+  margin: 0 0 20px 8px; /* Alignment shift to align nicely with the card below */
+}
+
+/* White Workspace Card */
+.officer-dashboard-container {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 28px 32px;
+  min-height: calc(100vh - 120px);
+  border: 1px solid #e5e7eb; /* Subtle border for definition */
+}
+
+/* Page Wrapper to keep padding outside the workspace card */
+.officer-page-wrapper {
+  padding: 24px 32px;
+  background-color: #ffffff;
+  min-height: 100vh;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Page Title Outside */
+.officer-dashboard-main-title {
+  font-size: 35px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+  margin: 0 0 20px 4px;
+}
+
+/* Elevated White Workspace Card */
+.officer-dashboard-container {
+  background-color: #fff8ed;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 28px 32px;
+  min-height: calc(100vh - 120px);
+}
+
+/* 2 Equal Columns for Content Panels */
+.officer-content-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+
+.officer-section-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Headings Sitting Outside the Panels */
+.officer-outside-heading {
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #1e293b;
+  text-transform: uppercase;
+  margin: 0 0 0 4px;
 }
