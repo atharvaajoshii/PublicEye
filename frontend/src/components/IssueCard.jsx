@@ -3,6 +3,7 @@ import IssueImage from "./IssueImage";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { FaLocationDot } from "react-icons/fa6";
 import toast from "react-hot-toast";
+import "../styles/IssueCard.css"
 import issueService from "../services/issueService";
 function IssueCard({ issue, rowExpanded, onToggle }) {
   const [votes, setVotes] = useState(issue.votes);
