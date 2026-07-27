@@ -9,6 +9,8 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
 
+import LoadingSpinner from "../components/LoadingSpinner";
+
 import {
   AreaChartCard,
   LineChartCard,
@@ -211,11 +213,8 @@ function Analytics() {
       </div>
 
       {loading ? (
-        <div className="analytics-loading">
-          <div className="loading-spinner" />
-          <p>Loading analytics…</p>
-        </div>
-      ) : totalReports === 0 ? (
+  <LoadingSpinner text="Loading analytics..." />
+) : totalReports === 0 ? (
         <div className="no-analytics">
           <div className="no-analytics-icon">
             <FiFileText size={28} />

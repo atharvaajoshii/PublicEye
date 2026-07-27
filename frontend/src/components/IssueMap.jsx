@@ -10,6 +10,9 @@ import { Link } from "react-router-dom";
 
 import "../styles/Map.css";
 
+import LoadingSpinner from "../components/LoadingSpinner";
+
+
 const STATUS_FILTERS = ["All", "Pending", "Assigned", "In Progress", "Resolved", "Rejected"];
 
 // Maps a status to one of the app's existing status-badge tokens — no new colors.
@@ -156,7 +159,13 @@ export default function IssueMap() {
       </div>
 
       <div className="issue-map-count-badge">
-        {loading ? "Loading issues…" : `${visibleIssues.length} of ${plottable.length} issues shown`}
+        {loading ? (
+  <LoadingSpinner text="Loading issues..." />
+) : (
+  <p>
+    {visibleIssues.length} of {plottable.length} issues shown
+  </p>
+)}
       </div>
     </div>
   );

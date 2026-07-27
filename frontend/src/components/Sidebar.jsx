@@ -129,7 +129,6 @@ function Sidebar({ isOpen, closeSidebar, toggleSidebar }) {
               alt={user?.role || "Guest"}
               className="profile-image"
             />
-            <span className={`status-dot ${user ? "online" : "offline"}`} />
           </div>
 
           <div className="user-info">

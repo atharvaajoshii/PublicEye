@@ -41,9 +41,9 @@ function StatusChart(props){
                     <Cell
                         key={index}
                         fill={[
-                            "#f59e0b",
-                            "#3b82f6",
-                            "#22c55e"
+                            "#482D58",
+                            "#7B57CE",
+                            "#8F9D68"
                         ][index]}
                     />
                 ))} {/* the data.map and cell part is generated  */}

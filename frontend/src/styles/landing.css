@@ -1059,7 +1059,7 @@ margin-bottom:18px;
       
       color:var(--heading);
       
-      font-weight:800;
+      font-weight:600;
       
       line-height:1.1;
       
@@ -1177,6 +1177,16 @@ margin-bottom:18px;
   max-width:680px;
   margin:0 auto 4rem;
   text-align:center;
+}
+
+.cta-header .section-chip{
+    display: inline-block;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: var(--primary-alpha-10);
+  color: var(--primary-dark-alt);
+  font-weight: 700;
+  margin-bottom: 18px;
 }
 
 .cta-deck{
