@@ -81,7 +81,7 @@
      Features — vertical Ferris wheel
   --------------------------------------------------- */
   --wheel-radius-x:170px;
-  --wheel-radius-y:280px;
+  --wheel-radius-y:220px;
   --wheel-track-height: 250vh;
   --wheel-top-offset: 90px;
   --wheel-auto-speed: 4deg;

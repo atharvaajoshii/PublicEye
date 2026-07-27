@@ -584,9 +584,9 @@ const FEATURE_GROUPS = [
         body: "Attach images to help authorities understand the issue immediately.",
       },
       {
-        icon: <FiBell />,
-        title: "Instant Notifications",
-        body: "Receive updates every time your complaint progresses.",
+        icon: <FiSearch />,
+        title: "Public Issue Explorer",
+        body: "Browse reported issues across your city and stay informed about problems in your community.",
       },
       {
         icon: <FiCheckCircle />,
@@ -605,9 +605,9 @@ const FEATURE_GROUPS = [
         body: "Automatically assign reports to the responsible department.",
       },
       {
-        icon: <FiMapPin />,
-        title: "Location Intelligence",
-        body: "Identify hotspots using interactive GIS visualization.",
+        icon: <FiCheckCircle />,
+        title: "Status Management",
+        body: "Update reports through every stage from Pending to Resolved with a clear workflow.",
       },
       {
         icon: <FiBarChart2 />,
@@ -722,7 +722,7 @@ function WheelCard({ feature, index, rotation, active }) {
 
     const rad = (angle * Math.PI) / 180;
 
-    const radiusX = 250;
+    const radiusX = 220;
     const radiusY = 200;
 
     const dist = shortestDistance(angle, ACTIVE_ANGLE);

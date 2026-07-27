@@ -906,11 +906,37 @@ button {
   
   }
 
+/* atharva */
+.wheel-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+
+  width: 160px;
+  min-height: 150px !important;
+  padding: 16px;
+
+  border-radius: 22px;
+
+  background: var(--white-alpha-70);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--land-glass-border);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.wheel-card.active {
+  width: 280px;
+  min-height: 100px;
+  padding: 20px;
+}
   .wheel-card:has(p){
 
-    width:390px;
+    width:350px;
     
-    min-height:320px;
+    min-height:390px;
     
     }
 
