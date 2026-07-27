@@ -9,7 +9,7 @@ console.log("secret key: ", secretkey);
 const registerUser = async (req, res) => {
     try {
         const { name, email, password, phone } = req.body;
-        if (!name || !email || !password) { throw new Error("all feilds are requiredd") }
+        if (!name || !email || !password) { throw new Error("all fields are required") }
         const exist = await User.findOne({ email: email })
         if (exist) {
             return res.status(400).json({ message: "User already exists" });
@@ -38,7 +38,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-        if (!email || !password) { throw new Error("all feilds are requiredd") }
+        if (!email || !password) { throw new Error("all fields are required") }
 
         const user = await User.findOne({
             email: email,
